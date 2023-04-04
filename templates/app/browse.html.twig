@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movie index{% endblock %}
+
+{% block page_title 'Movies' %}
+{% block page_subtitle 'from opensubtitles' %}
+
+{% block body %}
+
+
+    {#    {{ api_table(class) }}#}
+    {#    <pre>{{ api_table(class)|escape }}</pre>#}
+    'actions',
+    'movieType',
+    'subtitleCount',
+    {name: 'name', title:'Movie Name'},
+
+    {% set columns = [
+        'imdbId',
+        'releaseName',
+        'year',
+        'adult',
+        'runtimeMinutes',
+    ] %}
+    {% set movieType = 'movie' %}
+    {% if movieType == 'episode' %}
+        {% set columns = columns|merge(['seriesImdbId', 'season','episode']) %}
+    {% endif %}
+    {% if movieType == 'series' %}
+        {% set columns = columns|merge(['seriesImdbId', 'seasonCount','episodeCount']) %}
+    {% endif %}
+
+    {% component api_grid with
+        {
+            class: class,
+            filter: filter,
+            columns: columns,
+
+            caller: _self,
+            dom: 'P<"dtsp-dataTable"rQfti>l'
+        }
+    %}
+
+        {% block actions %}
+            {#                <a href="{{ path('app_bookmark') }}">#}
+            <i class="far fa-thumbs-up"></i>
+            <a href="{{ path('movie_show', row.rp) }}"><i>Show</i></a>
+            {#                </a>#}
+        {% endblock %}
+
+        {% block seriesImdbId %}
+            <a href="{{ path('movie_show', {movieId: row.seriesImdbId}) }}"><i>{{ row.seriesImdbId }}</i></a>
+        {% endblock %}
+
+        {% block imdbId %}
+            <a target="_blank" href="{{ path('movie_show', {imdbId: row.imdbId}) }}"><i class="fas fa-external-link-alt"></i> <i>{{ row.imdbId }}</i></a>
+            {#                {% if row.imdbId < 5 %}#}
+            {#                    RR{{ reverseRange(row.id, 0) }}#}
+            {#                <a href="{{ path('ost_movie_show', {movieId: row.id}) }}">Test with {{ row.id }}</a>#}
+            {#                {% endif %}#}
+        {% endblock %}
+
+        {% block name %}
+            <a href="{{ path('movie_show', row.rp) }}"><i>{{ row.name }}</i></a>
+            {#                {% if row.imdbId < 5 %}#}
+            {#                    RR{{ reverseRange(row.id, 0) }}#}
+            {#                <a href="{{ path('ost_movie_show', {movieId: row.id}) }}">Test with {{ row.id }}</a>#}
+            {#                {% endif %}#}
+        {% endblock %}
+
+    {% endcomponent %}
+
+    {#    <h3>_table</h3>#}
+    {#    {% include "ost/movie/_table.html.twig" %}#}
+
+{% endblock %}
