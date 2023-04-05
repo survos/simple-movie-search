@@ -21,4 +21,5 @@ return [
     Survos\ApiGrid\SurvosApiGridBundle::class => ['all' => true],
     Survos\GridGroupBundle\SurvosGridGroupBundle::class => ['all' => true],
     Survos\Grid\SurvosGridBundle::class => ['all' => true],
+    Meilisearch\Bundle\MeilisearchBundle::class => ['all' => true],
 ];
