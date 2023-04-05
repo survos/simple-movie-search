@@ -1,13 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AppController!{% endblock %}
+{% block page_title 'Movies' %}
+{% block page_subtitle 'from opensubtitles' %}
 
 {% block body %}
 <div class="example-wrapper">
 
     This friendly message is coming from:
     <ul>
-        <li><a href="{{ path('app_browse') }}">Browse Movies</li>
+        <li><a href="{{ path('app_browse') }}">Browse Movies</a></li>
     </ul>
+    <div class="container">
+        {% set currentYear = "now"|date("Y") %}
+        <h2>Movies</h2>
+        <form class="form-inline" action="">
+            <div class="form-group">
+                <label for="startYear">From Year:</label>
+                {# <input type="email" class="form-control" id="startYear"> #}
+                <select id="startYear" style="width:auto;" name="startYear" class="form-control selectWidth">
+                    {% for year in 1800 .. currentYear %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="endYear">To Year:</label>
+                {# <input type="email" class="form-control" id="startYear"> #}
+                <select id="endYear" style="width:auto;" name="endYear"  class="form-control selectWidth">
+                    {% for year in 1800 .. currentYear %}
+                        <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}                                      
+                </select>
+               
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+        <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>Imdb Id</th>
+                <th>Release Name</th>
+                <th>Year</th>
+                <th>Primary Title</th>
+                <th>Type</th>
+                <th>Adult</th>
+                <th>Runtime Minutes</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for movie in movies %}
+                    <tr>
+                        <td>{{ movie.imdbId }}</td>
+                        <td>{{ movie.releaseName }}</td>
+                        <td>{{ movie.year }}</td>
+                        <td>{{ movie.primaryTitle }}</td>
+                        <td>{{ movie.type }}</td>
+                        <td>{{ movie.adult ? "TRUE" : "FALSE" }}</td>
+                        <td>{{ movie.runtimeMinutes }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+
 </div>
 {% endblock %}
