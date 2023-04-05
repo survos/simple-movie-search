@@ -19,32 +19,35 @@
         <div {{ stimulus_controller('search', {
             start_year: 1920,
             end_year: 2022,
-            q: 'magic'
+            q: '',
+            endpoint: path('app_search')
         }) }}>
             {#            <div {{ stimulus_target(_sc, 'slider') }} class="range-slider-1"></div> #}
             <div {{ stimulus_target(_sc, 'slider') }}></div>
 
-                {#            </div> #}
-                {#            <div {{ stimulus_target('results') }}> #}
-                {#                Results here. #}
-                {#            </div> #}
+            {#            </div> #}
+            {#            <div {{ stimulus_target('results') }}> #}
+            {#                Results here. #}
+            {#            </div> #}
 
 
-                <form class="form-inline" action="{{ path('app_homepage') }}">
-                    <input type="text" name="q" placeholder="search"/>
-                    <div class="form-group">
-                        <label for="startYear">From Year:</label>
-                        <input name="startYear" id="startYear" value="1962" class="d-nonex">
-                    </div>
-                    <div class="form-group">
-                        <label for="endYear">To Year:</label>
-                        <input name="endYear" id="endYear" value="1980" type="hiddenx">
-                    </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </form>
+            <form class="form-inline" action="{{ path('app_homepage') }}">
+                <input type="text" id="q" name="q" placeholder="search" {{ stimulus_target(_sc, 'q')}} />
+                <div class="form-group">
+                    <label for="startYear">From Year:</label>
+                    <input name="startYear" id="startYear" value="1962" class="d-nonex">
+                </div>
+                <div class="form-group">
+                    <label for="endYear">To Year:</label>
+                    <input name="endYear" id="endYear" value="1980" type="hiddenx">
+                </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+            <div {{ stimulus_target(_sc, 'results') }}>
+                {{ include('app/_movies.html.twig', {movies: movies}) }}
+
             </div>
         </div>
-        {{ include('app/_movies.html.twig', {movies: movies}) }}
 
     </div>
     {% endblock %}

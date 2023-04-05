@@ -1,9 +1,9 @@
-import { Controller } from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus';
 import * as noUiSlider from 'nouislider/dist/nouislider.min';
-
-let routes = require('../../public/js/fos_js_routes.json');
-import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
-Routing.setRoutingData(routes);
+import axios from "axios";
+// let routes = require('../../public/js/fos_js_routes.json');
+// import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+// Routing.setRoutingData(routes);
 
 /*
 * The following line makes this controller "lazy": it won't be downloaded until needed
@@ -11,11 +11,12 @@ Routing.setRoutingData(routes);
 */
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static targets = ['slider', 'results', 'start_year', 'end_year'];
+    static targets = ['slider', 'results', 'start_year', 'end_year', 'q'];
     static values = {
         startYear: Number,
         endYear: Number,
         q: String,
+        endpoint: String
     }
 
     connect() {
@@ -34,34 +35,27 @@ export default class extends Controller {
                 'max': this.endYearValue,
             }
         });
-        uislider.on('update',  (values, handle) => {
-
-            console.log(handle, values);
+        uislider.on('update', (values, handle) => {
             document.getElementById('startYear').value = values[0];
             document.getElementById('endYear').value = values[1];
+            axios.get(this.endpointValue, {
+                params: {
+                    startYear: values[0],
+                    endYear: values[1],
+                    q: this.qTarget.value
+                }
+            })
+                .then((response) => {
+                        // handle success
+                        this.resultsTarget.innerHTML = response.data;
+                    }
+                );
 
-            // this.startYearTarget.value = uislider.range[0];
         });
-
-        // var mySlider = new RangeSlider({
-        //     target: this.sliderTarget,
-        //     values: [this.startYearValue, this.endYearValue],
-        //     range: true,
-        //     tooltip: true,
-        //     scale: true,
-        //     labels: true,
-        //     set: [2010, 2013]
-        // })
-        //     .onChange(val => console.log(val));
     }
 
     async submitForm() {
         // see https://symfonycasts.com/screencast/stimulus/form-ajax
         const $form = this.formTarget;
-        this.resultsTarget.innerHTML = await axiosg({
-            url: $form.prop('action'),
-            method: $form.prop('method'),
-            data: $form.serialize(),
-        });
     }
 }
