@@ -14,23 +14,29 @@ use Doctrine\ORM\EntityManagerInterface;
 class AppController extends AbstractController
 {
     #[Route('/', name: 'app_homepage')]
+    #[Route('/_search', name: 'app_search', options: ['expose' => true])]
     public function index(SearchService $searchService, EntityManagerInterface $em, Request $request): Response
     {
-        $searchQuery = $request->query->get('q') ?? '';
-        $filter = $request->query->get('filters')?? "";
+
+        $searchQuery = $request->get('q') ?? '';
+        $filter = $request->get('filters')?? "";
         $filterData = [];
         $rawFilter = json_decode($filter,true);
 
-        // Filters
-        // $movies = $searchService->search($em, Movie::class, $searchQuery, ['filter' => 'year > 1894 AND year < 1896','sort' => ['year:asc']]);
-        // sort
-        $movies = $searchService->search($em, Movie::class, $searchQuery, ['sort' => ['year:desc']]);
+        $startYear = (int)$request->get('startYear');
+        $endYear = (int)$request->get('endYear');
 
-        return $this->render('app/index.html.twig', [
-            'controller_name' => 'AppController',
+        // Filters
+         $movies = $searchService->search($em, Movie::class, $searchQuery, ['filter' => "year > $startYear AND year < $endYear",'sort' => ['year:asc']]);
+        // sort
+//        $movies = $searchService->search($em, Movie::class, $searchQuery, ['sort' => ['year:desc']]);
+
+        return $this->render($request->get('_route') == 'app_search' ?  'app/_movies.html.twig': 'app/index.html.twig', [
             'movies' => $movies
         ]);
     }
+
+
 
     #[Route('/browse', name: 'app_browse')]
     public function browse(): Response

@@ -6,6 +6,7 @@ use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Survos\GridGroupBundle\Service\GridGroupService;
+use Survos\GridGroupBundle\Service\Reader;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -27,25 +28,17 @@ final class AppImportImdbCommand extends InvokableServiceCommand
 
     public function __construct(
         #[Autowire('%kernel.project_dir%/data/')] private string $dataDir,
-        private EntityManagerInterface $ostEntityManager,
-        private MovieRepository    $movieRepository,
-        string         $name = null)
+        private EntityManagerInterface                           $ostEntityManager,
+        private MovieRepository                                  $movieRepository,
+        string                                                   $name = null)
     {
         parent::__construct($name);
     }
 
     public function __invoke(
-        IO                     $io,
-
-// custom injections
-// UserRepository $repo,
-
-// expand the arguments and options
-        #[Argument(description: 'filename')]
-        string                 $filename = 'title.basics.tsv',
-
-        #[Option(description: 'limit')]
-        int                    $limit = 10,
+        IO                                          $io,
+        #[Argument(description: 'filename')] string $filename = 'title.basics.tsv',
+        #[Option(description: 'limit')] int         $limit = 10,
 
 
     ): void
@@ -64,6 +57,18 @@ final class AppImportImdbCommand extends InvokableServiceCommand
         $movieRepository = $ostEntityManager->getRepository(Movie::class);
 
         $count = 0;
+
+        $reader = new Reader($fullFilename);
+        foreach ($reader->getRow() as $row) {
+            dd($row);
+
+        }
+
+        $reader = new \EasyCSV\Reader($fullFilename);
+        while ($row = $reader->getRow()) {
+            dd($row);
+        }
+
         foreach (GridGroupService::fetchRow($fullFilename, separator: "\t") as $row) {
             $count++;
             $imdbId = (int)u($row['tconst'])->after('tt')->toString();
@@ -71,7 +76,7 @@ final class AppImportImdbCommand extends InvokableServiceCommand
                 $movie = (new Movie())->setImdbId($imdbId);
                 $ostEntityManager->persist($movie);
             }
-            foreach ($row as $key=>$value) {
+            foreach ($row as $key => $value) {
                 if ($value == '\N') {
                     $row[$key] = null;
                 }
@@ -83,8 +88,7 @@ final class AppImportImdbCommand extends InvokableServiceCommand
                 ->setType($row['titleType'])
                 ->setAdult((bool)$row['isAdult'])
                 ->setRuntimeMinutes($row['runtimeMinutes'])
-                ->setYear((int)$row['startYear'])
-                ;
+                ->setYear((int)$row['startYear']);
             $progressBar->setMessage($movie->getReleaseName());
             $progressBar->advance();
             if ($limit && ($count > $limit)) {

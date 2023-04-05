@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Index(name: 'movie_type', columns: ['type'])]
 #[ApiFilter(RangeFilter::class, properties: ['year','runtimeMinutes'])]
 #[ApiFilter(OrderFilter::class, properties: ['releaseName', 'year', 'primaryTitle','runtimeMinutes'], arguments: ['orderParameterName' => 'order'])]
-#[ApiFilter(MultiFieldSearchFilter::class, properties: ['name', 'imdbId'])] # Mei?isearch
+#[ApiFilter(MultiFieldSearchFilter::class, properties: ['releaseName', 'imdbId'])] # Mei?isearch
 
 
 class Movie

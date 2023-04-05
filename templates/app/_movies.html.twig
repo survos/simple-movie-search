@@ -1,0 +1,27 @@
+
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th>Imdb Id</th>
+                    <th>Release Name</th>
+                    <th>Year</th>
+                    <th>Primary Title</th>
+                    <th>Type</th>
+                    <th>Adult</th>
+                    <th>Runtime Minutes</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for movie in movies %}
+                    <tr>
+                        <td>{{ movie.imdbId }}</td>
+                        <td>{{ movie.releaseName }}</td>
+                        <td>{{ movie.year }}</td>
+                        <td>{{ movie.primaryTitle }}</td>
+                        <td>{{ movie.type }}</td>
+                        <td>{{ movie.adult ? "TRUE" : "FALSE" }}</td>
+                        <td>{{ movie.runtimeMinutes }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>

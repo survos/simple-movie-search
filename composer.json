@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
+        "friendsofsymfony/jsrouting-bundle": "^3.2",
         "meilisearch/search-bundle": "^0.10.2",
         "nyholm/psr7": "^1.5",
         "phpdocumentor/reflection-docblock": "^5.3",
