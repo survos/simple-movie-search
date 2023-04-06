@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <br>
                             {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
-                            {{ form_widget(form.reset, {'attr': {'class': 'btn btn-danger', 'onclick' : 'document.forms.movie_search.submit()'}}) }}
+                            {{ form_widget(form.reset, {'attr': {'class': 'btn btn-danger', 'onclick' : 'document.forms.movie_search.reset();document.forms.movie_search.submit()'}}) }}
                         </div>
                     </div>
                 </div>            

@@ -11,6 +11,7 @@ use Meilisearch\Bundle\SearchService;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\MovieSearchType;
+use Exception;
 use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
 
 class AppController extends AbstractController
@@ -29,13 +30,17 @@ class AppController extends AbstractController
         $type = isset($formData['type']) ? $formData['type'] : "";
         $filter = $fromYear ? 'year > '.$fromYear:"";
         $filter = $toYear ? $filter != "" ? $filter."  AND year < ". $toYear: $filter."year < ". $toYear:$filter;
-        $filter = $type != "" ? $filter != ""? " AND type =".$type : " type = ".$type: $filter;
+        $filter = $type != "" ? $filter != ""? $filter." AND type =".$type : " type = ".$type: $filter;
         
-        $movies = $searchService->rawSearch(Movie::class, $searchQuery, [
-            'filter' => $filter,
-            'sort' => [$sortby.':'.$direction],
-            'facets' => ['year', 'type']
-        ]);
+        try {
+            $movies = $searchService->rawSearch(Movie::class, $searchQuery, [
+                'filter' => $filter,
+                'sort' => [$sortby.':'.$direction],
+                'facets' => ['year', 'type']
+            ]);    
+        } catch(\Exception $e) {
+            throw new Exception("Somthing went wrong with Search");
+        }
 
         $form = $this->createForm(MovieSearchType::class, null, [
             'method' => 'GET', 
