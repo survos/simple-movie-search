@@ -4,53 +4,68 @@
 {% block page_subtitle 'from opensubtitles' %}
 
 {% block body %}
-<div class="example-wrapper">
+    <div class="example-wrapper">
 
-    This friendly message is coming from:
-    <ul>
-        <li><a href="{{ path('app_browse') }}">Browse Movies with Doctrine/Datatables</a></li>
-    </ul>
+        This friendly message is coming from:
+        <ul>
+            <li><a href="{{ path('app_browse') }}">Browse Movies with Doctrine/Datatables</a></li>
+        </ul>
 
-    <div class="container">
-        {% set currentYear = "now"|date("Y") %}
-        <h2>Movies, using Meilisearch</h2>
+        <div class="container">
+            <h2>Movies, using Meilisearch</h2>
+            {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
-
-        {{ include('app/_movies.html.twig', {movies:movies}) }}
-
-        {% set _sc = 'search' %}
-        <div {{ stimulus_controller('search', {
-            start_year: 1920,
-            end_year: 2022,
-            q: '',
-            endpoint: path('app_search')
-        }) }}>
-            {#            <div {{ stimulus_target(_sc, 'slider') }} class="range-slider-1"></div> #}
-            <div {{ stimulus_target(_sc, 'slider') }}></div>
-
-            {#            </div> #}
-            {#            <div {{ stimulus_target('results') }}> #}
-            {#                Results here. #}
-            {#            </div> #}
-
-
-            <form class="form-inline" action="{{ path('app_homepage') }}">
-                <input type="text" id="q" name="q" placeholder="search" {{ stimulus_target(_sc, 'q')}} />
-                <div class="form-group">
-                    <label for="startYear">From Year:</label>
-                    <input name="startYear" id="startYear" value="{{ startYear }}" class="d-nonex">
+            {{ form_start(form, {attr : {"method": "GET"}}) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(form.search) }}
+                        </div>
+                    </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(form.type) }}
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="endYear">To Year:</label>
-                    <input name="endYear" id="endYear" value="{{ endYear }}" type="hiddenx">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(form.from_year) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(form.to_year) }}
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-success">Submit</button>
-            </form>
-            <div {{ stimulus_target(_sc, 'results') }}>
-                {{ include('app/_movies.html.twig', {movies: movies}) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(form.sortby) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(form.direction) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <br>
+                            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                            {{ form_widget(form.reset, {'attr': {'class': 'btn btn-danger', 'onclick' : 'document.forms.movie_search.submit()'}}) }}
+                        </div>
+                    </div>
+                </div>            
+            {{ form_end(form) }}
 
+            <div class="container">
+                {{ include('app/_meili_movies.html.twig', {movies: movies}) }}
             </div>
         </div>
-
     </div>
-    {% endblock %}
+{% endblock %}

@@ -11,5 +11,9 @@ meilisearch:
           settings:
             filterableAttributes:
               - year
+              - type
+              - primaryTitle
             sortableAttributes:
               - year
+              - type
+              - primaryTitle

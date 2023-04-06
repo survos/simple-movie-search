@@ -1,0 +1,21 @@
+
+<table class="table table-condensed">
+    <thead>
+    <tr>
+        <th>Imdb Id</th>
+        <th>Primary Title</th>
+        <th>Year</th>
+        <th>Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for movie in movies['hits'] %}
+        <tr>
+            <td>{{ movie.objectID }}</td>
+            <td>{{ movie.primaryTitle }}</td>
+            <td>{{ movie.year }}</td>
+            <td>{{ movie.type }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

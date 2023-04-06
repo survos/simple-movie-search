@@ -10,6 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Meilisearch\Bundle\SearchService;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\MovieSearchType;
+use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
 
 class AppController extends AbstractController
 {
@@ -17,27 +19,40 @@ class AppController extends AbstractController
     #[Route('/_search', name: 'app_search', options: ['expose' => true])]
     public function index(SearchService $searchService, EntityManagerInterface $em, Request $request): Response
     {
+        $formData = $request->get('movie_search') ? $request->get('movie_search') : [];
 
-        $searchQuery = $request->get('q') ?? '';
-        $filter = $request->get('filters')?? "";
-        $filterData = [];
-        $rawFilter = json_decode($filter,true);
+        $searchQuery = isset($formData['search']) ? $formData['search'] :  '';
+        $fromYear = isset($formData['from_year']) ? $formData['from_year'] : false;
+        $toYear = isset($formData['to_year']) ? $formData['to_year'] : false;
+        $sortby = isset($formData['sortby']) ? $formData['sortby'] : 'year';
+        $direction = isset($formData['direction']) ? $formData['direction'] : 'asc';
+        $type = isset($formData['type']) ? $formData['type'] : "";
+        $filter = $fromYear ? 'year > '.$fromYear:"";
+        $filter = $toYear ? $filter != "" ? $filter."  AND year < ". $toYear: $filter."year < ". $toYear:$filter;
+        $filter = $type != "" ? $filter != ""? " AND type =".$type : " type = ".$type: $filter;
+        
+        $movies = $searchService->rawSearch(Movie::class, $searchQuery, [
+            'filter' => $filter,
+            'sort' => [$sortby.':'.$direction],
+            'facets' => ['year', 'type']
+        ]);
 
-        $startYear = (int)$request->get('startYear');
-        $endYear = (int)$request->get('endYear');
+        $form = $this->createForm(MovieSearchType::class, null, [
+            'method' => 'GET', 
+            "facets" => $movies['facetDistribution'],
+            "default_values" => [
+                'search' => $searchQuery, 
+                'from' => $fromYear, 
+                'to' => $toYear, 
+                'type' => $type, 
+                'sortby' => $sortby, 
+                'direction' => $direction
+                ]
+        ]);
 
-        // Filters
-         $movies = $searchService->search($em, Movie::class, $searchQuery, ['filter' => "year > $startYear AND year < $endYear",'sort' => ['year:asc']]);
-//         dd($searchQuery, $startYear, $endYear, $movies);
-        // sort
-//        $movies = $searchService->search($em, Movie::class, $searchQuery, ['sort' => ['year:desc']]);
-
-        return $this->render($request->get('_route') == 'app_search' ?  'app/_movies.html.twig': 'app/index.html.twig',
-            [
-                'startYear' => $startYear,
-            'endYear' => $endYear,
-            'q' => $searchQuery,
-            'movies' => $movies
+        return $this->render('app/index.html.twig',[
+                'movies' => $movies,
+                'form' => $form
         ]);
     }
 
