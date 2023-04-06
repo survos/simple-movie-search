@@ -41,9 +41,11 @@ class Movie
 
     #[ORM\Column(length: 255, nullable: true)]
     #[ApiFilter(SearchFilter::class, strategy: 'partial')]
+    #[Groups(['searchable','movie.read'])]
     private ?string $primaryTitle = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['searchable','movie.read'])]
     #[ApiFilter(SearchFilter::class, strategy: 'exact')]
     #[ApiProperty(openapiContext: ["type" => "string", "description" => 'Movie type', "example" => "short"])]
     private ?string $type = null;
