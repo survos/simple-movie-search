@@ -15,6 +15,9 @@
         {% set currentYear = "now"|date("Y") %}
         <h2>Movies, using Meilisearch</h2>
 
+
+        {{ include('app/_movies.html.twig', {movies:movies}) }}
+
         {% set _sc = 'search' %}
         <div {{ stimulus_controller('search', {
             start_year: 1920,
@@ -35,11 +38,11 @@
                 <input type="text" id="q" name="q" placeholder="search" {{ stimulus_target(_sc, 'q')}} />
                 <div class="form-group">
                     <label for="startYear">From Year:</label>
-                    <input name="startYear" id="startYear" value="1962" class="d-nonex">
+                    <input name="startYear" id="startYear" value="{{ startYear }}" class="d-nonex">
                 </div>
                 <div class="form-group">
                     <label for="endYear">To Year:</label>
-                    <input name="endYear" id="endYear" value="1980" type="hiddenx">
+                    <input name="endYear" id="endYear" value="{{ endYear }}" type="hiddenx">
                 </div>
                 <button type="submit" class="btn btn-success">Submit</button>
             </form>

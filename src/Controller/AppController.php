@@ -28,11 +28,15 @@ class AppController extends AbstractController
 
         // Filters
          $movies = $searchService->search($em, Movie::class, $searchQuery, ['filter' => "year > $startYear AND year < $endYear",'sort' => ['year:asc']]);
-         dd($searchQuery, $startYear, $endYear, $movies);
+//         dd($searchQuery, $startYear, $endYear, $movies);
         // sort
 //        $movies = $searchService->search($em, Movie::class, $searchQuery, ['sort' => ['year:desc']]);
 
-        return $this->render($request->get('_route') == 'app_search' ?  'app/_movies.html.twig': 'app/index.html.twig', [
+        return $this->render($request->get('_route') == 'app_search' ?  'app/_movies.html.twig': 'app/index.html.twig',
+            [
+                'startYear' => $startYear,
+            'endYear' => $endYear,
+            'q' => $searchQuery,
             'movies' => $movies
         ]);
     }
