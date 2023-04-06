@@ -26,7 +26,7 @@ export default class extends Controller {
         var slider = this.sliderTarget;
 
         let uislider = noUiSlider.create(slider, {
-            start: [1980, 1990],
+            start: [1800, 2022],
             connect: true,
             tooltips: true,
             increment: 1,
