@@ -38,7 +38,8 @@ final class AppImportImdbCommand extends InvokableServiceCommand
     public function __invoke(
         IO                                          $io,
         #[Argument(description: 'filename')] string $filename = 'title.basics.tsv',
-        #[Option(description: 'limit')] int         $limit = 10,
+        #[Option(description: 'limit')] int         $limit = 10000,
+        #[Option(description: 'batch size for flush')] int         $batch = 1000,
 
 
     ): void
@@ -84,10 +85,13 @@ final class AppImportImdbCommand extends InvokableServiceCommand
             if ($limit && ($count > $limit)) {
                 break;
             }
-
+            if (($count % $batch) === 0) {
+                $ostEntityManager->flush();
+                $ostEntityManager->clear(); // Detaches all objects from Doctrine!
+            }
         }
         $progressBar->finish();
-        $io->success("Flushing..." . $count);
+        $io->success("Final flush..." . $count);
         $ostEntityManager->flush();
         $io->success("Done.");
     }
