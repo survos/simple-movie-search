@@ -28,6 +28,7 @@ class AppController extends AbstractController
 
         // Filters
          $movies = $searchService->search($em, Movie::class, $searchQuery, ['filter' => "year > $startYear AND year < $endYear",'sort' => ['year:asc']]);
+         dd($searchQuery, $startYear, $endYear, $movies);
         // sort
 //        $movies = $searchService->search($em, Movie::class, $searchQuery, ['sort' => ['year:desc']]);
 
@@ -39,7 +40,7 @@ class AppController extends AbstractController
 
 
     #[Route('/browse', name: 'app_browse')]
-    public function browse(): Response
+    public function browse(Request $request): Response
     {
         $filter = [
 

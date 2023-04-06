@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "914593de66d164d82ce1a053b630d6af",
+    "content-hash": "4c52d5825dc5c1ecd97c3b8720b6dec0",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1761,6 +1761,60 @@
             "time": "2022-07-01T11:50:22+00:00"
         },
         {
+            "name": "jwage/easy-csv",
+            "version": "0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jwage/easy-csv.git",
+                "reference": "41a944970704f0b1d07c8303f6cb6ed382889336"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jwage/easy-csv/zipball/41a944970704f0b1d07c8303f6cb6ed382889336",
+                "reference": "41a944970704f0b1d07c8303f6cb6ed382889336",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.5|^6.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EasyCSV\\": "lib/EasyCSV"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan H. Wage",
+                    "email": "jonwage@gmail.com"
+                }
+            ],
+            "description": "Easy CSV manipulation for PHP 5.4+",
+            "homepage": "http://github.com/jwage/easy-csv",
+            "keywords": [
+                "csv",
+                "read",
+                "write"
+            ],
+            "support": {
+                "issues": "https://github.com/jwage/easy-csv/issues",
+                "source": "https://github.com/jwage/easy-csv/tree/master"
+            },
+            "time": "2018-05-11T12:27:22+00:00"
+        },
+        {
             "name": "meilisearch/meilisearch-php",
             "version": "v1.1.0",
             "source": {
@@ -2644,16 +2698,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.17.1",
+            "version": "1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "d3753fcb3abc6f78f5de6f72153d4b9c99c72dee"
+                "reference": "882eabc9b6a12e25c27091a261397f9c8792e722"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/d3753fcb3abc6f78f5de6f72153d4b9c99c72dee",
-                "reference": "d3753fcb3abc6f78f5de6f72153d4b9c99c72dee",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/882eabc9b6a12e25c27091a261397f9c8792e722",
+                "reference": "882eabc9b6a12e25c27091a261397f9c8792e722",
                 "shasum": ""
             },
             "require": {
@@ -2683,9 +2737,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.17.1"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.18.0"
             },
-            "time": "2023-04-04T11:11:22+00:00"
+            "time": "2023-04-06T07:26:43+00:00"
         },
         {
             "name": "psr/cache",
@@ -3107,16 +3161,16 @@
         },
         {
             "name": "survos/api-grid-bundle",
-            "version": "1.4.11",
+            "version": "1.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosApiGridBundle.git",
-                "reference": "5ec8d9d6b77fba7ce6caf7000ea01e952725ecf9"
+                "reference": "959562165e32e79d5d43748d330af7adc30fbb00"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/5ec8d9d6b77fba7ce6caf7000ea01e952725ecf9",
-                "reference": "5ec8d9d6b77fba7ce6caf7000ea01e952725ecf9",
+                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/959562165e32e79d5d43748d330af7adc30fbb00",
+                "reference": "959562165e32e79d5d43748d330af7adc30fbb00",
                 "shasum": ""
             },
             "require": {
@@ -3125,7 +3179,7 @@
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "friendsofsymfony/jsrouting-bundle": "^3.2",
                 "php": "^8.1",
-                "survos/inspection-bundle": "^1.4.11",
+                "survos/inspection-bundle": "^1.4.12",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -3171,13 +3225,13 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosApiGridBundle/issues",
-                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.4.11"
+                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.4.12"
             },
-            "time": "2023-04-04T20:46:17+00:00"
+            "time": "2023-04-06T16:21:09+00:00"
         },
         {
             "name": "survos/command-bundle",
-            "version": "1.4.11",
+            "version": "1.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCommandBundle.git",
@@ -3244,13 +3298,13 @@
             "description": "Run Symfony console commands from a web interface",
             "support": {
                 "issues": "https://github.com/survos/SurvosCommandBundle/issues",
-                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.4.11"
+                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.4.12"
             },
             "time": "2023-04-02T13:29:35+00:00"
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.4.11",
+            "version": "1.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
@@ -3327,22 +3381,22 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.4.11"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.4.12"
             },
             "time": "2023-03-28T22:02:47+00:00"
         },
         {
             "name": "survos/grid-bundle",
-            "version": "1.4.11",
+            "version": "1.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosGridBundle.git",
-                "reference": "27fa3b08ba51af63f3abc72dc100abeb4a3aa4ed"
+                "reference": "37836741dc5e00b9c66ec759847c1552420d5a84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/27fa3b08ba51af63f3abc72dc100abeb4a3aa4ed",
-                "reference": "27fa3b08ba51af63f3abc72dc100abeb4a3aa4ed",
+                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/37836741dc5e00b9c66ec759847c1552420d5a84",
+                "reference": "37836741dc5e00b9c66ec759847c1552420d5a84",
                 "shasum": ""
             },
             "require": {
@@ -3350,7 +3404,7 @@
                 "doctrine/orm": "^2.12",
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.4.11",
+                "survos/core-bundle": "^1.4.12",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -3425,25 +3479,20 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosGridBundle/issues",
-                "source": "https://github.com/survos/SurvosGridBundle/tree/1.4.11"
+                "source": "https://github.com/survos/SurvosGridBundle/tree/1.4.12"
             },
-            "time": "2023-04-04T20:46:23+00:00"
+            "time": "2023-04-06T16:21:14+00:00"
         },
         {
             "name": "survos/grid-group-bundle",
-            "version": "1.4.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosGridGroupBundle.git",
-                "reference": "dc513466725a70237b1f065432f1f730dc31a12a"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridGroupBundle/zipball/dc513466725a70237b1f065432f1f730dc31a12a",
-                "reference": "dc513466725a70237b1f065432f1f730dc31a12a",
-                "shasum": ""
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/grid-group-bundle",
+                "reference": "1841bf81861febf07cb78c289f231fea941ba348"
             },
             "require": {
+                "jwage/easy-csv": "^0.0.4",
                 "php": "^8.1",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
@@ -3488,7 +3537,6 @@
                     "Survos\\GridGroupBundle\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3497,30 +3545,28 @@
                 "symfony-ux",
                 "symfony6"
             ],
-            "support": {
-                "issues": "https://github.com/survos/SurvosGridGroupBundle/issues",
-                "source": "https://github.com/survos/SurvosGridGroupBundle/tree/1.4.11"
-            },
-            "time": "2023-04-04T20:46:06+00:00"
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "survos/inspection-bundle",
-            "version": "1.4.11",
+            "version": "1.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosInspectionBundle.git",
-                "reference": "5b8d6dc8a684f5545980dd3b22bed869c8960a12"
+                "reference": "b92d7bbaddd8c410f005afa09265c96e3b2bf366"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/5b8d6dc8a684f5545980dd3b22bed869c8960a12",
-                "reference": "5b8d6dc8a684f5545980dd3b22bed869c8960a12",
+                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/b92d7bbaddd8c410f005afa09265c96e3b2bf366",
+                "reference": "b92d7bbaddd8c410f005afa09265c96e3b2bf366",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "^2.7 || ^3.0",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.4.11",
+                "survos/core-bundle": "^1.4.12",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -3579,9 +3625,9 @@
             "description": "Inspects Doctrine entities with APIPlatform attributes",
             "support": {
                 "issues": "https://github.com/survos/SurvosInspectionBundle/issues",
-                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.4.11"
+                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.4.12"
             },
-            "time": "2023-04-04T20:46:19+00:00"
+            "time": "2023-04-06T16:21:13+00:00"
         },
         {
             "name": "symfony/asset",
@@ -11404,7 +11450,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "survos/grid-group-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

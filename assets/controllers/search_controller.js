@@ -36,8 +36,11 @@ export default class extends Controller {
             }
         });
         uislider.on('update', (values, handle) => {
+            console.log(values);
             document.getElementById('startYear').value = values[0];
             document.getElementById('endYear').value = values[1];
+
+            // better would be to submit the entire form, not each element.
             axios.get(this.endpointValue, {
                 params: {
                     startYear: values[0],

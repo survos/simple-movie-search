@@ -8,12 +8,12 @@
 
     This friendly message is coming from:
     <ul>
-        <li><a href="{{ path('app_browse') }}">Browse Movies</a></li>
+        <li><a href="{{ path('app_browse') }}">Browse Movies with Doctrine/Datatables</a></li>
     </ul>
 
     <div class="container">
         {% set currentYear = "now"|date("Y") %}
-        <h2>Movies</h2>
+        <h2>Movies, using Meilisearch</h2>
 
         {% set _sc = 'search' %}
         <div {{ stimulus_controller('search', {

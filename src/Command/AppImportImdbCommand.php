@@ -58,18 +58,8 @@ final class AppImportImdbCommand extends InvokableServiceCommand
 
         $count = 0;
 
-        $reader = new Reader($fullFilename);
+        $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
         foreach ($reader->getRow() as $row) {
-            dd($row);
-
-        }
-
-        $reader = new \EasyCSV\Reader($fullFilename);
-        while ($row = $reader->getRow()) {
-            dd($row);
-        }
-
-        foreach (GridGroupService::fetchRow($fullFilename, separator: "\t") as $row) {
             $count++;
             $imdbId = (int)u($row['tconst'])->after('tt')->toString();
             if (!$movie = $movieRepository->findOneBy(['imdbId' => $imdbId])) {
