@@ -34,6 +34,7 @@ class MovieSearchType extends AbstractType
 
             ->add('type', ChoiceType::class, [
                 'choices'  => ['select' => ""] + $this->type,
+                'expanded' => true,
                 'data' =>  $options['default_values']['type'],
                 'required' => false
             ],['attr'=> ['class' => 'form-control']])
