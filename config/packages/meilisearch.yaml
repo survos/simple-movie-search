@@ -10,6 +10,7 @@ meilisearch:
           enable_serializer_groups: true
           settings:
             filterableAttributes:
+              - idimdbId 
               - year
               - type
               - primaryTitle
@@ -17,3 +18,4 @@ meilisearch:
               - year
               - type
               - primaryTitle
+              - imdbId

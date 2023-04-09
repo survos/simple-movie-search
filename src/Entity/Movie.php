@@ -12,23 +12,27 @@ use App\Repository\MovieRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\Get;
+use App\State\MeilliSearchStateProvider;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource(
     openapiContext:  ["description" => 'Movies and shows, keyed by IMDB id', "example" => "Rainman"],
-    normalizationContext: ['movie.read', 'rp']
+    normalizationContext: ['movie.read', 'rp'],
+    provider: MeilliSearchStateProvider::class # MeilisearchProvider
 )]
 //#[ORM\Index(name: 'movie_imdb_id', columns: ['imdbId'])]
 #[ORM\Index(name: 'movie_type', columns: ['type'])]
 #[ApiFilter(RangeFilter::class, properties: ['year','runtimeMinutes'])]
 #[ApiFilter(OrderFilter::class, properties: ['releaseName', 'year', 'primaryTitle','runtimeMinutes'], arguments: ['orderParameterName' => 'order'])]
-#[ApiFilter(MultiFieldSearchFilter::class, properties: ['releaseName', 'imdbId'])] # Mei?isearch
+#[ApiFilter(MultiFieldSearchFilter::class, properties: ['releaseName'])] # Mei?isearch
 
 class Movie
 {
     #[ORM\Column]
     #[ORM\Id]
     #[ApiProperty(identifier: true)]
+    #[Groups(['searchable','movie.read'])]
     private int $imdbId;
 
     #[ORM\Column(length: 255, nullable: true)]
