@@ -116,6 +116,9 @@ class AppController extends AbstractController
             $imdbId = $row['tconst'];
             if (!$csvCache->contains($imdbId)) {
                 $csvCache->set($imdbId, $row);
+            } else {
+                $data = $csvCache->get($imdbId);
+
             }
             if ( $idx > $limit) {
                 break;
@@ -130,16 +133,18 @@ class AppController extends AbstractController
     public function test_cache(Request $request,
                            ParameterBagInterface $bag): Response
     {
-        $cache = new CsvCacheAdapter($csvFilename = 'test.csv', 'imdb-cache.csv',  ['primaryTitle','startYear','runtimeMinutes','titleType']);
+
         $limit = $request->get('limit', 5);
         $filename = 'title.basics.tsv';
         $fullFilename = $this->dataDir . $filename;
-        $count = 0;
 
+        $cache = new CsvCacheAdapter($csvFilename = 'test.csv', 'imdb-cache.csv',  ['primaryTitle','startYear','runtimeMinutes','titleType']);
         $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
         foreach ($reader->getRow() as $idx =>  $row) {
             $imdbId = $row['tconst'];
             $x = $cache->get($imdbId, function (ItemInterface $item) use ($row) {
+//                $reviews = $movieService->downloadReviews($imdbId)
+//                return $reviews;
                 return $row;
             });
             dump($x);
