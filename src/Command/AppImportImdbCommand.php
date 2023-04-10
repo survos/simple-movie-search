@@ -5,7 +5,6 @@ namespace App\Command;
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Survos\GridGroupBundle\Service\CsvCache;
 use Survos\GridGroupBundle\Service\GridGroupService;
 use Survos\GridGroupBundle\Service\Reader;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -46,8 +45,8 @@ final class AppImportImdbCommand extends InvokableServiceCommand
     ): void
     {
 
-
         $ostEntityManager = $this->ostEntityManager;
+
         $fullFilename = $this->dataDir . $filename;
         $process = (new Process(['wc', '-l', $fullFilename]));
         $process->run();
@@ -60,36 +59,28 @@ final class AppImportImdbCommand extends InvokableServiceCommand
 
         $count = 0;
 
-        $csvCache = new CsvCache('imdbId', ['primaryTitle','startYear','runtimeMinutes','titleType']);
-
         $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
         foreach ($reader->getRow() as $row) {
             $count++;
             $imdbId = (int)u($row['tconst'])->after('tt')->toString();
-
-            if (!$csvCache->contains($imdbId)) {
-                $csvCache->set($imdbId, $row);
+            if (!$movie = $movieRepository->findOneBy(['imdbId' => $imdbId])) {
+                $movie = (new Movie())->setImdbId($imdbId);
+                $ostEntityManager->persist($movie);
             }
-
-//
-//            if (!$movie = $movieRepository->findOneBy(['imdbId' => $imdbId])) {
-//                $movie = (new Movie())->setImdbId($imdbId);
-//                $ostEntityManager->persist($movie);
-//            }
-//            foreach ($row as $key => $value) {
-//                if ($value == '\N') {
-//                    $row[$key] = null;
-//                }
-//            }
-//            $movie
-////                ->setMovieType('movie')
-//                ->setPrimaryTitle($row['primaryTitle'])
-//                ->setReleaseName($row['originalTitle'])
-//                ->setType($row['titleType'])
-//                ->setAdult((bool)$row['isAdult'])
-//                ->setRuntimeMinutes($row['runtimeMinutes'])
-//                ->setYear((int)$row['startYear']);
-//            $progressBar->setMessage($movie->getReleaseName());
+            foreach ($row as $key => $value) {
+                if ($value == '\N') {
+                    $row[$key] = null;
+                }
+            }
+            $movie
+//                ->setMovieType('movie')
+                ->setPrimaryTitle($row['primaryTitle'])
+                ->setReleaseName($row['originalTitle'])
+                ->setType($row['titleType'])
+                ->setAdult((bool)$row['isAdult'])
+                ->setRuntimeMinutes($row['runtimeMinutes'])
+                ->setYear((int)$row['startYear']);
+            $progressBar->setMessage($movie->getReleaseName());
             $progressBar->advance();
             if ($limit && ($count > $limit)) {
                 break;
