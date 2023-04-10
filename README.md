@@ -14,6 +14,7 @@ bin/console doctrine:schema:update --force --complete
 
 # download the raw data from imdb
 bin/imdb.sh 
+bin/imdb.sh title.basics.tsv.gz
 
 # import a subset of the data.
 bin/console app:import-imdb --limit 500
