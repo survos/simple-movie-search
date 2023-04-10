@@ -30,57 +30,101 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
 {
     use LoggerAwareTrait;
 
-
     private CsvCache $csvCache;
+
+    private static \Closure $createCacheItem;
 
     /**
      * @param bool $storeSerialized Disabling serialization can lead to cache corruptions when storing mutable values but increases performance otherwise
      */
-    public function __construct(string $csvFilenamem, string $keyName, array $headers)
+    public function __construct(string $csvFilename, string $keyName, array $headers)
     {
-        $this->csvCache = new CsvCache($csvFilenamem, ['keyName' => $keyName, 'headers' => $headers]);
+        $this->csvCache = new CsvCache($csvFilename, ['keyName' => $keyName, 'headers' => $headers]);
 
+        self::$createCacheItem ??= \Closure::bind(
+            static function ($key, $value, $isHit, $tags) {
+                $item = new CacheItem();
+                $item->key = $key;
+                $item->value = $value;
+                $item->isHit = $isHit;
+                if (null !== $tags) {
+                    $item->metadata[CacheItem::METADATA_TAGS] = $tags;
+                }
+
+                return $item;
+            },
+            null,
+            CacheItem::class
+        );
     }
 
     public function getItem(mixed $key): CacheItem
     {
-        $data = $this->csvCache->get($key);
-        // TODO: Implement getItem() method.
+        if (!$isHit = $this->hasItem($key)) {
+            $value = null;
+        } else {
+            return $this->csvCache->get($key);
+        }
+
+        return (self::$createCacheItem)($key, $value, $isHit, $this->tags[$key] ?? null);
     }
 
     public function getItems(array $keys = []): iterable
     {
-        // TODO: Implement getItems() method.
+        $data = [];
+
+        foreach ($keys as $key) {
+            $data[] = $this->getItem($key);
+        }
+
+        return $data;
     }
 
     public function clear(string $prefix = ''): bool
     {
-        // TODO: Implement clear() method.
+        $this->csvCache->getAll();
+
+        return true;
     }
 
     public function get(string $key, callable $callback, float $beta = null, array &$metadata = null): mixed
     {
-        // TODO: Implement get() method.
+        if (!$this->hasItem($key)) {
+            $item = ($callback)($this->getItem($key));
+            $this->csvCache->set($key, (array) $item);
+
+            return $item;
+        }
+
+        return $this->getItem($key);
     }
 
     public function delete(string $key): bool
     {
-        // TODO: Implement delete() method.
+        $this->csvCache->delete($key);
+
+        return true;
     }
 
     public function hasItem(string $key): bool
     {
-        // TODO: Implement hasItem() method.
+        return $this->csvCache->contains($key);
     }
 
     public function deleteItem(string $key): bool
     {
-        // TODO: Implement deleteItem() method.
+        $this->csvCache->delete($key);
+
+        return true;
     }
 
     public function deleteItems(array $keys): bool
     {
-        // TODO: Implement deleteItems() method.
+        foreach ($keys as $key) {
+            $this->deleteItem($key);
+        }
+
+        return true;
     }
 
     public function save(CacheItemInterface $item): bool
@@ -102,6 +146,4 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
     {
         // TODO: Implement reset() method.
     }
-
-
 }
