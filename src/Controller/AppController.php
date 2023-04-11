@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use App\Service\CsvCacheAdapter;
+use Survos\GridGroupBundle\Service\Bedrock\CsvDatabase;
 use Survos\GridGroupBundle\Service\CsvCache;
 use Survos\GridGroupBundle\Service\Reader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -107,13 +108,12 @@ class AppController extends AbstractController
         $fullFilename = $this->dataDir . $filename;
         $count = 0;
 
-        $csvCache = new CsvCache('imdb.csv', [
-            'keyName' => 'imdbId',
-            'headers' => ['primaryTitle','startYear','runtimeMinutes','titleType']]);
+        $csvCache = new CsvCache('new-imdb.csv', 'imdbId', ['primaryTitle','startYear','runtimeMinutes','titleType']);
 
         $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
         foreach ($reader->getRow() as $idx =>  $row) {
             $imdbId = $row['tconst'];
+            $row['imdbId'] = $imdbId;
             if (!$csvCache->contains($imdbId)) {
                 $csvCache->set($imdbId, $row);
             } else {

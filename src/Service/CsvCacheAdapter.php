@@ -15,6 +15,7 @@ use Psr\Cache\CacheItemInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Survos\GridGroupBundle\Service\CsvCache;
+use Survos\GridGroupBundle\Service\CsvDatabase;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Cache\Exception\InvalidArgumentException;
@@ -30,7 +31,7 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
 {
     use LoggerAwareTrait;
 
-    private CsvCache $csvCache;
+    private CsvDatabase $csvDatabase;
 
     private static \Closure $createCacheItem;
 
@@ -39,7 +40,7 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
      */
     public function __construct(string $csvFilename, string $keyName, array $headers)
     {
-        $this->csvCache = new CsvCache($csvFilename, ['keyName' => $keyName, 'headers' => $headers]);
+        $this->csvDatabase = new CsvDatabase($csvFilename, $keyName, $headers);
 
         self::$createCacheItem ??= \Closure::bind(
             static function ($key, $value, $isHit, $tags) {
@@ -63,7 +64,7 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
         if (!$isHit = $this->hasItem($key)) {
             $value = null;
         } else {
-            return $this->csvCache->get($key);
+            return $this->csvDatabase->get($key);
         }
 
         return (self::$createCacheItem)($key, $value, $isHit, $this->tags[$key] ?? null);
@@ -82,7 +83,8 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
 
     public function clear(string $prefix = ''): bool
     {
-        $this->csvCache->getAll();
+        // @todo: needs attach
+        // $this->csvDatabase->flushFile();
 
         return true;
     }
@@ -91,7 +93,7 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
     {
         if (!$this->hasItem($key)) {
             $item = ($callback)($this->getItem($key));
-            $this->csvCache->set($key, (array) $item);
+            $this->csvDatabase->set($key, (array) $item);
 
             return $item;
         }
@@ -101,19 +103,19 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
 
     public function delete(string $key): bool
     {
-        $this->csvCache->delete($key);
+        $this->csvDatabase->delete($key);
 
         return true;
     }
 
     public function hasItem(string $key): bool
     {
-        return $this->csvCache->contains($key);
+        return $this->csvDatabase->has($key);
     }
 
     public function deleteItem(string $key): bool
     {
-        $this->csvCache->delete($key);
+        $this->csvDatabase->delete($key);
 
         return true;
     }
