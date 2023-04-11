@@ -13,7 +13,7 @@ cache:
         data: {code: 'nj', label: 'New Jersey'}
         csv: |
           code,label
-          nj,New Jersey
+          nj,"New Jersey"
 
       - operation: has
         key: nj
@@ -24,7 +24,7 @@ cache:
         data: {code: 'va', label: 'Virginia'}
         csv: |
           code,label
-          nj,New Jersey
+          nj,"New Jersey"
           va,Virginia
 
       - operation: delete

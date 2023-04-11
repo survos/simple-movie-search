@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use Survos\GridGroupBundle\Service\CsvDatabase;
+use App\Service\CsvDatabase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Yaml\Yaml;
 
@@ -14,20 +14,21 @@ class CsvCacheTest extends KernelTestCase
     public function testSomething(array $test): void
     {
         $kernel = self::bootKernel();
-        $csvDatabase = new CsvDatabase($test['db'], $test['key'], $test['headers']??[]);
-//        $csvDatabase->flushFile(); // purge?  reset? We need to start with a clean file.
+        $csvDatabase = new CsvDatabase($test['db'], $test['key'], $test['headers'] ?? []);
+        $csvDatabase->flushFile(); // purge?  reset? We need to start with a clean file.
+        $csvDatabase->purge();
         foreach ($test['steps'] as $step) {
             $key = $step['key'];
-            $data = $step['data']??[];
-            $expects=$step['expects']??null;
-            $csv=$step['csv']??null;
-            $actual  = match($operation = $step['operation']) {
+            $data = $step['data'] ?? [];
+            $expects = $step['expects'] ?? null;
+            $csv = $step['csv'] ?? null;
+            $actual = match ($operation = $step['operation']) {
                 'has' => $csvDatabase->has($key),
                 'get' => $csvDatabase->get($key),
                 'delete' => $csvDatabase->delete($key),
                 'set' => $csvDatabase->set($key, (array)$data),
                 default =>
-                    assert(false, "Operation not supported " . $operation)
+                assert(false, "Operation not supported " . $operation)
             };
             if (!is_null($expects)) {
                 $this->assertSame($expects, $actual);
@@ -47,7 +48,6 @@ class CsvCacheTest extends KernelTestCase
     {
         $data = Yaml::parseFile(__DIR__ . '/test.yaml');
         foreach ($data['cache'] as $test) {
-            var_dump($test);
             yield [$test['db'] => $test];
         }
     }
