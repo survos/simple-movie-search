@@ -144,7 +144,7 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
         // TODO: Implement commit() method.
     }
 
-    public function reset()
+    public function reset(): void
     {
         // TODO: Implement reset() method.
     }
