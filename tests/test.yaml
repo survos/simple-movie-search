@@ -27,6 +27,35 @@ cache:
           nj,"New Jersey"
           va,Virginia
 
+      - operation: set
+        key: oh
+        data: {code: 'oh', label: 'Ohoi'}
+        csv: |
+          code,label
+          nj,"New Jersey"
+          va,Virginia
+          oh,Ohoi
+
+      - operation: set
+        key: ma
+        data: {code: 'ma', label: 'Maine'}
+        csv: |
+          code,label
+          nj,"New Jersey"
+          va,Virginia
+          oh,Ohoi
+          ma,Maine
+
+      - operation: replace
+        key: oh
+        data: {code: 'oh', label: 'Ohio'}
+        csv: |
+          code,label
+          nj,"New Jersey"
+          va,Virginia
+          oh,Ohio
+          ma,Maine
+
       - operation: delete
         key: nj
         csv: |
