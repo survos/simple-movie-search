@@ -1,0 +1,36 @@
+cache:
+  - db: states.csv
+    key: code
+    headers: [code,label]
+
+    steps:
+      - operation: has
+        key: code
+        expects: false
+
+      - operation: set
+        key: nj
+        data: {code: 'nj', label: 'New Jersey'}
+        csv: |
+          code,label
+          nj,New Jersey
+
+      - operation: has
+        key: nj
+        expects: true
+
+      - operation: set
+        key: va
+        data: {code: 'va', label: 'Virginia'}
+        csv: |
+          code,label
+          nj,New Jersey
+          va,Virginia
+
+      - operation: delete
+        key: nj
+        csv: |
+          code,label
+          va,Virginia
+
+
