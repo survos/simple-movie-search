@@ -5,10 +5,13 @@ namespace App\Controller;
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use App\Service\CsvCacheAdapter;
+use Psr\Cache\CacheItemInterface;
 use Survos\GridGroupBundle\Service\Bedrock\CsvDatabase;
 use Survos\GridGroupBundle\Service\CsvCache;
 use Survos\GridGroupBundle\Service\Reader;
+use Survos\Scraper\Service\ScraperService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -74,6 +77,30 @@ class AppController extends AbstractController
                 'movies' => $movies,
                 'form' => $form
         ]);
+    }
+
+    #[Route('/test-url-cache', name: 'app_url_cache')]
+    public function url_cache(Request $request, ScraperService $scraperService): Response
+    {
+        $scraperService->setDir('../data/museum-digital-cache');
+        $limit = $request->get('limit', 5);
+
+        for ($i = 0; $i < $limit;  $i++) {
+            $url = 'https://global.museum-digital.org/json/objects?style=liste&s=metadata_rights%3ACC0&style=liste&startwert=' . ($i * 20);
+
+            $filename = $scraperService->fetchUrlFilename($url, [], ['Content-Type' => 'application/json'], key: $key=sprintf('cc0-page-%s.json', $i));
+            $json = file_get_contents($filename);
+            $data = json_decode($json, true);
+        }
+
+        // with adapter
+        $urlCacheAdapter = (new WebpageCacheAdapter($dir));
+        $path = $urlCacheAdapter->get($key, function (CacheItemInterface $cacheItem) {
+
+        });
+
+
+        return $this->redirect(); // add template, etc. for debugging
     }
 
 

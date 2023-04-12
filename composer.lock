@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "754023ffc822fd33215209e10b5491a4",
+    "content-hash": "35987ce149d952c87c1df859818a2078",
     "packages": [
         {
             "name": "api-platform/core",
@@ -3583,6 +3583,50 @@
                 "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.4.19"
             },
             "time": "2023-04-11T11:06:53+00:00"
+        },
+        {
+            "name": "survos/scraper-bundle",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/scraper-bundle",
+                "reference": "40482aa71f766eb010645000b2ad35822207f0b9"
+            },
+            "require": {
+                "php": "^8.1",
+                "symfony/cache": "^6.2",
+                "symfony/config": "^6.1.0",
+                "symfony/dependency-injection": "^6.1.0",
+                "symfony/http-client": "^6.2",
+                "symfony/http-kernel": "^6.1.0",
+                "twig/twig": "^3.4"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8",
+                "symfony/browser-kit": "^6.1.0",
+                "symfony/framework-bundle": "^6.1.0",
+                "symfony/phpunit-bridge": "^6.1.0",
+                "symfony/twig-bundle": "^6.1.0",
+                "symfony/var-dumper": "^6.1.0",
+                "symfony/webpack-encore-bundle": "^1.11"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\Scraper\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Scrape and cache web pages",
+            "keywords": [
+                "symfony-ux",
+                "symfony6"
+            ],
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "symfony/asset",
@@ -11405,7 +11449,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "survos/scraper-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

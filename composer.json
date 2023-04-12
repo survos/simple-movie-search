@@ -1,8 +1,6 @@
 {
     "type": "project",
     "license": "proprietary",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": ">=8.1",
         "ext-ctype": "*",
@@ -21,6 +19,7 @@
         "survos/grid-bundle": "^1.4",
         "survos/grid-group-bundle": "^1.4",
         "survos/inspection-bundle": "^1.4",
+        "survos/scraper-bundle": "*@dev",
         "symfony/asset": "6.2.*",
         "symfony/console": "6.2.*",
         "symfony/doctrine-messenger": "6.2.*",
@@ -110,6 +109,12 @@
         "symfony/stopwatch": "6.2.*",
         "symfony/web-profiler-bundle": "6.2.*"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "repositories": {
+        "scraper": {
+            "type": "path",
+            "url": "//home/tac/g/survos/survos/packages/scraper-bundle"
+        }
     }
 }
