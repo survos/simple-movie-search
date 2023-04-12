@@ -61,5 +61,7 @@ cache:
         csv: |
           code,label
           va,Virginia
+          oh,Ohio
+          ma,Maine
 
 

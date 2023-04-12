@@ -26,6 +26,7 @@ class CsvCacheTest extends KernelTestCase
                 'has' => $csvDatabase->has($key),
                 'get' => $csvDatabase->get($key),
                 'delete' => $csvDatabase->delete($key),
+                'replace' => $csvDatabase->replace($key, $data),
                 'set' => $csvDatabase->set($key, (array)$data),
                 default =>
                 assert(false, "Operation not supported " . $operation)
@@ -34,6 +35,7 @@ class CsvCacheTest extends KernelTestCase
                 $this->assertSame($expects, $actual);
             }
             if (!is_null($csv)) {
+                $temp = file_get_contents($csvDatabase->getFilename());
                 $this->assertSame($csv, file_get_contents($csvDatabase->getFilename()));
             }
         }
