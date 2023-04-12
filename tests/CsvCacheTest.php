@@ -35,7 +35,6 @@ class CsvCacheTest extends KernelTestCase
                 $this->assertSame($expects, $actual);
             }
             if (!is_null($csv)) {
-                $temp = file_get_contents($csvDatabase->getFilename());
                 $this->assertSame($csv, file_get_contents($csvDatabase->getFilename()));
             }
         }
