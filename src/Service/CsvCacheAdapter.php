@@ -15,7 +15,7 @@ use Psr\Cache\CacheItemInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Survos\GridGroupBundle\Service\CsvCache;
-use Survos\GridGroupBundle\Service\CsvDatabase;
+use App\Service\CsvDatabase;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Cache\Exception\InvalidArgumentException;
@@ -64,7 +64,7 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
         if (!$isHit = $this->hasItem($key)) {
             $value = null;
         } else {
-            return $this->csvDatabase->get($key);
+            return (self::$createCacheItem)($key, $this->csvDatabase->get($key), $isHit, $this->tags[$key] ?? null);
         }
 
         return (self::$createCacheItem)($key, $value, $isHit, $this->tags[$key] ?? null);
@@ -83,19 +83,18 @@ class CsvCacheAdapter implements AdapterInterface, CacheInterface, LoggerAwareIn
 
     public function clear(string $prefix = ''): bool
     {
-        // @todo: needs attach
-        // $this->csvDatabase->flushFile();
+        $this->csvDatabase->flushFile();
 
         return true;
     }
 
     public function get(string $key, callable $callback, float $beta = null, array &$metadata = null): mixed
     {
-        if (!$this->hasItem($key)) {
-            $item = ($callback)($this->getItem($key));
+        $item = ($callback)($this->getItem($key));
+        if (!$isHit = $this->hasItem($key)) {
             $this->csvDatabase->set($key, (array) $item);
 
-            return $item;
+            return (self::$createCacheItem)($key, $item, $isHit, $this->tags[$key] ?? null);
         }
 
         return $this->getItem($key);
