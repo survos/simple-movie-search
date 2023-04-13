@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use App\Service\CsvDatabase;
+use Survos\GridGroupBundle\Service\CsvDatabase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Yaml\Yaml;
 
@@ -35,7 +35,6 @@ class CsvCacheTest extends KernelTestCase
                 $this->assertSame($expects, $actual);
             }
             if (!is_null($csv)) {
-                $temp = file_get_contents($csvDatabase->getFilename());
                 $this->assertSame($csv, file_get_contents($csvDatabase->getFilename()));
             }
         }

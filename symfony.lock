@@ -116,6 +116,9 @@
     "survos/inspection-bundle": {
         "version": "1.4.6"
     },
+    "survos/scraper-bundle": {
+        "version": "dev-main"
+    },
     "symfony/console": {
         "version": "6.2",
         "recipe": {

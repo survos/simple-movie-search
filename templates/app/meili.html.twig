@@ -8,25 +8,14 @@
 {% block body %}
 
 
-    {#    {{ api_table(class) }}#}
-    {#    <pre>{{ api_table(class)|escape }}</pre>#}
-    'actions',
-    'movieType',
-    'subtitleCount',
-    {name: 'name', title:'Movie Name'},
-
-
     {% set columns = [
         'imdbId',
         'releaseName',
         {name: 'type', searchable: true, browsable: true},
         {name: 'year', searchable: true, sortable: true},
         {name: 'adult', browsable: true},
-        {name: 'genres', sortable: false, browsable: true},
         {name: 'runtimeMinutes', sortable: true}
     ] %}
-
-
     {% set movieType = 'movie' %}
     {% if movieType == 'episode' %}
         {% set columns = columns|merge(['seriesImdbId', 'season','episode']) %}
@@ -47,36 +36,23 @@
     {% endfor %}
 
 
-    {% set fieldsSearch  = path('movie_field_counts', ({_format: 'json'})) %}
-
-    <div class="dtsp-verticalContainer row">
-        <div class="search-panes xxdtsp-verticalPanes col-3">
-        </div>
-        <div class="xxcontainer col-9">
-            {{ block('gridTable') }}
-        </div>
-    </div>
-
-    {% endblock %}
-
-{% block gridTable %}
+{% set fieldsSearch  = path('movie_field_counts', ({_format: 'json'})) %}
+{#    {% set fieldsSearch = 'https://www.museado.org/es/penn-asian/obj/public/fieldCounts' %}#}
     {% component api_grid with
         {
             searchPanesDataUrl: fieldsSearch,
             searchBuilderFields: searchBuilderFields,
 
+            apiGetCollectionUrl: '/api/meili',
             class: class,
             filter: filter,
             columns: columns,
 
             caller: _self,
-            dom: 'P<"dtsp-dataTable"rQfti>l'
+            dom: 'PQSBR<"dtsp-dataTable"lpfrti>',
         }
     %}
 
-        {% block genres %}
-            {{ row.genres|join('|') }}
-        {% endblock %}
         {% block actions %}
             {#                <a href="{{ path('app_bookmark') }}">#}
             <i class="far fa-thumbs-up"></i>

@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Survos\GridGroupBundle\Service\CsvCache;
 use Survos\GridGroupBundle\Service\GridGroupService;
 use Survos\GridGroupBundle\Service\Reader;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -80,6 +81,9 @@ final class AppImportImdbCommand extends InvokableServiceCommand
                 ->setAdult((bool)$row['isAdult'])
                 ->setRuntimeMinutes($row['runtimeMinutes'])
                 ->setYear((int)$row['startYear']);
+            if ($row['genres']) {
+                $movie->setGenres(explode(',', $row['genres']));
+            }
             $progressBar->setMessage($movie->getReleaseName());
             $progressBar->advance();
             if ($limit && ($count > $limit)) {
