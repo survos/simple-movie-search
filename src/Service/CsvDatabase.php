@@ -327,16 +327,19 @@ class CsvDatabase
         $tempFile = $this->openTempFile();
         $file = $this->openFile(static::FILE_READ);
 
-//        $file->fseek($offset);
-
         $firstPart = $file->fread($offset);
 
-        dump($file->current());
+        $file->rewind();
+        while (!$file->eof()) {
+            $file->next();
+        }
+        $endOfFile = $file->ftell();
+
+        $file->rewind();
+        $file->fseek($offset);
         $file->next();
 
-        dump($file->current());
-
-        $secondPart = $file->fread($file->getSize());
+        $secondPart = $file->fread($endOfFile - $offset);
 
         $tempFile->fwrite($firstPart);
         $tempFile->fwrite($secondPart);
