@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Movie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Survos\CoreBundle\Traits\QueryBuilderHelperTrait;
 
 /**
  * @extends ServiceEntityRepository<Movie>
@@ -16,6 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class MovieRepository extends ServiceEntityRepository
 {
+    use QueryBuilderHelperTrait;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Movie::class);
