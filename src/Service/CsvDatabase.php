@@ -231,7 +231,7 @@ class CsvDatabase
                 } catch (\Exception) {
                     // only during dev
                 }
-                $this->offsetCache->set($row[$this->getKeyName()], $reader->getCurrentBufferPosition());
+                $this->offsetCache->set($row[$this->getKeyName()], $reader->getRowOffset());
             }
         }
     }
@@ -324,22 +324,29 @@ class CsvDatabase
     {
         $offset = $this->keyOffset($key);
 
-        $this->replace($key, false);
-//
-//        $tempFile = $this->openTempFile();
-//        $file = $this->openFile(static::FILE_READ);
-//
-//        $tempFile->fputcsv((array) $file->fread($offset));
-//
-//        dump($file->current());
-//        dd($file->getCurrentLine());
-//
-//
-//
-//        $file->fseek($offset);
-//
-//        dd($file->fread($offset));
+        $tempFile = $this->openTempFile();
+        $file = $this->openFile(static::FILE_READ);
 
+//        $file->fseek($offset);
+
+        $firstPart = $file->fread($offset);
+
+        dump($file->current());
+        $file->next();
+
+        dump($file->current());
+
+        $secondPart = $file->fread($file->getSize());
+
+        $tempFile->fwrite($firstPart);
+        $tempFile->fwrite($secondPart);
+
+        $this->closeFile($file);
+
+        $tempFile->rewind();
+        $this->writeTempToFile($tempFile);
+
+        $this->loadOffsetCache();
         // get the file from the beginning to the offset.  Fetch the line (to move the offset), then get the rest of the file.
     }
 

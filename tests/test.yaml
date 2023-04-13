@@ -61,6 +61,8 @@ cache:
         csv: |
           code,label
           va,Virginia
+          oh,Ohio
+          ma,Maine
 
       - operation: add_headers
         headers: [population, user_count]

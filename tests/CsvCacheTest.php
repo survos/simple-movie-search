@@ -26,6 +26,7 @@ class CsvCacheTest extends KernelTestCase
                 'has' => $csvDatabase->has($key),
                 'get' => $csvDatabase->get($key),
                 'delete' => $csvDatabase->delete($key),
+                'replace' => $csvDatabase->replace($key, $data),
                 'set' => $csvDatabase->set($key, (array)$data),
                 default =>
                 assert(false, "Operation not supported " . $operation)
