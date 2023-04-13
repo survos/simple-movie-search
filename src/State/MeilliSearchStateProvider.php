@@ -41,11 +41,6 @@ class MeilliSearchStateProvider implements ProviderInterface
 
             $body['hitsPerPage'] = $body['hitsPerPage'] ??= $this->pagination->getLimit($operation, $context);
             $body['offset'] = $body['offset'] ??= $this->pagination->getOffset($operation, $context);
-            
-            $filter = [];
-            $this->getPaginationData($context, $filter);
-            $this->getFilters($context, $filter);
-            $this->getFacets($context, $filter);
 
             $objectData = $this->searchService->rawSearch($operation->getClass(), $searchQuery, $body);
             return  $this->returnObject($objectData, $operation->getClass());
@@ -73,36 +68,5 @@ class MeilliSearchStateProvider implements ProviderInterface
             $returnObject[] = $oject;
         }
         return $returnObject;
-    }
-
-    private function getPaginationData(array $context, array &$filter) {
-       
-        $filter['hitsPerPage'] = 30;
-        if(isset($context['filters']['offset'])) {
-            $filter['hitsPerPage'] = (int) $context['filters']['limit'];
-        }
-
-        $filter['offset'] = 0;
-        if(isset($context['filters']['offset'])) {
-            $filter['offset'] = (int) $context['filters']['offset'];
-        }
-
-//        $filter['page'] = 1;
-        if(isset($context['filters']['page'])) {
-            $pagination['page'] = (int) $context['filters']['page'];
-        }
-    }
-
-    private function getFilters(array $context, array &$filter) {
-        //'filter' => $filter,
-    }
-
-    private function getFacets(array $context, array &$filter) {
-        //'facets' => ['year', 'type']
-    }
-
-    private function getIndex(Operation $operation): string
-    {
-        return Inflector::tableize($operation->getShortName());
     }
 }

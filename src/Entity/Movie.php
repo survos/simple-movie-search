@@ -17,8 +17,7 @@ use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\Get;
 use App\State\MeilliSearchStateProvider;
-use App\Filter\MeilliSearchSortFilter;
-use App\Filter\MeilliSearchRangeFilter;
+use App\Filter\MeiliSearch\SortFilter;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource(
@@ -45,7 +44,7 @@ use App\Filter\MeilliSearchRangeFilter;
 //#[ORM\Index(name: 'movie_imdb_id', columns: ['imdbId'])]
 #[ORM\Index(name: 'movie_type', columns: ['type'])]
 #[ApiFilter(RangeFilter::class, properties: ['year','runtimeMinutes'])]
-#[ApiFilter(MeilliSearchSortFilter::class, properties: ['releaseName', 'year', 'primaryTitle','runtimeMinutes'], arguments: ['orderParameterName' => 'sort'])]
+#[ApiFilter(SortFilter::class, properties: ['releaseName', 'year', 'primaryTitle','runtimeMinutes'], arguments: ['orderParameterName' => 'sort'])]
 #[ApiFilter(OrderFilter::class, properties: ['releaseName', 'year', 'primaryTitle','runtimeMinutes'], arguments: ['orderParameterName' => 'order'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['releaseName', 'imdbId'])] # Mei?isearch
 // can we move this to a property

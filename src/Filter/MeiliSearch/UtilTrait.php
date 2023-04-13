@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filter;
+namespace App\Filter\MeiliSearch;
 
 use ApiPlatform\Api\ResourceClassResolverInterface;
 use ApiPlatform\Exception\PropertyNotFoundException;
@@ -13,7 +13,7 @@ use Symfony\Component\PropertyInfo\Type;
  * @internal
  *
  */
-trait MeilliSearchUtilTrait
+trait UtilTrait
 {
     private readonly PropertyMetadataFactoryInterface $propertyMetadataFactory;
 

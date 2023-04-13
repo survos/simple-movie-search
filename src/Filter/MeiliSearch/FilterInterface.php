@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filter;
+namespace App\Filter\MeiliSearch;
 
 use ApiPlatform\Api\FilterInterface as BaseFilterInterface;
 use ApiPlatform\Metadata\Operation;
 
-interface MeilliSearchFilterInterface extends BaseFilterInterface
+interface FilterInterface extends BaseFilterInterface
 {
 
     public function apply(array $clauseBody, string $resourceClass, ?Operation $operation = null, array $context = []): array;

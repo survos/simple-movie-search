@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filter;
+namespace App\Filter\MeiliSearch;
 
 use ApiPlatform\Api\ResourceClassResolverInterface;
 use App\Filter\MeilliSearchUtilTrait;
@@ -28,9 +28,9 @@ use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
  * @experimental
  *
  */
-abstract class AbstractMeilliSearchFilter implements MeilliSearchFilterInterface
+abstract class AbstractSearchFilter implements FilterInterface
 {
-    use MeilliSearchUtilTrait { getNestedFieldPath as protected; }
+    use UtilTrait { getNestedFieldPath as protected; }
 
     public function __construct(protected PropertyNameCollectionFactoryInterface $propertyNameCollectionFactory, PropertyMetadataFactoryInterface $propertyMetadataFactory, ResourceClassResolverInterface $resourceClassResolver, protected ?NameConverterInterface $nameConverter = null, protected ?array $properties = null)
     {

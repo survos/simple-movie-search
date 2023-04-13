@@ -14,8 +14,10 @@ meilisearch:
               - year
               - type
               - primaryTitle
+              - releaseName
             sortableAttributes:
               - year
               - type
               - primaryTitle
               - imdbId
+              - releaseName
