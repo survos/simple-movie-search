@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
-use App\Service\CsvCacheAdapter;
 use Survos\CoreBundle\Traits\JsonResponseTrait;
+use Survos\GridGroupBundle\Service\CsvCacheAdapter;
+use Survos\GridGroupBundle\Service\CsvDatabase;
 use Survos\GridGroupBundle\Service\Reader;
 use Survos\GridGroupBundle\Service\CsvCache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -156,23 +157,23 @@ class AppController extends AbstractController
         $fullFilename = $this->dataDir . $filename;
         $count = 0;
 
-        $csvCache = new CsvCache('new-imdb.csv', 'imdbId', ['primaryTitle','startYear','runtimeMinutes','titleType']);
+        $csvDatabase = new CsvDatabase('new-imdb.csv', 'imdbId', ['primaryTitle','startYear','runtimeMinutes','titleType']);
 
         $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
         foreach ($reader->getRow() as $idx =>  $row) {
             $imdbId = $row['tconst'];
             $row['imdbId'] = $imdbId;
-            if (!$csvCache->contains($imdbId)) {
-                $csvCache->set($imdbId, $row);
+            if (!$csvDatabase->has($imdbId)) {
+                $csvDatabase->set($imdbId, $row);
             } else {
-                $data = $csvCache->get($imdbId);
+                $data = $csvDatabase->get($imdbId);
 
             }
             if ( $idx > $limit) {
                 break;
             }
         }
-        dd(file_get_contents($csvCache->getDatabase()->getPath()));
+        dd(file_get_contents($csvDatabase->getPath()));
 
 
     }
@@ -186,7 +187,7 @@ class AppController extends AbstractController
         $filename = 'title.basics.tsv';
         $fullFilename = $this->dataDir . $filename;
 
-        $cache = new CsvCacheAdapter($csvFilename = 'test.csv', 'imdb-cache.csv',  ['primaryTitle','startYear','runtimeMinutes','titleType']);
+        $cache = new CsvCacheAdapter($csvFilename = 'test.csv', 'tconst',  ['primaryTitle','startYear','runtimeMinutes','titleType']);
         $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
         foreach ($reader->getRow() as $idx =>  $row) {
             $imdbId = $row['tconst'];

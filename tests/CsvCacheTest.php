@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use App\Service\CsvDatabase;
+use Survos\GridGroupBundle\Service\CsvDatabase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Yaml\Yaml;
 

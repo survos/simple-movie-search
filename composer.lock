@@ -3108,7 +3108,7 @@
         },
         {
             "name": "survos/api-grid-bundle",
-            "version": "dev-main",
+            "version": "dev-tac",
             "dist": {
                 "type": "path",
                 "url": "//home/tac/g/survos/survos/packages/api-grid-bundle",
@@ -3174,7 +3174,7 @@
         },
         {
             "name": "survos/command-bundle",
-            "version": "1.4.19",
+            "version": "1.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCommandBundle.git",
@@ -3241,7 +3241,7 @@
             "description": "Run Symfony console commands from a web interface",
             "support": {
                 "issues": "https://github.com/survos/SurvosCommandBundle/issues",
-                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.4.19"
+                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.4.21"
             },
             "time": "2023-04-09T13:41:55+00:00"
         },
@@ -3331,16 +3331,16 @@
         },
         {
             "name": "survos/grid-bundle",
-            "version": "1.4.19",
+            "version": "1.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosGridBundle.git",
-                "reference": "966fb9a282168d9f12c0fb9f6c143594d0b8b598"
+                "reference": "9617ea6408016f4c0713959df6b6767926506909"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/966fb9a282168d9f12c0fb9f6c143594d0b8b598",
-                "reference": "966fb9a282168d9f12c0fb9f6c143594d0b8b598",
+                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/9617ea6408016f4c0713959df6b6767926506909",
+                "reference": "9617ea6408016f4c0713959df6b6767926506909",
                 "shasum": ""
             },
             "require": {
@@ -3348,7 +3348,7 @@
                 "doctrine/orm": "^2.12",
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.4.19",
+                "survos/core-bundle": "^1.4.21",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -3423,23 +3423,17 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosGridBundle/issues",
-                "source": "https://github.com/survos/SurvosGridBundle/tree/1.4.19"
+                "source": "https://github.com/survos/SurvosGridBundle/tree/1.4.21"
             },
-            "time": "2023-04-11T11:06:49+00:00"
+            "time": "2023-04-12T12:30:30+00:00"
         },
         {
             "name": "survos/grid-group-bundle",
-            "version": "1.4.19",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosGridGroupBundle.git",
-                "reference": "e1333248ef84077bb179bc2dd0d905b35702162a"
-            },
+            "version": "dev-tac",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridGroupBundle/zipball/e1333248ef84077bb179bc2dd0d905b35702162a",
-                "reference": "e1333248ef84077bb179bc2dd0d905b35702162a",
-                "shasum": ""
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/grid-group-bundle",
+                "reference": "dacecd307b77f9fd9d7b3bdf5520e0bb1501ee17"
             },
             "require": {
                 "php": "^8.1",
@@ -3486,7 +3480,6 @@
                     "Survos\\GridGroupBundle\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3495,11 +3488,9 @@
                 "symfony-ux",
                 "symfony6"
             ],
-            "support": {
-                "issues": "https://github.com/survos/SurvosGridGroupBundle/issues",
-                "source": "https://github.com/survos/SurvosGridGroupBundle/tree/1.4.19"
-            },
-            "time": "2023-04-11T11:01:03+00:00"
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "survos/inspection-bundle",
