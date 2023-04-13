@@ -37,7 +37,21 @@
 
 
 {% set fieldsSearch  = path('movie_field_counts', ({_format: 'json'})) %}
-{#    {% set fieldsSearch = 'https://www.museado.org/es/penn-asian/obj/public/fieldCounts' %}#}
+
+
+    <div class="dtsp-verticalContainer row">
+        <div class="search-panes xxdtsp-verticalPanes col-3">
+        </div>
+        <div class="xxcontainer col-9">
+            {{ block('gridTable') }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block gridTable %}
+
+    {#    {% set fieldsSearch = 'https://www.museado.org/es/penn-asian/obj/public/fieldCounts' %}#}
     {% component api_grid with
         {
             searchPanesDataUrl: fieldsSearch,
