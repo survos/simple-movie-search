@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use App\Service\CsvCacheAdapter;
-use Survos\GridGroupBundle\Service\Bedrock\CsvDatabase;
-use Survos\GridGroupBundle\Service\CsvCache;
+use Survos\CoreBundle\Traits\JsonResponseTrait;
 use Survos\GridGroupBundle\Service\Reader;
+use Survos\GridGroupBundle\Service\CsvCache;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -26,15 +26,24 @@ use function Symfony\Component\String\u;
 
 class AppController extends AbstractController
 {
+    use JsonResponseTrait;
     public function __construct(
         #[Autowire('%kernel.project_dir%/data/')] private string $dataDir,
     ) {
 
     }
     #[Route('/', name: 'app_homepage')]
-    #[Route('/_search', name: 'app_search', options: ['expose' => true])]
     public function index(SearchService $searchService, EntityManagerInterface $em, Request $request): Response
     {
+        return $this->render('app/homepage.html.twig', [
+            'class' => Movie::class,
+        ]);
+
+    }
+    #[Route('/_search', name: 'app_search', options: ['expose' => true])]
+    public function search(SearchService $searchService, EntityManagerInterface $em, Request $request): Response
+    {
+
         $formData = $request->get('movie_search') ? $request->get('movie_search') : [];
 
         $searchQuery = isset($formData['search']) ? $formData['search'] :  '';
@@ -45,14 +54,14 @@ class AppController extends AbstractController
         $type = isset($formData['type']) ? $formData['type'] : "";
         $filter = $fromYear ? 'year > '.$fromYear:"";
         $filter = $toYear ? $filter != "" ? $filter."  AND year < ". $toYear: $filter."year < ". $toYear:$filter;
-        $filter = $type != "" ? $filter != ""? $filter." AND type =".$type : " type = ".$type: $filter;
+//        $filter = $type != "" ? $filter != ""? $filter." AND type =".$type : " type = ".$type: $filter;
 
-        try {
             $movies = $searchService->rawSearch(Movie::class, $searchQuery, [
                 'filter' => $filter,
                 'sort' => [$sortby.':'.$direction],
                 'facets' => ['year', 'type']
             ]);
+        try {
         } catch(\Exception $e) {
             throw new Exception("Somthing went wrong with Search");
         }
@@ -85,6 +94,45 @@ class AppController extends AbstractController
 
         ];
         return $this->render('app/browse.html.twig', [
+            'class' => Movie::class,
+            'filter' => $filter,
+        ]);
+    }
+
+    #[Route(path: '/fieldCounts.{_format}', name: 'movie_field_counts', methods: ['POST', 'GET'])]
+    public function field_counts(Request    $request,
+                                            MovieRepository $movieRepository,
+                                            $_format = 'json'
+
+    ): Response
+    {
+
+
+        $results = [];
+        foreach (['type'] as $field) {
+            foreach ($movieRepository->getCounts($field) as $valueName=>$count) {
+                $r = [
+                    'label' => $valueName,
+                    'count' => $count,
+                    'total' => $count, // wrong!
+                    'value' => $valueName
+                ];
+                $results[$field][] = $r;
+            }
+        }
+        return $this->jsonResponse($results, $request, $_format);
+
+
+        return $this->render('app/test.html.twig', ['result' => $result]);
+    }
+
+    #[Route('/meili', name: 'app_browse_meili')]
+    public function meili(Request $request): Response
+    {
+        $filter = [
+
+        ];
+        return $this->render('app/meili.html.twig', [
             'class' => Movie::class,
             'filter' => $filter,
         ]);

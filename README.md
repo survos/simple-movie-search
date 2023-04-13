@@ -8,7 +8,7 @@ Install meilisearch, run it on 7700
 ```bash
 symfony proxy:domain:attach movie
 composer install
-yarn install && yarn dev
+yarn install && yarn dev0
 bin/console doctrine:database:create
 bin/console doctrine:schema:update --force --complete
 

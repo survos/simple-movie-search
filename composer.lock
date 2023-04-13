@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "754023ffc822fd33215209e10b5491a4",
+    "content-hash": "89f9760a2bdd95adf71a418316631820",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1378,16 +1378,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.14.1",
+            "version": "2.14.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "de7eee5ed7b1b35c99b118f26f210a8281e6db8e"
+                "reference": "e5fb1a4a8f5aa4e37612f66a22aac10291bcbb52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/de7eee5ed7b1b35c99b118f26f210a8281e6db8e",
-                "reference": "de7eee5ed7b1b35c99b118f26f210a8281e6db8e",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/e5fb1a4a8f5aa4e37612f66a22aac10291bcbb52",
+                "reference": "e5fb1a4a8f5aa4e37612f66a22aac10291bcbb52",
                 "shasum": ""
             },
             "require": {
@@ -1416,14 +1416,14 @@
                 "doctrine/annotations": "^1.13 || ^2",
                 "doctrine/coding-standard": "^9.0.2 || ^11.0",
                 "phpbench/phpbench": "^0.16.10 || ^1.0",
-                "phpstan/phpstan": "~1.4.10 || 1.9.8",
-                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "phpstan/phpstan": "~1.4.10 || 1.10.6",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6",
                 "psr/log": "^1 || ^2 || ^3",
-                "squizlabs/php_codesniffer": "3.7.1",
+                "squizlabs/php_codesniffer": "3.7.2",
                 "symfony/cache": "^4.4 || ^5.4 || ^6.0",
                 "symfony/var-exporter": "^4.4 || ^5.4 || ^6.2",
                 "symfony/yaml": "^3.4 || ^4.0 || ^5.0 || ^6.0",
-                "vimeo/psalm": "4.30.0 || 5.4.0"
+                "vimeo/psalm": "4.30.0 || 5.9.0"
             },
             "suggest": {
                 "ext-dom": "Provides support for XSD validation for XML mapping files",
@@ -1473,9 +1473,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.14.1"
+                "source": "https://github.com/doctrine/orm/tree/2.14.2"
             },
-            "time": "2023-01-16T18:36:59+00:00"
+            "time": "2023-03-30T15:18:54+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -3108,17 +3108,11 @@
         },
         {
             "name": "survos/api-grid-bundle",
-            "version": "1.4.19",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosApiGridBundle.git",
-                "reference": "89c53657c49b823dfa7094bf6d9d7ed63092f692"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/89c53657c49b823dfa7094bf6d9d7ed63092f692",
-                "reference": "89c53657c49b823dfa7094bf6d9d7ed63092f692",
-                "shasum": ""
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/api-grid-bundle",
+                "reference": "22254988bae0d4fcb3802c60018a223785347c0d"
             },
             "require": {
                 "doctrine/doctrine-bundle": "^2.7",
@@ -3126,7 +3120,7 @@
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "friendsofsymfony/jsrouting-bundle": "^3.2",
                 "php": "^8.1",
-                "survos/inspection-bundle": "^1.4.19",
+                "survos/inspection-bundle": "^1.5",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -3155,7 +3149,11 @@
                     "Survos\\ApiGrid\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "phpstan": [
+                    "vendor/bin/phpstan analyse"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -3170,11 +3168,9 @@
                 "symfony-ux",
                 "symfony6"
             ],
-            "support": {
-                "issues": "https://github.com/survos/SurvosApiGridBundle/issues",
-                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.4.19"
-            },
-            "time": "2023-04-11T11:06:53+00:00"
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "survos/command-bundle",
@@ -3251,7 +3247,7 @@
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.4.19",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
@@ -3304,6 +3300,7 @@
                 "symfony/var-dumper": "^6.1.0",
                 "symfony/webpack-encore-bundle": "^1.11"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -3328,7 +3325,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.4.19"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.4.21"
             },
             "time": "2023-04-11T10:24:56+00:00"
         },
@@ -3506,22 +3503,22 @@
         },
         {
             "name": "survos/inspection-bundle",
-            "version": "1.4.19",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosInspectionBundle.git",
-                "reference": "24e8507bd395e294d2c3496fb9ac6300197adaa6"
+                "reference": "a332c46193306fecf0818f5a83ac2d48e4316e37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/24e8507bd395e294d2c3496fb9ac6300197adaa6",
-                "reference": "24e8507bd395e294d2c3496fb9ac6300197adaa6",
+                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/a332c46193306fecf0818f5a83ac2d48e4316e37",
+                "reference": "a332c46193306fecf0818f5a83ac2d48e4316e37",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "^2.7 || ^3.0",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.4.19",
+                "survos/core-bundle": "^1.5",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -3553,6 +3550,7 @@
                 "phpstan/phpstan": "^1.8",
                 "roave/security-advisories": "dev-latest"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -3580,9 +3578,9 @@
             "description": "Inspects Doctrine entities with APIPlatform attributes",
             "support": {
                 "issues": "https://github.com/survos/SurvosInspectionBundle/issues",
-                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.4.19"
+                "source": "https://github.com/survos/SurvosInspectionBundle/tree/main"
             },
-            "time": "2023-04-11T11:06:53+00:00"
+            "time": "2023-04-12T12:30:41+00:00"
         },
         {
             "name": "symfony/asset",
@@ -11405,7 +11403,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "survos/api-grid-bundle": 20,
+        "survos/grid-group-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block page_title 'Movies' %}
+{% block page_subtitle 'from opensubtitles' %}
+
+{% block body %}
+    <div class="example-wrapper">
+
+        <ul>
+            {% for route, description in {
+                'app_browse': "Browse using APIPlatform with doctrine/postgres",
+                'app_browse_meili': "Browse using API Platform / Meilisearch",
+                'imdb_test_cache': "Test the CSV Cache Adapter",
+            } %}
+                <li><a href="{{ path(route) }}">{{ description }}</a></li>
+
+            {% endfor %}
+        </ul>
+
+
+    </div>
+{% endblock %}

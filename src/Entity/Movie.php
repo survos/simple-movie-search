@@ -8,8 +8,11 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\MovieRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\ApiGrid\Api\Filter\JsonSearchFilter;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\Get;
@@ -17,15 +20,33 @@ use App\State\MeilliSearchStateProvider;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource(
-    openapiContext:  ["description" => 'Movies and shows, keyed by IMDB id', "example" => "Rainman"],
+    operations: [
+        new Get(),
+        new GetCollection(
+            normalizationContext: ['movie.read', 'rp', 'searchable']
+        )
+    ],
+    openapiContext:  ["description" => 'Movies and shows in doctrine (postgres)'],
     normalizationContext: ['movie.read', 'rp'],
-    provider: MeilliSearchStateProvider::class # MeilisearchProvider
+)]
+
+#[ApiResource(
+    operations: [
+        new GetCollection(
+            uriTemplate: '/meili',
+            provider: MeilliSearchStateProvider::class, # MeilisearchProvider
+            normalizationContext: ['movie.read', 'rp', 'searchable']
+        )
+    ],
+    openapiContext:  ["description" => 'meiliseach provider'],
 )]
 //#[ORM\Index(name: 'movie_imdb_id', columns: ['imdbId'])]
 #[ORM\Index(name: 'movie_type', columns: ['type'])]
 #[ApiFilter(RangeFilter::class, properties: ['year','runtimeMinutes'])]
 #[ApiFilter(OrderFilter::class, properties: ['releaseName', 'year', 'primaryTitle','runtimeMinutes'], arguments: ['orderParameterName' => 'order'])]
-#[ApiFilter(MultiFieldSearchFilter::class, properties: ['releaseName'])] # Mei?isearch
+#[ApiFilter(MultiFieldSearchFilter::class, properties: ['releaseName', 'imdbId'])] # Mei?isearch
+// can we move this to a property
+#[ApiFilter(JsonSearchFilter::class, properties: ['attributes'], arguments: ['searchParameterName' => 'attribute_search'])]
 
 class Movie
 {
@@ -36,6 +57,7 @@ class Movie
     private int $imdbId;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['searchable','movie.read'])]
     private ?string $releaseName = null;
 
     #[ORM\Column(nullable: true)]
@@ -55,10 +77,16 @@ class Movie
 
     #[ORM\Column(nullable: true)]
     #[ApiFilter(SearchFilter::class, strategy: 'exact')]
+    #[Groups(['searchable','movie.read'])]
     private ?bool $adult = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['searchable','movie.read'])]
     private ?int $runtimeMinutes = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: false)]
+    #[Groups(['searchable','movie.read'])]
+    private array $genres = [];
 
 
     public function getImdbId(): int
@@ -141,6 +169,18 @@ class Movie
     public function setRuntimeMinutes(?int $runtimeMinutes): self
     {
         $this->runtimeMinutes = $runtimeMinutes;
+
+        return $this;
+    }
+
+    public function getGenres(): array
+    {
+        return $this->genres;
+    }
+
+    public function setGenres(?array $genres): self
+    {
+        $this->genres = $genres;
 
         return $this;
     }
