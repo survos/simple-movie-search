@@ -33,7 +33,7 @@ final class DataTableFilter extends AbstractSearchFilter implements FilterInterf
             $searchBuilder = $context['filters']['searchBuilder'];
 
             $dataTablefilter = $this->criteria($searchBuilder['logic'], $searchBuilder['criteria']);
-            dd($dataTablefilter);
+            
             $clauseBody['filter'] = ($filter != "")?$filter." AND ".$dataTablefilter:$filter.$dataTablefilter;
         }
 
