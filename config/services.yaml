@@ -22,3 +22,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Filter\MeilliSearchSortFilter:
+        tags: ['meilli_search_filter']
+        autowire: true
+    App\Filter\MeilliSearchDataTableFilter:
+        tags: ['meilli_search_filter']
+        autowire: true
+    App\State\MeilliSearchStateProvider:
+        bind:  
+            $meilliSearchFilter: !tagged meilli_search_filter
+        autowire: true

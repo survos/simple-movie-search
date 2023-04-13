@@ -14,6 +14,8 @@ use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\Get;
 use App\State\MeilliSearchStateProvider;
+use App\Filter\MeilliSearchSortFilter;
+use App\Filter\MeilliSearchRangeFilter;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource(
@@ -24,7 +26,8 @@ use App\State\MeilliSearchStateProvider;
 //#[ORM\Index(name: 'movie_imdb_id', columns: ['imdbId'])]
 #[ORM\Index(name: 'movie_type', columns: ['type'])]
 #[ApiFilter(RangeFilter::class, properties: ['year','runtimeMinutes'])]
-#[ApiFilter(OrderFilter::class, properties: ['releaseName', 'year', 'primaryTitle','runtimeMinutes'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(MeilliSearchSortFilter::class)]
+#[ApiFilter(MeilliSearchSortFilter::class, properties: ['releaseName', 'year', 'primaryTitle','runtimeMinutes'], arguments: ['orderParameterName' => 'sort'])]
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['releaseName'])] # Mei?isearch
 
 class Movie

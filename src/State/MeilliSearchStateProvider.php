@@ -8,12 +8,20 @@ use App\Entity\Movie;
 use ApiPlatform\Metadata\CollectionOperationInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Meilisearch\Bundle\SearchService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Tagged;
+use App\Filter\MeilliSearchFilterInterface;
+use ApiPlatform\Util\Inflector;
+use ApiPlatform\State\Pagination\Pagination;
 
 class MeilliSearchStateProvider implements ProviderInterface
 {
     public function __construct(
         private NormalizerInterface $normalizer,
-        private SearchService $searchService    
+        private SearchService $searchService,
+        private EntityManagerInterface $em,
+        private Pagination $pagination,
+        private iterable $meilliSearchFilter
     )
     {
   
@@ -22,21 +30,29 @@ class MeilliSearchStateProvider implements ProviderInterface
     {
         if ($operation instanceof CollectionOperationInterface) {
 
+            $resourceClass = $operation->getClass();
+            $body = [];
+
+            foreach ($this->meilliSearchFilter as $meilliSearchFilter) {
+                $body = $meilliSearchFilter->apply($body, $resourceClass, $operation, $context);
+            }
+
             $searchQuery = isset($context['filters']['search'])?$context['filters']['search']:"";
 
+            $body['hitsPerPage'] = $body['hitsPerPage'] ??= $this->pagination->getLimit($operation, $context);
+            $body['offset'] = $body['offset'] ??= $this->pagination->getOffset($operation, $context);
+            
             $filter = [];
-
-            $this->getSortSequence($context, $filter);
             $this->getPaginationData($context, $filter);
             $this->getFilters($context, $filter);
             $this->getFacets($context, $filter);
 
-            $objectData = $this->searchService->rawSearch($operation->getClass(), $searchQuery, $filter);
+            $objectData = $this->searchService->rawSearch($operation->getClass(), $searchQuery, $body);
             return  $this->returnObject($objectData, $operation->getClass());
         }
 
         // Retrieve the state from somewhere
-        return new Movie($uriVariables['id']);
+        return $this->em->getRepository($operation->getClass())->find($uriVariables['imdbId']);
     }
 
     private function returnObject(array $objectData, string $class) : object|array|null{
@@ -57,23 +73,6 @@ class MeilliSearchStateProvider implements ProviderInterface
             $returnObject[] = $oject;
         }
         return $returnObject;
-    }
-    
-    private function getSortSequence(array $context, array &$filter) {
-
-        $sortByArray = [];
-        if(isset($context['filters']['order\\'])) {
-            foreach($context['filters']['order\\'] as $key => $value) {
-                $sortByArray[] = rtrim($key,"\\").":".$value;
-            }
-        }
-        if(isset($context['filters']['order'])) {
-            foreach($context['filters']['order'] as $key => $value) {
-                $sortByArray[] = rtrim($key,"\\").":".$value;
-            }
-        }
-
-        $filter['sort'] = $sortByArray;
     }
 
     private function getPaginationData(array $context, array &$filter) {
@@ -100,5 +99,10 @@ class MeilliSearchStateProvider implements ProviderInterface
 
     private function getFacets(array $context, array &$filter) {
         //'facets' => ['year', 'type']
+    }
+
+    private function getIndex(Operation $operation): string
+    {
+        return Inflector::tableize($operation->getShortName());
     }
 }
