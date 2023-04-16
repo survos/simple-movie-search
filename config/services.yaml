@@ -33,3 +33,50 @@ services:
         bind:  
             $meilliSearchFilter: !tagged meilli_search_filter
         autowire: true
+
+    App\Hydra\Serializer\MeiliCollectionNormalizer:
+        arguments :
+            - "@api_platform.jsonld.context_builder"
+            - "@api_platform.resource_class_resolver"
+            - "@api_platform.iri_converter"
+            - null
+        tags: {name: 'serializer.normalizer', priority: '-985' } 
+
+    api_platform.hydra.normalizer.collection:
+        alias : App\Hydra\Serializer\MeiliCollectionNormalizer
+        
+    api_platform.hydra.normalizer.partial_collection_view:
+        class: ApiPlatform\Hydra\Serializer\PartialCollectionViewNormalizer
+        decorates: App\Hydra\Serializer\MeiliCollectionNormalizer
+        public: false
+        arguments:
+            - "@api_platform.hydra.normalizer.partial_collection_view.inner"
+            - "%api_platform.collection.pagination.page_parameter_name%"
+            - "%api_platform.collection.pagination.enabled_parameter_name%"
+            - "@api_platform.metadata.resource.metadata_collection_factory"
+            - "@api_platform.property_accessor"
+
+        # <service id="api_platform.hydra.normalizer.collection" class="ApiPlatform\Hydra\Serializer\CollectionNormalizer" public="false">
+        #     <argument type="service" id="api_platform.jsonld.context_builder" />
+        #     <argument type="service" id="api_platform.resource_class_resolver" />
+        #     <argument type="service" id="api_platform.iri_converter" />
+        #     <argument>null</argument>
+
+        #     <!-- Run after api_platform.jsonld.normalizer.object but before serializer.normalizer.object and serializer.denormalizer.array -->
+        #     <tag name="serializer.normalizer" priority="-985" />
+        # </service>
+
+        # <service id="api_platform.hydra.normalizer.partial_collection_view" class="ApiPlatform\Hydra\Serializer\PartialCollectionViewNormalizer" decorates="api_platform.hydra.normalizer.collection" public="false">
+        #     <argument type="service" id="api_platform.hydra.normalizer.partial_collection_view.inner" />
+        #     <argument>%api_platform.collection.pagination.page_parameter_name%</argument>
+        #     <argument>%api_platform.collection.pagination.enabled_parameter_name%</argument>
+        #     <argument type="service" id="api_platform.metadata.resource.metadata_collection_factory" />
+        #     <argument type="service" id="api_platform.property_accessor" />
+        # </service>
+
+        # <service id="api_platform.hydra.normalizer.collection_filters" class="ApiPlatform\Hydra\Serializer\CollectionFiltersNormalizer" decorates="api_platform.hydra.normalizer.collection" public="false">
+        #     <argument type="service" id="api_platform.hydra.normalizer.collection_filters.inner" />
+        #     <argument type="service" id="api_platform.metadata.resource.metadata_collection_factory" />
+        #     <argument type="service" id="api_platform.resource_class_resolver" />
+        #     <argument type="service" id="api_platform.filter_locator" />
+        # </service>

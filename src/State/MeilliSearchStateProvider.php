@@ -36,6 +36,8 @@ class MeilliSearchStateProvider implements ProviderInterface
             foreach ($this->meilliSearchFilter as $meilliSearchFilter) {
                 $body = $meilliSearchFilter->apply($body, $resourceClass, $operation, $context);
             }
+            
+            $body['facets'] = ['type'];
 
             $searchQuery = isset($context['filters']['search'])?$context['filters']['search']:"";
 
@@ -43,6 +45,7 @@ class MeilliSearchStateProvider implements ProviderInterface
             $body['offset'] = $body['offset'] ??= $this->pagination->getOffset($operation, $context);
 
             $objectData = $this->searchService->rawSearch($operation->getClass(), $searchQuery, $body);
+            return $objectData;
             return  $this->returnObject($objectData, $operation->getClass());
         }
 
