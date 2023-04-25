@@ -60,6 +60,7 @@
     {% endblock %}
 
 {% block gridTable %}
+    {{ _self }}
     {% component api_grid with
         {
             searchPanesDataUrl: fieldsSearch,
