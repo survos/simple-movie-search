@@ -1,0 +1,72 @@
+cache:
+  - db: states.csv
+    key: code
+    headers: [code,label]
+
+    steps:
+      - operation: has
+        key: code
+        expects: false
+
+      - operation: set
+        key: nj
+        data: {code: 'nj', label: 'New Jersey'}
+        csv: |
+          code,label
+          nj,"New Jersey"
+
+      - operation: has
+        key: nj
+        expects: true
+
+      - operation: set
+        key: va
+        data: {code: 'va', label: 'Virginia'}
+        csv: |
+          code,label
+          nj,"New Jersey"
+          va,Virginia
+
+      - operation: set
+        key: oh
+        data: {code: 'oh', label: 'Ohoi'}
+        csv: |
+          code,label
+          nj,"New Jersey"
+          va,Virginia
+          oh,Ohoi
+
+      - operation: set
+        key: ma
+        data: {code: 'ma', label: 'Maine'}
+        csv: |
+          code,label
+          nj,"New Jersey"
+          va,Virginia
+          oh,Ohoi
+          ma,Maine
+
+      - operation: replace
+        key: oh
+        data: {code: 'oh', label: 'Ohio'}
+        csv: |
+          code,label
+          nj,"New Jersey"
+          va,Virginia
+          oh,Ohio
+          ma,Maine
+
+      - operation: delete
+        key: nj
+        csv: |
+          code,label
+          va,Virginia
+          oh,Ohio
+          ma,Maine
+
+#      - operation: add_headers
+#        headers: [population, user_count]
+#        csv: |
+#          code,label,population,user_count
+#          va,Virginia,,
+

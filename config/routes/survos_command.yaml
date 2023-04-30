@@ -1,0 +1,10 @@
+#survos_workflow_bundle:
+#    resource: '@SurvosWorkflowBundle/Controller/WorkflowController.php'
+#    # resource: '@EasyAdminBundle/Controller/AdminController.php'
+#    prefix: /workflow
+#    type: annotation
+
+#survos_workflows: {path: /workflows, controller: 'Survos\WorkflowBundle\Controller\WorkflowController::workflows'}
+#
+survos_commands: {path: "/{_locale}/commands", controller: 'Survos\CommandBundle\Controller\CommandController::commands'}
+survos_command: {path: "/{_locale}/command/{commandName}", controller: 'Survos\CommandBundle\Controller\CommandController::runCommand'}
