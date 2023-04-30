@@ -18,7 +18,7 @@
         "survos/api-grid-bundle": "^1.4",
         "survos/command-bundle": "^1.4",
         "survos/grid-bundle": "^1.4",
-        "survos/grid-group-bundle": "^1.4",
+        "survos/grid-group-bundle": "*@dev",
         "survos/inspection-bundle": "^1.4",
         "survos/scraper-bundle": "*@dev",
         "symfony/asset": "6.2.*",
@@ -113,5 +113,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
+        "grid-group": {
+            "type": "path",
+            "url": "//home/tac/g/survos/survos/packages/grid-group-bundle"
+        }
     }
 }

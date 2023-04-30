@@ -7,6 +7,7 @@ use League\Csv\Reader;
 use League\Csv\Statement;
 
 use Survos\GridGroupBundle\Service\CsvDatabase;
+use Survos\GridGroupBundle\Service\GridGroupService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -45,21 +46,27 @@ final class CreateCsvDatabaseCommand extends InvokableServiceCommand
     {
         $slugger = new AsciiSlugger();
 
-        $movieCsv = new CsvDatabase('movie.csv', 'imdbId');
-        $genreCsv = new CsvDatabase('genre.csv', 'code');
+        $movieCsv = new CsvDatabase('movie.csv', 'imdbId', [
+            'primaryTitle','originalTitle','titleType','isAdult','runtimeMinutes','startYear, genre:rel.genre'
+        ]);
+        // keyNames?  Create multiple lookup cache?
+        $genreCsv = new CsvDatabase('genre.csv', 'code', ['code:id','label']);
+
+        // define the schema one field/column at a time
+//        $movieCsv->addHeader('imdb:id')
+//            ->addHeader()
+
 
         // this only works because we know there are no linefeeds in the file.
         $fullFilename = $this->dataDir . $filename;
-        $process = (new Process(['wc', '-l', $fullFilename]));
-        $process->run();
-        $output = $process->getOutput();
-        $lineCount = (int)u($output)->before(' ')->toString();
+        $lineCount = $this->getLineCount($fullFilename);
 
         $io->warning("Loading " . $fullFilename . " get $limit of $lineCount");
         $progressBar = new ProgressBar($io->output(), $lineCount);
 
         $count = 0;
 
+        // League Readerr
         $csv = Reader::createFromPath($fullFilename, 'r');
         $csv->setDelimiter("\t")
             ->setHeaderOffset(0) // use the first line as header for rows
@@ -76,14 +83,16 @@ final class CreateCsvDatabaseCommand extends InvokableServiceCommand
                 // the movie data should come from a json schema.  This will do for now.
                 $movie = [];
                 // no mapping, just use the same for now.
-                foreach (['primaryTitle','originalTitle','titleType','isAdult','runtimeMinutes','startYear, genre:rel.genre'] as $key) {
+                foreach (['primaryTitle','originalTitle','titleType','isAdult','runtimeMinutes','startYear', 'genres'] as $key) {
+
+                    GridGroupService::assertKeyExists($key, $row);
                     $value = $row[$key];
                     if ($value == '\N') {
                         $value = null;
                     }
                     switch ($key) {
                         case 'genres':
-                            foreach (explode(',', $value??[]) as $genre) {
+                            foreach (explode(',', $value??'') as $genre) {
                                 $code = $slugger->slug($genre);
                                 if (!$genreCsv->has($code)) {
                                     $genreRecord = [
@@ -102,20 +111,26 @@ final class CreateCsvDatabaseCommand extends InvokableServiceCommand
                 dump($movie);
             }
 
-            $progressBar->setMessage($movie->getReleaseName());
             $progressBar->advance();
             if ($limit && ($count > $limit)) {
                 break;
             }
-            if (($count % $batch) === 0) {
-                $ostEntityManager->flush();
-                $ostEntityManager->clear(); // Detaches all objects from Doctrine!
-            }
         }
         $progressBar->finish();
-        $io->success("Final flush..." . $count);
-        $ostEntityManager->flush();
         $io->success("Done.");
+    }
+
+    /**
+     * @param string $fullFilename
+     * @return int
+     */
+    public function getLineCount(string $fullFilename): int
+    {
+        $process = (new Process(['wc', '-l', $fullFilename]));
+        $process->run();
+        $output = $process->getOutput();
+        $lineCount = (int)u($output)->before(' ')->toString();
+        return $lineCount;
     }
 
 }

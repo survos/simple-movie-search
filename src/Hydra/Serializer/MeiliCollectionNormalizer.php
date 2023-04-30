@@ -14,7 +14,9 @@ namespace App\Hydra\Serializer;
 use ApiPlatform\Api\IriConverterInterface;
 use ApiPlatform\Api\ResourceClassResolverInterface;
 use ApiPlatform\Api\UrlGeneratorInterface;
+use ApiPlatform\JsonLd\AnonymousContextBuilderInterface;
 use ApiPlatform\JsonLd\ContextBuilder;
+use ApiPlatform\JsonLd\ContextBuilderInterface;
 use ApiPlatform\JsonLd\Serializer\JsonLdContextTrait;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
 use ApiPlatform\Serializer\AbstractCollectionNormalizer;
@@ -29,7 +31,6 @@ use ApiPlatform\State\Pagination\PartialPaginatorInterface;
  */
 final class MeiliCollectionNormalizer extends AbstractCollectionNormalizer
 {
-    use JsonLdContextTrait;
 
     public const FORMAT = 'jsonld';
     public const IRI_ONLY = 'iri_only';
@@ -38,10 +39,10 @@ final class MeiliCollectionNormalizer extends AbstractCollectionNormalizer
     ];
 
     public function __construct(
-        private $contextBuilder, 
-        ResourceClassResolverInterface $resourceClassResolver, 
-        private readonly IriConverterInterface $iriConverter, 
-        private readonly ?ResourceMetadataCollectionFactoryInterface $resourceMetadataCollectionFactory = null, 
+        private $contextBuilder,
+        ResourceClassResolverInterface $resourceClassResolver,
+        private readonly IriConverterInterface $iriConverter,
+        private readonly ?ResourceMetadataCollectionFactoryInterface $resourceMetadataCollectionFactory = null,
         array $defaultContext = []
     )
     {
@@ -76,7 +77,7 @@ final class MeiliCollectionNormalizer extends AbstractCollectionNormalizer
         $resourceClass = $this->resourceClassResolver->getResourceClass($object, $context['resource_class']);
         $context = $this->initContext($resourceClass, $context);
         $data = [];
-        
+
         $paginationData = $this->getPaginationData($object, $context);
 
         if (($operation = $context['operation'] ?? null) && method_exists($operation, 'getItemUriTemplate')) {
@@ -182,10 +183,47 @@ final class MeiliCollectionNormalizer extends AbstractCollectionNormalizer
                 $fdata["count"] =  $facetValue;
                 $data[] = $fdata;
             }
-            $facetsData['searchPanes']['options'][$key] = $data;        
+            $facetsData['searchPanes']['options'][$key] = $data;
         }
 
         return $facetsData;
+    }
+
+    /**
+     *
+     * copies from the internal trait ApiPlatform\JsonLd\Serializer\JsonLdContextTrait
+     *
+     * Updates the given JSON-LD document to add its @context key.
+     */
+    private function addJsonLdContext(ContextBuilderInterface $contextBuilder, string $resourceClass, array &$context, array $data = []): array
+    {
+        if (isset($context['jsonld_has_context'])) {
+            return $data;
+        }
+
+        $context['jsonld_has_context'] = true;
+
+        if (isset($context['jsonld_embed_context'])) {
+            $data['@context'] = $contextBuilder->getResourceContext($resourceClass);
+
+            return $data;
+        }
+
+        $data['@context'] = $contextBuilder->getResourceContextUri($resourceClass);
+
+        return $data;
+    }
+
+    private function createJsonLdContext(AnonymousContextBuilderInterface $contextBuilder, $object, array &$context): array
+    {
+        // We're in a collection, don't add the @context part
+        if (isset($context['jsonld_has_context'])) {
+            return $contextBuilder->getAnonymousResourceContext($object, ($context['output'] ?? []) + ['api_resource' => $context['api_resource'] ?? null, 'has_context' => true]);
+        }
+
+        $context['jsonld_has_context'] = true;
+
+        return $contextBuilder->getAnonymousResourceContext($object, ($context['output'] ?? []) + ['api_resource' => $context['api_resource'] ?? null]);
     }
 
 }
