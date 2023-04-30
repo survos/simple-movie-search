@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use Psr\Cache\CacheItemInterface;
+use Survos\GridGroupBundle\CsvSchema\Parser;
 use Survos\GridGroupBundle\Service\CsvCache;
 use Survos\GridGroupBundle\Service\Reader;
 use Survos\CoreBundle\Traits\JsonResponseTrait;
@@ -208,6 +209,31 @@ class AppController extends AbstractController
     public function test_cache(Request $request,
                            ParameterBagInterface $bag): Response
     {
+
+
+        $input = "Kai,Sassnowski,26,0.3\nJohn,Doe,38,7.8";
+
+        $config = [
+            'schema' => [
+                'first_name' => 'string',
+                'last_name' => 'string',
+                'age' => 'int',
+                'coolness_factor' => 'float',
+            ]
+        ];
+        $parser = new Parser($config);
+
+
+        $rows = $parser->fromString($input);
+        dd($rows[0]);
+
+        var_dump($rows[0]->firstname);
+// string(3) "Kai"
+
+        var_dump($rows[0]->age);
+// int(26)
+
+        var_dump($rows[0]->coolness_factor);
 
         $limit = $request->get('limit', 5);
         $filename = 'title.basics.tsv';

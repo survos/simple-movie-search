@@ -36,21 +36,25 @@ final class CreateCsvDatabaseCommand extends InvokableServiceCommand
     }
 
     public function __invoke(
-        IO                                          $io,
-        #[Argument(description: 'filename')] string $filename = 'title.basics.tsv',
-        #[Option(description: 'limit')] int         $limit = 10000,
-        #[Option(description: 'batch size for flush')] int         $batch = 1000,
+        IO                                                 $io,
+        #[Argument(description: 'filename')] string        $filename = 'title.basics.tsv',
+        #[Option(description: 'limit')] int                $limit = 10000,
+        #[Option(description: 'batch size for flush')] int $batch = 1000,
 
 
     ): void
     {
         $slugger = new AsciiSlugger();
 
-        $movieCsv = new CsvDatabase('movie.csv', 'imdbId', [
-            'primaryTitle','originalTitle','titleType','isAdult','runtimeMinutes','startYear, genre:rel.genre'
-        ]);
+        $movieCsv = new CsvDatabase('movie.csv');
+        $movieCsv->reset();
+        foreach ([
+                     'primaryTitle', 'originalTitle', 'titleType:rel.type', 'isAdult:bool', 'runtimeMinutes:int', 'startYear:int', 'genre:rel.genre'
+                 ] as $header) {
+            $movieCsv->addHeader($header);
+    }
         // keyNames?  Create multiple lookup cache?
-        $genreCsv = new CsvDatabase('genre.csv', 'code', ['code:id','label']);
+        $genreCsv = new CsvDatabase('genre.csv', 'code', ['code:id', 'label']);
 
         // define the schema one field/column at a time
 //        $movieCsv->addHeader('imdb:id')
@@ -83,7 +87,7 @@ final class CreateCsvDatabaseCommand extends InvokableServiceCommand
                 // the movie data should come from a json schema.  This will do for now.
                 $movie = [];
                 // no mapping, just use the same for now.
-                foreach (['primaryTitle','originalTitle','titleType','isAdult','runtimeMinutes','startYear', 'genres'] as $key) {
+                foreach (['primaryTitle', 'originalTitle', 'titleType', 'isAdult', 'runtimeMinutes', 'startYear', 'genres'] as $key) {
 
                     GridGroupService::assertKeyExists($key, $row);
                     $value = $row[$key];
@@ -92,7 +96,7 @@ final class CreateCsvDatabaseCommand extends InvokableServiceCommand
                     }
                     switch ($key) {
                         case 'genres':
-                            foreach (explode(',', $value??'') as $genre) {
+                            foreach (explode(',', $value ?? '') as $genre) {
                                 $code = $slugger->slug($genre);
                                 if (!$genreCsv->has($code)) {
                                     $genreRecord = [
