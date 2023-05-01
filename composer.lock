@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccd6a6e21fd9d5e13b030583e07071ca",
+    "content-hash": "4a36346b2950e000d50476a66d23ac11",
     "packages": [
         {
             "name": "answear/liform",
@@ -11873,8 +11873,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "survos/grid-group-bundle": 20,
-        "survos/scraper-bundle": 20
+        "survos/grid-group-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
