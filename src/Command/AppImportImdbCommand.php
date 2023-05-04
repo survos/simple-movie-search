@@ -22,7 +22,7 @@ use Zenstruck\Console\RunsCommands;
 use Zenstruck\Console\RunsProcesses;
 use function Symfony\Component\String\u;
 
-#[AsCommand('app:import-imdb', '')]
+#[AsCommand('app:import-imdb', 'Import imdb into the movie database (doctrine)')]
 final class AppImportImdbCommand extends InvokableServiceCommand
 {
     use ConfigureWithAttributes, RunsCommands, RunsProcesses;

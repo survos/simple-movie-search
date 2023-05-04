@@ -205,13 +205,17 @@ class AppController extends AbstractController
 
     }
 
-    #[Route('/test-cache', name: 'imdb_test_cache')]
+        #[Route('/test-cache', name: 'imdb_test_cache')]
     public function test_cache(Request $request,
-                           ParameterBagInterface $bag): Response
+                               ParameterBagInterface $bag): Response
     {
+        $limit = $request->get('limit', 5);
+        $filename = 'title.basics.tsv';
+        $fullFilename = $this->dataDir . $filename;
 
+        $map = [
 
-        $input = "Kai,Sassnowski,26,0.3\nJohn,Doe,38,7.8";
+        ];
 
         $config = [
             'schema' => [
@@ -222,22 +226,10 @@ class AppController extends AbstractController
             ]
         ];
         $parser = new Parser($config);
-
-
+        $input = "Kai,Sassnowski,26,0.3\nJohn,Doe,38,7.8";
         $rows = $parser->fromString($input);
         dd($rows[0]);
 
-        var_dump($rows[0]->firstname);
-// string(3) "Kai"
-
-        var_dump($rows[0]->age);
-// int(26)
-
-        var_dump($rows[0]->coolness_factor);
-
-        $limit = $request->get('limit', 5);
-        $filename = 'title.basics.tsv';
-        $fullFilename = $this->dataDir . $filename;
 
         $cache = new CsvCacheAdapter($csvFilename = 'test.csv', 'tconst',  ['primaryTitle','startYear','runtimeMinutes','titleType']);
         $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
