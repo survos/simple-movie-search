@@ -127,6 +127,18 @@ class AppController extends AbstractController
         ]);
     }
 
+    #[Route('/browse_dynamic', name: 'app_browse_dynamic')]
+    public function browse_dynamic(Request $request): Response
+    {
+        $filter = [
+
+        ];
+        return $this->render('app/browse_dynamic.html.twig', [
+            'class' => Movie::class,
+            'filter' => $filter,
+        ]);
+    }
+
     #[Route(path: '/fieldCounts.{_format}', name: 'movie_field_counts', methods: ['POST', 'GET'])]
     public function field_counts(Request    $request,
                                             MovieRepository $movieRepository,

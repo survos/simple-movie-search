@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movie index{% endblock %}
+
+{% block page_title 'Movies' %}
+{% block page_subtitle 'from opensubtitles' %}
+
+{% block body %}
+
+
+    {#    {{ api_table(class) }}#}
+    {#    <pre>{{ api_table(class)|escape }}</pre>#}
+    'actions',
+    'movieType',
+    'subtitleCount',
+    {name: 'name', title:'Movie Name'},
+
+
+    {% set columns = [
+        'id',
+        'title',
+        {name: 'type', searchable: true, browsable: true},
+        {name: 'start_year', searchable: true, sortable: true},
+        {name: 'adult', browsable: true},
+        {name: 'genres', sortable: false, browsable: true},
+        {name: 'runtimeMinutes', sortable: true}
+    ] %}
+
+
+
+    {% set movieType = 'movie' %}
+    {% if movieType == 'episode' %}
+        {% set columns = columns|merge(['seriesImdbId', 'season','episode']) %}
+    {% endif %}
+    {% if movieType == 'series' %}
+        {% set columns = columns|merge(['seriesImdbId', 'seasonCount','episodeCount']) %}
+    {% endif %}
+
+    {% set searchBuilderFields = [] %}
+    {% for idx, c in columns %}
+        {#                <li> #}
+        {#                    {{ c.name }} #}
+        {#                </li> #}
+        {% if c.searchable|default(false) %}
+            {% set searchBuilderFields = searchBuilderFields|merge([idx]) %}
+        {% endif %}
+        {#        {{ dump(c) }} #}
+    {% endfor %}
+
+
+    {% set fieldsSearch  = path('movie_field_counts', ({_format: 'json'})) %}
+
+    <div class="dtsp-verticalContainer row">
+        <div class="search-panes xxdtsp-verticalPanes col-3">
+        </div>
+        <div class="xxcontainer col-9">
+            {{ block('gridTable') }}
+        </div>
+    </div>
+
+    {% endblock %}
+
+{% block gridTable %}
+    {% component api_grid with
+        {
+            searchPanesDataUrl: fieldsSearch,
+            searchBuilderFields: searchBuilderFields,
+
+            class: class,
+            filter: filter,
+            columns: columns,
+
+            caller: _self,
+            dom: 'P<"dtsp-dataTable"rQfti>l'
+        }
+    %}
+
+        {% block genres %}
+            {{ row.genres|join('|') }}
+        {% endblock %}
+        {% block actions %}
+            {#                <a href="{{ path('app_bookmark') }}">#}
+            <i class="far fa-thumbs-up"></i>
+            <a href="{{ path('movie_show', row.rp) }}"><i>Show</i></a>
+            {#                </a>#}
+        {% endblock %}
+
+        {% block seriesImdbId %}
+            <a href="{{ path('movie_show', {movieId: row.seriesImdbId}) }}"><i>{{ row.seriesImdbId }}</i></a>
+        {% endblock %}
+
+        {% block imdbId %}
+            <a target="_blank" href="{{ path('movie_show', {imdbId: row.imdbId}) }}"><i class="fas fa-external-link-alt"></i> <i>{{ row.imdbId }}</i></a>
+            {#                {% if row.imdbId < 5 %}#}
+            {#                    RR{{ reverseRange(row.id, 0) }}#}
+            {#                <a href="{{ path('ost_movie_show', {movieId: row.id}) }}">Test with {{ row.id }}</a>#}
+            {#                {% endif %}#}
+        {% endblock %}
+
+        {% block name %}
+            <a href="{{ path('movie_show', row.rp) }}"><i>{{ row.name }}</i></a>
+            {#                {% if row.imdbId < 5 %}#}
+            {#                    RR{{ reverseRange(row.id, 0) }}#}
+            {#                <a href="{{ path('ost_movie_show', {movieId: row.id}) }}">Test with {{ row.id }}</a>#}
+            {#                {% endif %}#}
+        {% endblock %}
+
+    {% endcomponent %}
+
+    {#    <h3>_table</h3>#}
+    {#    {% include "ost/movie/_table.html.twig" %}#}
+
+{% endblock %}

@@ -7,6 +7,7 @@ use League\Csv\Reader;
 use League\Csv\Writer;
 use League\Csv\Statement;
 
+use Meilisearch\Client;
 use Survos\GridGroupBundle\CsvSchema\Parser;
 use Survos\GridGroupBundle\Service\CsvDatabase;
 use Survos\GridGroupBundle\Service\CsvWriter;
@@ -60,35 +61,6 @@ EOL
     {
         $slugger = new AsciiSlugger();
 
-        $writer = Writer::createFromString();
-        $csvWriter = new CsvWriter($writer);
-        $headers = ['first', 'last', 'email'];
-        $formatter = function (array $row) use ($headers): array {
-            return array_merge($row, $headers);
-            return array_map('strtoupper', $row);
-        };
-        $writer = Writer::createFromFileObject(new \SplTempFileObject());
-        $writer->insertOne($headers);
-        $writer->addFormatter($formatter);
-        $writer->insertOne(['john', 'doe', 'john.doe@example.com']);
-
-        dd($writer->toString());
-
-        $movieCsv = new CsvDatabase('movie.csv', 'imdbId');
-        $movieCsv->reset();
-        foreach ([
-                     'primaryTitle', 'originalTitle', 'titleType:rel.type', 'isAdult:bool', 'runtimeMinutes:int', 'startYear:int', 'genre:rel.genre'
-                 ] as $header) {
-            $movieCsv->addHeader($header);
-    }
-        // keyNames?  Create multiple lookup cache?
-        $genreCsv = new CsvDatabase('genre.csv', 'code', ['code:id', 'label']);
-
-        // define the schema one field/column at a time
-//        $movieCsv->addHeader('imdb:id')
-//            ->addHeader()
-
-
         // this only works because we know there are no linefeeds in the file.
         $fullFilename = $this->dataDir . $filename;
         $lineCount = $this->getLineCount($fullFilename);
@@ -98,58 +70,48 @@ EOL
 
         $count = 0;
 
-        $fieldNameDelimited = '/';
-        $map = Yaml::parse(<<<END
-map:
-    /tconst/i: db.code?header=id
-    /year/i: int
-    /runtime/i: int?units=min
-    /type/i: cat.type?label=Tipo
-    /adult/i: bool?code=adult
-    /genre/i: rel.genre?delim=,
-END
-);
+        $config = $this->setupSchemaFromHeaders($fullFilename);
+        $writer = Writer::createFromString();
+        $csvWriter = new CsvWriter($writer);
 
-        $csv = Reader::createFromPath($fullFilename, 'r');
-        $csv->setDelimiter("\t")
-            ->setHeaderOffset(0) // use the first line as header for rows
-        ;
+        $headers = $config['outputSchema'];
 
-//        $normalizer = new ObjectNormalizer(null, new CamelCaseToSnakeCaseNameConverter());
-//        $serializer = new Serializer([$normalizer]);
-//        $personArray = $serializer->normalize(new Person());
+        $formatter = function (array $row) use ($headers): array {
+            return array_merge($row, $headers);
+            return array_map('strtoupper', $row);
+        };
+        $writer = Writer::createFromFileObject(new \SplTempFileObject());
+        $writer->insertOne($headers);
+//        $writer->addFormatter($formatter);
+////        $writer->insertOne(['john', 'doe', 'john.doe@example.com']);
+//        $writer->insertOne(['john'=>'doe']);
 
-        $header = $csv->getHeader();
-        foreach ($header as $column) {
-            // use the map!
-            $newColumn = u($column)->snake()->toString(); //
-            $columnType = 'string';
-            foreach ($map['map'] as $regEx => $rule) {
-                if (preg_match($regEx, $newColumn)) {
-                    if (str_contains($rule, $fieldNameDelimited)) { // } && !str_starts_with($rule, 'array:')) {
-                        [$newColumn, $rule] = explode($fieldNameDelimited, $rule, 2);
-                    }
-                    $columnType = $rule; // for now
-                    break;
-                }
-            }
-            $schema[$newColumn] = $columnType;
-        }
-        $config = [
-            'delimiter' => "\t",
-            'skipTitle' => true,
-            // the map, ignores the row headers, so this must be the correct order~
-            'schema' => $schema,
-            'valueRules' => [
-                '\N' => null
-            ]
-        ];
+//        dd($writer->toString());
+
+//        $movieCsv = new CsvDatabase('movie.csv', 'imdbId');
+//        $movieCsv->reset();
+//        foreach ([
+//                     'primaryTitle', 'originalTitle', 'titleType:rel.type', 'isAdult:bool', 'runtimeMinutes:int', 'startYear:int', 'genre:rel.genre'
+//                 ] as $header) {
+//            $movieCsv->addHeader($header);
+//    }
+//        // keyNames?  Create multiple lookup cache?
+//        $genreCsv = new CsvDatabase('genre.csv', 'code', ['code:id', 'label']);
+
+        // define the schema one field/column at a time
+//        $movieCsv->addHeader('imdb:id')
+//            ->addHeader()
+
+
+        $client = new Client('http://127.0.0.1:7700', 'masterKey');
+        $index = $client->index('movies');
 
 
         $parser = $this->getParser($config);
 //        $rows = $csv->getRecords();
         $rows = $parser->fromFile($fullFilename);
         foreach ($rows as $row) {
+            $index->addDocuments([$row], 'id');
             $count++;
             if ($limit && ($count > $limit)) {
                 break;
@@ -195,13 +157,16 @@ END
         $io->success("Done.");
     }
 
-    public function addCat($type, $value)
+    public function addCat($type, $value, $settings)
     {
-        $slug = u($value)->snake()->toString();
-        $this->cat[$type][$slug] = $value;
+        $delim = $settings['delim']??'|';
+        foreach (explode($delim, $value) as $v) {
+            $slug = u($v)->snake()->toString();
+            $this->cat[$type][$slug] = $v;
+        }
     }
 
-    public function addRelatedCore($type, $value)
+    public function addRelatedCore($type, $value, array $settings=[])
     {
         $slug = u($value)->snake()->toString();
         $this->rel[$type][$slug] = $value;
@@ -226,18 +191,121 @@ END
      */
     public function getParser(array $config): Parser
     {
-        Parser::registerType('rel', function ($value, $core)  {
-            dd($value, $core, 'rel');
-            $this->addRelatedCore($core, $value);
-            return explode($delimiter, trim($string));
+        Parser::registerType('rel', function ($value, $core, $settings) use ($config)  {
+//            dd($value, $core, 'rel');
+//            dd($config, $value, $core, $settings);
+            $delimiter = $settings['delim']??'|';
+            $this->addRelatedCore($core, $value, $settings);
+//            return $value;
+            return explode($delimiter, trim($value));
         });
-        Parser::registerType('cat', function ($value, $table) {
-            $this->addCat($table, $value);
+        Parser::registerType('db', function ($value, $internalCode) {
+            // based on internalCode, do something.
+            return $value;
+        });
+        Parser::registerType('cat', function ($value, $catType, $settings) {
+//            dd($value, $catType, 'cat');
+            $this->addCat($catType, $value, $settings);
             return $value;
             return DB::table($table)->findById($value);
         });
         $parser = new Parser($config);
         return $parser;
+    }
+
+    /**
+     * @param string $fullFilename
+     * @return array
+     * @throws \League\Csv\Exception
+     * @throws \League\Csv\InvalidArgument
+     * @throws \League\Csv\UnavailableStream
+     */
+    public function setupSchemaFromHeaders(string $fullFilename): array
+    {
+        $fieldNameDelimited = ':';
+        // input to output map
+        $map = Yaml::parse(<<<END
+map:
+    /tconst/i: id:db.code
+    /primary_title/i: title:db.label
+    /year/i: int
+    /runtime/i: int?units=min
+    /type/i: type:cat.type?label=Tipo
+    /adult/i: adult:bool?permission=admin
+    /genre/i: rel.genre?delim=,
+END
+        );
+
+        $csv = Reader::createFromPath($fullFilename, 'r');
+        $csv->setDelimiter("\t")
+            ->setHeaderOffset(0) // use the first line as header for rows
+        ;
+
+        $outputSchema = [];
+        $header = $csv->getHeader();
+        foreach ($header as $column) {
+            // use the map!
+            $newColumn = u($column)->snake()->toString(); //
+            $columnType = 'string';
+            foreach ($map['map'] as $regEx => $rule) {
+                if (preg_match($regEx, $newColumn)) {
+                    if (str_contains($rule, $fieldNameDelimited)) { // } && !str_starts_with($rule, 'array:')) {
+                        [$newColumn, $rule] = explode($fieldNameDelimited, $rule, 2);
+                    }
+
+                    $columnType = $rule; // for now
+
+                    if (!str_contains($rule, '?')) {
+                        $rule .= '?';
+                    }
+                    [$dottedConfig, $settingsString] = explode('?', $rule);
+                    $settings = Parser::parseQueryString($settingsString);
+                    $values = explode('.', $dottedConfig);
+                    $type = array_shift($values);
+                    if ($type == '') {
+                        $type = 'string';
+                    }
+                    $outputHeader = $settings['header']??$newColumn;
+                    $outputHeader .= $fieldNameDelimited . $dottedConfig;
+                    if ($columnType) {
+//                        $outputHeader .= ':' . $columnType;
+                    }
+                    unset($settings['header']);
+                    if (count($settings)) {
+//                        $columnType = json_encode($settings);
+//                        $outputHeader .= ':' . $columnType;
+                        $outputHeader .= '?' . http_build_query($settings);
+//                        dd($outputHeader);
+                    }
+                    $outputSchema[$newColumn] = array_merge([
+                        'type' => $dottedConfig,
+                        ],
+                        $settings);
+
+                    $columnType = $outputHeader;
+//                    dd($type, $rule, $settings, $values, $columnType, $outputHeader);
+                    assert($type);
+
+//                    dd($columnType, $rule);
+                    break;
+                }
+            }
+            $schema[$newColumn] = $columnType;
+        }
+        file_put_contents('schema.json', json_encode($outputSchema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
+//        dd($schema, $outputSchema, json_encode($outputSchema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
+        // the input config
+        $config = [
+            'delimiter' => "\t",
+            'skipTitle' => true,
+            'outputSchema' => $outputSchema,
+            // the map, ignores the row headers, so this must be the correct order~
+            'schema' => $schema,
+            'valueRules' => [
+                '\N' => null
+            ]
+        ];
+        return $config;
     }
 
 }
