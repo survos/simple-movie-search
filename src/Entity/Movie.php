@@ -16,8 +16,8 @@ use Survos\ApiGrid\Api\Filter\JsonSearchFilter;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\Get;
-use App\State\MeilliSearchStateProvider;
-use App\Filter\MeiliSearch\SortFilter;
+use Survos\ApiGrid\State\MeilliSearchStateProvider;
+use Survos\ApiGrid\Filter\MeiliSearch\SortFilter;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource(
