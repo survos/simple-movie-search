@@ -15,6 +15,7 @@ meilisearch:
               - type
               - primaryTitle
               - releaseName
+              - adult
             sortableAttributes:
               - year
               - type
