@@ -67,13 +67,16 @@ final class MeiliCollectionNormalizer extends AbstractCollectionNormalizer
         }
 
         $facets = [];
-        if(isset($object['facetDistribution'])) {
-            $facets = $this->getFacetsData($object['facetDistribution']);
+        if (is_array($object)) {
+            if(isset($object['facetDistribution'])) {
+                $facets = $this->getFacetsData($object['facetDistribution']);
+            }
+
+            if(isset($object['hits'])) {
+                $object = $object['hits'];
+            }
         }
 
-        if(isset($object['hits'])) {
-            $object = $object['hits'];
-        }
         $resourceClass = $this->resourceClassResolver->getResourceClass($object, $context['resource_class']);
         $context = $this->initContext($resourceClass, $context);
         $data = [];

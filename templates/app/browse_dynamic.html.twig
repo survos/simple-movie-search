@@ -10,21 +10,16 @@
 
     {#    {{ api_table(class) }}#}
     {#    <pre>{{ api_table(class)|escape }}</pre>#}
-    'actions',
-    'movieType',
-    'subtitleCount',
-    {name: 'name', title:'Movie Name'},
 
-
-    {% set columns = [
-        'id',
-        'title',
-        {name: 'type', searchable: true, browsable: true},
-        {name: 'start_year', searchable: true, sortable: true},
-        {name: 'adult', browsable: true},
-        {name: 'genres', sortable: false, browsable: true},
-        {name: 'runtimeMinutes', sortable: true}
-    ] %}
+{#    {% set columns = [#}
+{#        'id',#}
+{#        'title',#}
+{#        {name: 'type', searchable: true, browsable: true},#}
+{#        {name: 'start_year', searchable: true, sortable: true},#}
+{#        {name: 'adult', browsable: true},#}
+{#        {name: 'genres', sortable: false, browsable: true},#}
+{#        {name: 'runtimeMinutes', sortable: true}#}
+{#    ] %}#}
 
 
 
@@ -65,11 +60,10 @@
         {
             searchPanesDataUrl: fieldsSearch,
             searchBuilderFields: searchBuilderFields,
-
-            class: class,
-            filter: filter,
+            apiGetCollectionUrl: api_route(class),
             columns: columns,
-
+            schema: schema,
+            filter: filter,
             caller: _self,
             dom: 'P<"dtsp-dataTable"rQfti>l'
         }

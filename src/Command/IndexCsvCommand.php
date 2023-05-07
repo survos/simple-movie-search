@@ -37,8 +37,8 @@ use Zenstruck\Console\RunsCommands;
 use Zenstruck\Console\RunsProcesses;
 use function Symfony\Component\String\u;
 
-#[AsCommand('app:create-csv', 'Creates a CSV database from the movie file.  Uses CsvReader from league.  No doctrine')]
-final class CreateCsvDatabaseCommand extends InvokableServiceCommand
+#[AsCommand('app:index-csv', 'Index a CSV file.  Uses CsvReader and CsvParser')]
+final class IndexCsvCommand extends InvokableServiceCommand
 {
     use ConfigureWithAttributes, RunsCommands, RunsProcesses;
 
@@ -62,9 +62,9 @@ EOL
 
     public function __invoke(
         IO                                                 $io,
-        #[Argument(description: 'filename')] string        $filename = 'title.small.tsv',
-        #[Option(description: 'limit')] int                $limit = 10000,
-        #[Option(description: 'batch size for flush')] int $batch = 1000,
+        #[Argument(description: 'filename')] string        $filename = 'title.basics.tsv',
+        #[Option(description: 'limit')] int                $limit = 1000,
+        #[Option(description: 'batch size for flush')] int $batch = 100,
 
 
 
@@ -83,6 +83,7 @@ EOL
         $count = 0;
 
         $config = $this->setupSchemaFromHeaders($fullFilename);
+        $io->success("Schema file written: " . $config['outputSchemaFilename']);
         $writer = Writer::createFromString();
         $csvWriter = new CsvWriter($writer);
 
@@ -128,41 +129,6 @@ EOL
             if ($limit && ($count > $limit)) {
                 break;
             }
-        }
-        if (0) {
-            $imdbId = (int)u($row['tconst'])->after('tt')->toString();
-            if (!$movieCsv->has($imdbId)) {
-                // the movie data should come from a json schema.  This will do for now.
-                $movie = [];
-                // no mapping, just use the same for now.
-                foreach (['primaryTitle', 'originalTitle', 'titleType', 'isAdult', 'runtimeMinutes', 'startYear', 'genres'] as $key) {
-
-                    GridGroupService::assertKeyExists($key, $row);
-                    $value = $row[$key];
-                    if ($value == '\N') {
-                        $value = null;
-                    }
-                    switch ($key) {
-                        case 'genres':
-                            foreach (explode(',', $value ?? '') as $genre) {
-                                $code = $slugger->slug($genre);
-                                if (!$genreCsv->has($code)) {
-                                    $genreRecord = [
-                                        'label' => $genre
-                                    ];
-                                    $genreCsv->set($code, $genreRecord);
-                                }
-                            }
-                            break;
-                        default:
-                            $movie[$key] = $value;
-                    }
-                }
-
-                $movieCsv->set($imdbId, $movie);
-            }
-
-            $progressBar->advance();
         }
         $progressBar->finish();
 //        dd($this->cat, $this->rel, $count);
@@ -355,6 +321,8 @@ END
 
         $form = $formBuilder
             ->getForm();
+        // https://github.com/swaggest/php-json-schema -- can we import with this?
+        // should validate wth https://github.com/opis/json-schema
         $schema = $this->liform->transform($form);
 //        foreach ($schema['properties'] as $code => $property) {
 //            dump($code, $property);
@@ -372,6 +340,7 @@ END
             'outputSchema' => $outputSchema,
             // the map, ignores the row headers, so this must be the correct order~
             'schema' => $csvSchema,
+            'outputSchemaFilename' => $schemaFilename,
             'valueRules' => [
                 '\N' => null
             ]

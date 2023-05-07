@@ -30,7 +30,7 @@ services:
         tags: ['meilli_search_filter']
         autowire: true
     App\State\MeilliSearchStateProvider:
-        bind:  
+        bind:
             $meilliSearchFilter: !tagged meilli_search_filter
         autowire: true
 
@@ -40,11 +40,11 @@ services:
             - "@api_platform.resource_class_resolver"
             - "@api_platform.iri_converter"
             - null
-        tags: {name: 'serializer.normalizer', priority: '-985' } 
+        tags: {name: 'serializer.normalizer', priority: '-985' }
 
     api_platform.hydra.normalizer.collection:
         alias : App\Hydra\Serializer\MeiliCollectionNormalizer
-        
+
     api_platform.hydra.normalizer.partial_collection_view:
         class: ApiPlatform\Hydra\Serializer\PartialCollectionViewNormalizer
         decorates: App\Hydra\Serializer\MeiliCollectionNormalizer

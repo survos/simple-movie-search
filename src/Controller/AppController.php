@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
+use Limenius\Liform\Liform;
+use Limenius\Liform\LiformInterface;
 use Psr\Cache\CacheItemInterface;
 use Survos\GridGroupBundle\CsvSchema\Parser;
 use Survos\GridGroupBundle\Service\CsvCache;
@@ -16,6 +18,9 @@ use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
@@ -128,13 +133,35 @@ class AppController extends AbstractController
     }
 
     #[Route('/browse_dynamic', name: 'app_browse_dynamic')]
-    public function browse_dynamic(Request $request): Response
+    public function browse_dynamic(Request $request, Liform $liform): Response
     {
+        $projectRoot = $this->getParameter('kernel.project_dir');
+        $schema = json_decode(file_get_contents($schemaFilename = $projectRoot . '/schema.json'));
+        // use inspection bundle to get data about the
+
+        $columns = [];
+        foreach ($schema->properties as $propertyName => $property) {
+            $attr = $property->attr;
+            $browsable = ($property->type == 'string') && ($attr->propertyType <> 'db');
+            $searchable = (in_array($property->type, ['string','int']));
+            $columns[] = [
+                'searchable' => $searchable,
+                'name' => $propertyName,
+                'browsable' => $browsable,
+            ];
+        }
+//        dd($columns, $schema->properties, $schemaFilename);
+
+//        dd($schema);
+
+
         $filter = [
 
         ];
         return $this->render('app/browse_dynamic.html.twig', [
+            'schema' => $schema,
             'class' => Movie::class,
+            'columns' => $columns,
             'filter' => $filter,
         ]);
     }
@@ -240,7 +267,10 @@ class AppController extends AbstractController
         $parser = new Parser($config);
         $input = "Kai,Sassnowski,26,0.3\nJohn,Doe,38,7.8";
         $rows = $parser->fromString($input);
-        dd($rows[0]);
+
+        foreach ($rows as $row) {
+            dump($row);
+        }
 
 
         $cache = new CsvCacheAdapter($csvFilename = 'test.csv', 'tconst',  ['primaryTitle','startYear','runtimeMinutes','titleType']);
