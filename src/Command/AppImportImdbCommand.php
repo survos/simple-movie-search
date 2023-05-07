@@ -6,6 +6,7 @@ use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Survos\GridGroupBundle\Service\CsvCache;
+use Survos\GridGroupBundle\Service\CsvDatabase;
 use Survos\GridGroupBundle\Service\GridGroupService;
 use Survos\GridGroupBundle\Service\Reader;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -21,7 +22,7 @@ use Zenstruck\Console\RunsCommands;
 use Zenstruck\Console\RunsProcesses;
 use function Symfony\Component\String\u;
 
-#[AsCommand('app:import-imdb', '')]
+#[AsCommand('app:import-imdb', 'Import imdb into the movie database (doctrine)')]
 final class AppImportImdbCommand extends InvokableServiceCommand
 {
     use ConfigureWithAttributes, RunsCommands, RunsProcesses;
@@ -73,6 +74,8 @@ final class AppImportImdbCommand extends InvokableServiceCommand
                     $row[$key] = null;
                 }
             }
+
+            // create movie and genre tables
             $movie
 //                ->setMovieType('movie')
                 ->setPrimaryTitle($row['primaryTitle'])

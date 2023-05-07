@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use Psr\Cache\CacheItemInterface;
+use Survos\GridGroupBundle\CsvSchema\Parser;
 use Survos\GridGroupBundle\Service\CsvCache;
 use Survos\GridGroupBundle\Service\Reader;
 use Survos\CoreBundle\Traits\JsonResponseTrait;
@@ -126,6 +127,18 @@ class AppController extends AbstractController
         ]);
     }
 
+    #[Route('/browse_dynamic', name: 'app_browse_dynamic')]
+    public function browse_dynamic(Request $request): Response
+    {
+        $filter = [
+
+        ];
+        return $this->render('app/browse_dynamic.html.twig', [
+            'class' => Movie::class,
+            'filter' => $filter,
+        ]);
+    }
+
     #[Route(path: '/fieldCounts.{_format}', name: 'movie_field_counts', methods: ['POST', 'GET'])]
     public function field_counts(Request    $request,
                                             MovieRepository $movieRepository,
@@ -204,14 +217,31 @@ class AppController extends AbstractController
 
     }
 
-    #[Route('/test-cache', name: 'imdb_test_cache')]
+        #[Route('/test-cache', name: 'imdb_test_cache')]
     public function test_cache(Request $request,
-                           ParameterBagInterface $bag): Response
+                               ParameterBagInterface $bag): Response
     {
-
         $limit = $request->get('limit', 5);
         $filename = 'title.basics.tsv';
         $fullFilename = $this->dataDir . $filename;
+
+        $map = [
+
+        ];
+
+        $config = [
+            'schema' => [
+                'first_name' => 'string',
+                'last_name' => 'string',
+                'age' => 'int',
+                'coolness_factor' => 'float',
+            ]
+        ];
+        $parser = new Parser($config);
+        $input = "Kai,Sassnowski,26,0.3\nJohn,Doe,38,7.8";
+        $rows = $parser->fromString($input);
+        dd($rows[0]);
+
 
         $cache = new CsvCacheAdapter($csvFilename = 'test.csv', 'tconst',  ['primaryTitle','startYear','runtimeMinutes','titleType']);
         $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
