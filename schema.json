@@ -1,0 +1,88 @@
+{
+    "title": "form",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "title": "id",
+            "attr": {
+                "propertyType": "db",
+                "internalCode": "code"
+            },
+            "propertyOrder": 1
+        },
+        "type": {
+            "type": "string",
+            "title": "Tipo",
+            "attr": {
+                "propertyType": "cat",
+                "internalCode": "type"
+            },
+            "propertyOrder": 2
+        },
+        "title": {
+            "type": "string",
+            "title": "title",
+            "attr": {
+                "propertyType": "db",
+                "internalCode": "label"
+            },
+            "widget": "textarea",
+            "propertyOrder": 3
+        },
+        "adult": {
+            "type": "boolean",
+            "title": "adult",
+            "attr": {
+                "permission": "admin",
+                "propertyType": "bool",
+                "internalCode": null
+            },
+            "widget": "checkbox",
+            "propertyOrder": 4
+        },
+        "start_year": {
+            "type": "number",
+            "title": "start_year",
+            "attr": {
+                "max": "2024",
+                "propertyType": "int",
+                "internalCode": null
+            },
+            "propertyOrder": 5
+        },
+        "end_year": {
+            "type": "number",
+            "title": "end_year",
+            "attr": {
+                "max": "2024",
+                "propertyType": "int",
+                "internalCode": null
+            },
+            "propertyOrder": 6
+        },
+        "genres": {
+            "type": "array",
+            "title": "genres",
+            "items": {
+                "type": "string",
+                "title": "prototype"
+            },
+            "attr": {
+                "delim": ",",
+                "propertyType": "rel",
+                "internalCode": "genre"
+            },
+            "propertyOrder": 7
+        }
+    },
+    "required": [
+        "id",
+        "type",
+        "title",
+        "adult",
+        "start_year",
+        "end_year",
+        "genres"
+    ]
+}
