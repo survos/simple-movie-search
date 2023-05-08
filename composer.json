@@ -16,10 +16,10 @@
         "nyholm/psr7": "^1.5",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.16",
-        "survos/api-grid-bundle": "*@dev",
+        "survos/api-grid-bundle": "^1.4",
         "survos/command-bundle": "^1.4",
         "survos/grid-bundle": "^1.4",
-        "survos/grid-group-bundle": "*@dev",
+        "survos/grid-group-bundle": "^1.4",
         "survos/inspection-bundle": "^1.4",
         "survos/scraper-bundle": "^1.4",
         "symfony/asset": "^6.2",
@@ -114,13 +114,5 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
-        "api-grid": {
-            "type": "path",
-            "url": "//home/tac/g/survos/survos/packages/api-grid-bundle"
-        },
-        "grid-group": {
-            "type": "path",
-            "url": "//home/tac/g/survos/survos/packages/grid-group-bundle"
-        }
     }
 }

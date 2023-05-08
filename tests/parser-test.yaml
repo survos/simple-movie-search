@@ -1,9 +1,9 @@
 tests:
   - source: |
-      name,hobbies:array|
-      bob,"golf|poker"
+      name,age
+      bob,22
     expects: |
-      {"name":"bob","hobbies":["golf","poker"]}
+      {"name":"bob","age":"22"}
 
   - source: |
       name,age
@@ -18,5 +18,11 @@ tests:
       bob,22
     expects: |
       {"name":"bob","age":22}
+
+  - source: |
+      name,hobbies:array|
+      bob,"golf|poker"
+    expects: |
+      {"name":"bob","hobbies":["golf","poker"]}
 
 
