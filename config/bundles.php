@@ -23,4 +23,5 @@ return [
     Survos\Grid\SurvosGridBundle::class => ['all' => true],
     Meilisearch\Bundle\MeilisearchBundle::class => ['all' => true],
     Survos\Scraper\SurvosScraperBundle::class => ['all' => true],
+    Limenius\LiformBundle\LimeniusLiformBundle::class => ['all' => true]
 ];

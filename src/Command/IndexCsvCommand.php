@@ -8,7 +8,6 @@ use League\Csv\Writer;
 use League\Csv\Statement;
 
 use Limenius\Liform\Liform;
-use Limenius\Liform\LiformInterface;
 use Meilisearch\Client;
 use Survos\GridGroupBundle\CsvSchema\Parser;
 use Survos\GridGroupBundle\Service\CsvDatabase;
@@ -47,7 +46,7 @@ final class IndexCsvCommand extends InvokableServiceCommand
     public function __construct(
         #[Autowire('%kernel.project_dir%/data/')] private string $dataDir,
         private FormFactoryInterface $formFactory,
-//        private Liform $liform,
+        private Liform $liform,
         private array $cat = [],
         private array $rel = [],
         string                                                   $name = null)
@@ -331,14 +330,14 @@ END
         $form = $formBuilder->getForm();
         // https://github.com/swaggest/php-json-schema -- can we import with this?
         // should validate wth https://github.com/opis/json-schema
-        $schema = []; // $this->liform->transform($form);
+        $schema = $this->liform->transform($form);
 //        foreach ($schema['properties'] as $code => $property) {
 //            dump($code, $property);
 //        }
 //        dd($property, $schema);
 
         $schemaFilename = 'schema.json';
-//        file_put_contents($schemaFilename, json_encode($schema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
+        file_put_contents($schemaFilename, json_encode($schema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
 //        dd(file_get_contents($schemaFilename));
 //        dd($schema, $outputSchema, json_encode($outputSchema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
         // the input config
