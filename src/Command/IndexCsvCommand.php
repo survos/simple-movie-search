@@ -8,6 +8,7 @@ use League\Csv\Writer;
 use League\Csv\Statement;
 
 use Limenius\Liform\Liform;
+use Limenius\Liform\LiformInterface;
 use Meilisearch\Client;
 use Survos\GridGroupBundle\CsvSchema\Parser;
 use Survos\GridGroupBundle\Service\CsvDatabase;
@@ -319,18 +320,17 @@ END
             $csvSchema[$newColumn] = $columnType;
         }
 
-        $form = $formBuilder
-            ->getForm();
+        $form = $formBuilder->getForm();
         // https://github.com/swaggest/php-json-schema -- can we import with this?
         // should validate wth https://github.com/opis/json-schema
-        $schema = $this->liform->transform($form);
+        $schema = []; // $this->liform->transform($form);
 //        foreach ($schema['properties'] as $code => $property) {
 //            dump($code, $property);
 //        }
 //        dd($property, $schema);
 
-
-        file_put_contents($schemaFilename = 'schema.json', json_encode($schema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
+        $schemaFilename = 'schema.json';
+//        file_put_contents($schemaFilename, json_encode($schema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
 //        dd(file_get_contents($schemaFilename));
 //        dd($schema, $outputSchema, json_encode($outputSchema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
         // the input config
