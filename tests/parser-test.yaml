@@ -1,0 +1,22 @@
+tests:
+  - source: |
+      name,hobbies:array|
+      bob,"golf|poker"
+    expects: |
+      {"name":"bob","hobbies":["golf","poker"]}
+
+  - source: |
+      name,age
+      bob,22
+    map:
+      /age/: int
+    expects: |
+      {"name":"bob","age":22}
+
+  - source: |
+      name,age:int
+      bob,22
+    expects: |
+      {"name":"bob","age":22}
+
+

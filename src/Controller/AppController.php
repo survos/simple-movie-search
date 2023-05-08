@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
+use League\Csv\Reader;
+use Limenius\Liform\Liform;
+use Limenius\Liform\LiformInterface;
 use Psr\Cache\CacheItemInterface;
+use Survos\GridGroupBundle\CsvSchema\Parser;
 use Survos\GridGroupBundle\Service\CsvCache;
-use Survos\GridGroupBundle\Service\Reader;
 use Survos\CoreBundle\Traits\JsonResponseTrait;
 use Survos\GridGroupBundle\Service\CsvCacheAdapter;
 use Survos\GridGroupBundle\Service\CsvDatabase;
@@ -15,6 +18,9 @@ use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +30,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Form\MovieSearchType;
 use Exception;
 use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
+use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\Cache\ItemInterface;
+use function PHPUnit\Framework\assertEquals;
 use function Symfony\Component\String\u;
 
 class AppController extends AbstractController
@@ -43,7 +51,81 @@ class AppController extends AbstractController
         ]);
 
     }
-    #[Route('/_search', name: 'app_search', options: ['expose' => true])]
+    #[Route('/test-parser', name: 'test_parser')]
+    public function test_parser( Request $request): Response|iterable
+    {
+        // this should be done by a php unit test
+        $yaml = Yaml::parseFile($this->dataDir . '../tests/parser-test.yaml');
+        foreach ($yaml['tests'] as $test) {
+            $csvString = $test['source'];
+            $csvReader = Reader::createFromString($csvString)->setHeaderOffset(0);
+            $schema = Parser::createSchemaFromMap($test['map']??[], $csvReader->getHeader());
+//                dd($schema, $map, $csvReader->getHeader());
+            $config['schema'] = $schema;
+            $parser = new Parser($config);
+            foreach ($parser->fromString($csvString) as $row) {
+                $expects = json_decode($test['expects'], true);
+                assert($expects, "invalid json: " . $test['expects']);
+                assertEquals($expects, $row, json_encode($expects) . '<>' . json_encode($row));
+            }
+        }
+        dd('all tests pass');
+        return [];
+    }
+
+    #[Route('/import_with_parser', name: 'import_with_parser')]
+    public function import_with_parser(SearchService $searchService, EntityManagerInterface $em, Request $request): Response|iterable
+    {
+        $filename = $this->dataDir . 'title.small.tsv';
+        $csv = \League\Csv\Reader::createFromPath($filename)->setDelimiter("\t");
+        $csv->setHeaderOffset(0);
+        foreach ($csv->getHeader() as $header) {
+            $schema[$header] = 'string';
+        }
+
+        $map = Yaml::parse(<<<END
+map:
+    /tconst/i: id:string
+    /primary_title/i: title:string
+    /year/i: int?max=2024
+    /runtime_in_minutes/i: runtime:int?units=min
+    /type/i: type:string
+    /adult/i: adult:bool?permission=admin
+    /genre/i: array,
+END
+        );
+
+
+        $config = [
+            'delimiter' => "\t",
+            'skipTitle' => true,
+            'valueRules' => [
+                '\N' => null
+            ],
+            'schema' => Parser::createSchemaFromMap($map, $csv->getHeader())
+        ];
+        $parser = new Parser($config);
+        $rows = $parser->fromFile($filename);
+        foreach ($rows as $row) {
+            dd($row);
+        }
+
+        $header_offset = $csv->getHeaderOffset(); //returns 0
+        $header = $csv->getHeader();
+        $rows = [];
+        foreach ($csv->getIterator() as $row) {
+            $rows[] = $row;
+            dd($row);
+        }
+
+        // age should be an integer.
+        return $rows;
+
+    }
+
+
+
+#[Route('/_search', name: 'app_search', options: ['expose' => true])]
     public function search(SearchService $searchService, EntityManagerInterface $em, Request $request): Response
     {
 
@@ -126,6 +208,40 @@ class AppController extends AbstractController
         ]);
     }
 
+    #[Route('/browse_dynamic', name: 'app_browse_dynamic')]
+    public function browse_dynamic(Request $request, Liform $liform): Response
+    {
+        $projectRoot = $this->getParameter('kernel.project_dir');
+        $schema = json_decode(file_get_contents($schemaFilename = $projectRoot . '/schema.json'));
+        // use inspection bundle to get data about the
+
+        $columns = [];
+        foreach ($schema->properties as $propertyName => $property) {
+            $attr = $property->attr;
+            $browsable = ($property->type == 'string') && ($attr->propertyType <> 'db');
+            $searchable = (in_array($property->type, ['string','int']));
+            $columns[] = [
+                'searchable' => $searchable,
+                'name' => $propertyName,
+                'browsable' => $browsable,
+            ];
+        }
+//        dd($columns, $schema->properties, $schemaFilename);
+
+//        dd($schema);
+
+
+        $filter = [
+
+        ];
+        return $this->render('app/browse_dynamic.html.twig', [
+            'schema' => $schema,
+            'class' => Movie::class,
+            'columns' => $columns,
+            'filter' => $filter,
+        ]);
+    }
+
     #[Route(path: '/fieldCounts.{_format}', name: 'movie_field_counts', methods: ['POST', 'GET'])]
     public function field_counts(Request    $request,
                                             MovieRepository $movieRepository,
@@ -204,14 +320,34 @@ class AppController extends AbstractController
 
     }
 
-    #[Route('/test-cache', name: 'imdb_test_cache')]
+        #[Route('/test-cache', name: 'imdb_test_cache')]
     public function test_cache(Request $request,
-                           ParameterBagInterface $bag): Response
+                               ParameterBagInterface $bag): Response
     {
-
         $limit = $request->get('limit', 5);
         $filename = 'title.basics.tsv';
         $fullFilename = $this->dataDir . $filename;
+
+        $map = [
+
+        ];
+
+        $config = [
+            'schema' => [
+                'first_name' => 'string',
+                'last_name' => 'string',
+                'age' => 'int',
+                'coolness_factor' => 'float',
+            ]
+        ];
+        $parser = new Parser($config);
+        $input = "Kai,Sassnowski,26,0.3\nJohn,Doe,38,7.8";
+        $rows = $parser->fromString($input);
+
+        foreach ($rows as $row) {
+            dump($row);
+        }
+
 
         $cache = new CsvCacheAdapter($csvFilename = 'test.csv', 'tconst',  ['primaryTitle','startYear','runtimeMinutes','titleType']);
         $reader = new Reader($fullFilename, strict: false, delimiter: "\t");

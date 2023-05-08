@@ -11,14 +11,14 @@ class CsvCacheTest extends KernelTestCase
     /**
      * @dataProvider csvSteps
      */
-    public function testSomething(array $test): void
+    public function testCsvDatabase(array $test): void
     {
         $kernel = self::bootKernel();
         $csvDatabase = new CsvDatabase($test['db'], $test['key'], $test['headers'] ?? []);
         $csvDatabase->flushFile(); // purge?  reset? We need to start with a clean file.
         $csvDatabase->purge();
         foreach ($test['steps'] as $step) {
-            $key = $step['key'];
+            $key = $step['key']??null;
             $data = $step['data'] ?? [];
             $expects = $step['expects'] ?? null;
             $csv = $step['csv'] ?? null;
@@ -28,6 +28,8 @@ class CsvCacheTest extends KernelTestCase
                 'delete' => $csvDatabase->delete($key),
                 'replace' => $csvDatabase->replace($key, $data),
                 'set' => $csvDatabase->set($key, (array)$data),
+                'add_headers' => $csvDatabase->setHeaders(),
+
                 default =>
                 assert(false, "Operation not supported " . $operation)
             };
@@ -52,5 +54,12 @@ class CsvCacheTest extends KernelTestCase
             yield [$test['db'] => $test];
         }
     }
+
+    public function getImport()
+    {
+
+    }
+
+
 
 }

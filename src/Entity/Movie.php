@@ -12,12 +12,13 @@ use ApiPlatform\Metadata\GetCollection;
 use App\Repository\MovieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Survos\ApiGrid\Api\Filter\FacetsFieldSearchFilter;
 use Survos\ApiGrid\Api\Filter\JsonSearchFilter;
 use Survos\ApiGrid\Api\Filter\MultiFieldSearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\Get;
-use App\State\MeilliSearchStateProvider;
-use App\Filter\MeiliSearch\SortFilter;
+use Survos\ApiGrid\State\MeilliSearchStateProvider;
+use Survos\ApiGrid\Filter\MeiliSearch\SortFilter;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource(
@@ -49,7 +50,10 @@ use App\Filter\MeiliSearch\SortFilter;
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['releaseName', 'imdbId'])] # Mei?isearch
 // can we move this to a property
 #[ApiFilter(JsonSearchFilter::class, properties: ['attributes'], arguments: ['searchParameterName' => 'attribute_search'])]
-
+// This is a doctrine facet filter that works when you select any fields from left seachPanes
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ["imdbId","releaseName","title"], arguments: [
+    "searchParameterName" => "facet_filter",
+])]
 class Movie
 {
     #[ORM\Column]
