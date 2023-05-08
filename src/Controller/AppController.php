@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
+use League\Csv\Reader;
 use Limenius\Liform\Liform;
 use Limenius\Liform\LiformInterface;
 use Psr\Cache\CacheItemInterface;
 use Survos\GridGroupBundle\CsvSchema\Parser;
 use Survos\GridGroupBundle\Service\CsvCache;
-use Survos\GridGroupBundle\Service\Reader;
 use Survos\CoreBundle\Traits\JsonResponseTrait;
 use Survos\GridGroupBundle\Service\CsvCacheAdapter;
 use Survos\GridGroupBundle\Service\CsvDatabase;
@@ -32,6 +32,7 @@ use Exception;
 use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\Cache\ItemInterface;
+use function PHPUnit\Framework\assertEquals;
 use function Symfony\Component\String\u;
 
 class AppController extends AbstractController
@@ -49,6 +50,27 @@ class AppController extends AbstractController
             'class' => Movie::class,
         ]);
 
+    }
+    #[Route('/test-parser', name: 'test_parser')]
+    public function test_parser( Request $request): Response|iterable
+    {
+        // this should be done by a php unit test
+        $yaml = Yaml::parseFile($this->dataDir . '../tests/parser-test.yaml');
+        foreach ($yaml['tests'] as $test) {
+            $csvString = $test['source'];
+            $csvReader = Reader::createFromString($csvString)->setHeaderOffset(0);
+            $schema = Parser::createSchemaFromMap($test['map']??[], $csvReader->getHeader());
+//                dd($schema, $map, $csvReader->getHeader());
+            $config['schema'] = $schema;
+            $parser = new Parser($config);
+            foreach ($parser->fromString($csvString) as $row) {
+                $expects = json_decode($test['expects'], true);
+                assert($expects, "invalid json: " . $test['expects']);
+                assertEquals($expects, $row, json_encode($expects) . '<>' . json_encode($row));
+            }
+        }
+        dd('all tests pass');
+        return [];
     }
 
     #[Route('/import_with_parser', name: 'import_with_parser')]
