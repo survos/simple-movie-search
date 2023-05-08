@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1425047357f6ed903c40a0eff59d19f",
+    "content-hash": "61ececc484a84c60a0f25b171d64c373",
     "packages": [
         {
             "name": "answear/liform",
@@ -4012,17 +4012,11 @@
         },
         {
             "name": "survos/scraper-bundle",
-            "version": "1.4.38",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosScraperBundle.git",
-                "reference": "980724101d9b9a1fc3e4580b2493f1d0d819f233"
-            },
+            "version": "dev-tac",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosScraperBundle/zipball/980724101d9b9a1fc3e4580b2493f1d0d819f233",
-                "reference": "980724101d9b9a1fc3e4580b2493f1d0d819f233",
-                "shasum": ""
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/scraper-bundle",
+                "reference": "82b8380d3f8a3b638b44233a9d01826531f2aeb1"
             },
             "require": {
                 "php": "^8.1",
@@ -4048,7 +4042,6 @@
                     "Survos\\Scraper\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4057,11 +4050,9 @@
                 "symfony-ux",
                 "symfony6"
             ],
-            "support": {
-                "issues": "https://github.com/survos/SurvosScraperBundle/issues",
-                "source": "https://github.com/survos/SurvosScraperBundle/tree/1.4.38"
-            },
-            "time": "2023-04-24T17:40:50+00:00"
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "symfony/asset",
@@ -9898,6 +9889,68 @@
             "time": "2022-02-21T01:04:05+00:00"
         },
         {
+            "name": "phpstan/phpstan",
+            "version": "1.10.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "d232901b09e67538e5c86a724be841bea5768a7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d232901b09e67538e5c86a724be841bea5768a7c",
+                "reference": "d232901b09e67538e5c86a724be841bea5768a7c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
+            "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-04-19T13:47:27+00:00"
+        },
+        {
             "name": "phpunit/php-code-coverage",
             "version": "9.2.26",
             "source": {
@@ -11873,7 +11926,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "survos/scraper-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
