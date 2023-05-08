@@ -3,3 +3,5 @@
 when@dev:
   survos_api_grid:
     stimulus_controller: sandbox_api_grid
+    meiliHost: 'http://127.0.0.1:7700'
+    meiliKey: masterKey
