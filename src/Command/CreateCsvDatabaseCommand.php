@@ -46,7 +46,7 @@ final class CreateCsvDatabaseCommand extends InvokableServiceCommand
     public function __construct(
         #[Autowire('%kernel.project_dir%/data/')] private string $dataDir,
         private FormFactoryInterface $formFactory,
-        private Liform $liform,
+//        private Liform $liform,
         private array $cat = [],
         private array $rel = [],
         string                                                   $name = null)

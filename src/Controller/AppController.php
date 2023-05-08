@@ -65,6 +65,7 @@ class AppController extends AbstractController
             $parser = new Parser($config);
             foreach ($parser->fromString($csvString) as $row) {
                 $expects = json_decode($test['expects'], true);
+                dump($test['expects']);
                 assert($expects, "invalid json: " . $test['expects']);
                 assertEquals($expects, $row, json_encode($expects) . '<>' . json_encode($row));
             }
