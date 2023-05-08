@@ -219,7 +219,7 @@ END
         $columns = [];
         foreach ($schema->properties as $propertyName => $property) {
             $attr = $property->attr;
-            $browsable = ($property->type == 'string') && ($attr->propertyType <> 'db');
+            $browsable = (in_array($property->type, ['bool', 'string'])) && ($attr->propertyType <> 'db');
             $searchable = (in_array($property->type, ['string','int']));
             $columns[] = [
                 'searchable' => $searchable,

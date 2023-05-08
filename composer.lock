@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1425047357f6ed903c40a0eff59d19f",
+    "content-hash": "92798f3c10497bc30dbbf9e15a667256",
     "packages": [
         {
             "name": "answear/liform",
@@ -3531,17 +3531,11 @@
         },
         {
             "name": "survos/api-grid-bundle",
-            "version": "1.4.38",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosApiGridBundle.git",
-                "reference": "cad1f8e2db7ad2cd743875026282057d32c60af2"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/cad1f8e2db7ad2cd743875026282057d32c60af2",
-                "reference": "cad1f8e2db7ad2cd743875026282057d32c60af2",
-                "shasum": ""
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/api-grid-bundle",
+                "reference": "2ed4574db0fe410a430a085143473a2ab09d419c"
             },
             "require": {
                 "doctrine/doctrine-bundle": "^2.7",
@@ -3550,7 +3544,7 @@
                 "friendsofsymfony/jsrouting-bundle": "^3.2",
                 "meilisearch/search-bundle": "^0.11.0",
                 "php": "^8.1",
-                "survos/inspection-bundle": "^1.4.38",
+                "survos/inspection-bundle": "^1.5",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -3579,7 +3573,11 @@
                     "Survos\\ApiGrid\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "phpstan": [
+                    "vendor/bin/phpstan analyse"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -3594,11 +3592,9 @@
                 "symfony-ux",
                 "symfony6"
             ],
-            "support": {
-                "issues": "https://github.com/survos/SurvosApiGridBundle/issues",
-                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.4.38"
-            },
-            "time": "2023-05-08T11:55:58+00:00"
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "survos/command-bundle",
@@ -3675,7 +3671,7 @@
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.4.38",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
@@ -3728,6 +3724,7 @@
                 "symfony/var-dumper": "^6.1.0",
                 "symfony/webpack-encore-bundle": "^1.11"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -3932,22 +3929,22 @@
         },
         {
             "name": "survos/inspection-bundle",
-            "version": "1.4.38",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosInspectionBundle.git",
-                "reference": "632fcf62fcf321520a0b38133b9a8262b8f08fe9"
+                "reference": "88c103aa41aa3d1106a2a76e66261b40df1bc3c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/632fcf62fcf321520a0b38133b9a8262b8f08fe9",
-                "reference": "632fcf62fcf321520a0b38133b9a8262b8f08fe9",
+                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/88c103aa41aa3d1106a2a76e66261b40df1bc3c1",
+                "reference": "88c103aa41aa3d1106a2a76e66261b40df1bc3c1",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "v3.1.7",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.4.38",
+                "survos/core-bundle": "^1.5",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -3979,6 +3976,7 @@
                 "phpstan/phpstan": "^1.8",
                 "roave/security-advisories": "dev-latest"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -4006,23 +4004,17 @@
             "description": "Inspects Doctrine entities with APIPlatform attributes",
             "support": {
                 "issues": "https://github.com/survos/SurvosInspectionBundle/issues",
-                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.4.38"
+                "source": "https://github.com/survos/SurvosInspectionBundle/tree/main"
             },
-            "time": "2023-05-08T11:56:03+00:00"
+            "time": "2023-05-08T11:56:11+00:00"
         },
         {
             "name": "survos/scraper-bundle",
-            "version": "1.4.38",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosScraperBundle.git",
-                "reference": "980724101d9b9a1fc3e4580b2493f1d0d819f233"
-            },
+            "version": "dev-main",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosScraperBundle/zipball/980724101d9b9a1fc3e4580b2493f1d0d819f233",
-                "reference": "980724101d9b9a1fc3e4580b2493f1d0d819f233",
-                "shasum": ""
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/scraper-bundle",
+                "reference": "82b8380d3f8a3b638b44233a9d01826531f2aeb1"
             },
             "require": {
                 "php": "^8.1",
@@ -4048,7 +4040,6 @@
                     "Survos\\Scraper\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4057,11 +4048,9 @@
                 "symfony-ux",
                 "symfony6"
             ],
-            "support": {
-                "issues": "https://github.com/survos/SurvosScraperBundle/issues",
-                "source": "https://github.com/survos/SurvosScraperBundle/tree/1.4.38"
-            },
-            "time": "2023-04-24T17:40:50+00:00"
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "symfony/asset",
@@ -9898,6 +9887,68 @@
             "time": "2022-02-21T01:04:05+00:00"
         },
         {
+            "name": "phpstan/phpstan",
+            "version": "1.10.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "d232901b09e67538e5c86a724be841bea5768a7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d232901b09e67538e5c86a724be841bea5768a7c",
+                "reference": "d232901b09e67538e5c86a724be841bea5768a7c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
+            "support": {
+                "docs": "https://phpstan.org/user-guide/getting-started",
+                "forum": "https://github.com/phpstan/phpstan/discussions",
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "security": "https://github.com/phpstan/phpstan/security/policy",
+                "source": "https://github.com/phpstan/phpstan-src"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-04-19T13:47:27+00:00"
+        },
+        {
             "name": "phpunit/php-code-coverage",
             "version": "9.2.26",
             "source": {
@@ -11873,7 +11924,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "survos/api-grid-bundle": 20,
+        "survos/scraper-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
