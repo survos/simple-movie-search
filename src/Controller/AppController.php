@@ -30,6 +30,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Form\MovieSearchType;
 use Exception;
 use Symfony\Component\Form\ChoiceList\ArrayChoiceList;
+use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\Cache\ItemInterface;
 use function Symfony\Component\String\u;
 
@@ -49,7 +50,60 @@ class AppController extends AbstractController
         ]);
 
     }
-    #[Route('/_search', name: 'app_search', options: ['expose' => true])]
+
+    #[Route('/import_with_parser', name: 'import_with_parser')]
+    public function import_with_parser(SearchService $searchService, EntityManagerInterface $em, Request $request): Response|iterable
+    {
+        $filename = $this->dataDir . 'title.small.tsv';
+        $csv = \League\Csv\Reader::createFromPath($filename)->setDelimiter("\t");
+        $csv->setHeaderOffset(0);
+        foreach ($csv->getHeader() as $header) {
+            $schema[$header] = 'string';
+        }
+
+        $map = Yaml::parse(<<<END
+map:
+    /tconst/i: id:string
+    /primary_title/i: title:string
+    /year/i: int?max=2024
+    /runtime_in_minutes/i: runtime:int?units=min
+    /type/i: type:string
+    /adult/i: adult:bool?permission=admin
+    /genre/i: array,
+END
+        );
+
+
+        $config = [
+            'delimiter' => "\t",
+            'skipTitle' => true,
+            'valueRules' => [
+                '\N' => null
+            ],
+            'schema' => Parser::createSchemaFromMap($map, $csv->getHeader())
+        ];
+        $parser = new Parser($config);
+        $rows = $parser->fromFile($filename);
+        foreach ($rows as $row) {
+            dd($row);
+        }
+
+        $header_offset = $csv->getHeaderOffset(); //returns 0
+        $header = $csv->getHeader();
+        $rows = [];
+        foreach ($csv->getIterator() as $row) {
+            $rows[] = $row;
+            dd($row);
+        }
+
+        // age should be an integer.
+        return $rows;
+
+    }
+
+
+
+#[Route('/_search', name: 'app_search', options: ['expose' => true])]
     public function search(SearchService $searchService, EntityManagerInterface $em, Request $request): Response
     {
 

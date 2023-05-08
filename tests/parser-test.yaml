@@ -1,0 +1,21 @@
+tests:
+  - source:
+      name,age
+      bob,22
+    map:
+      /age/: int
+    expects:
+      # json-encoded?
+
+  - source:
+      name,age:int
+      bob,22
+    expects:
+    # json-encoded?
+
+  - source:
+      name,hobbies:array|
+      bob,"golf|poker"
+    expects:
+    # json-encoded?
+

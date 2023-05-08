@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df076f4db27c92c9c28c0ad80b7031d2",
+    "content-hash": "fdef221316e51d5ec35686ac30ca9b18",
     "packages": [
         {
             "name": "answear/liform",
@@ -3579,7 +3579,7 @@
         },
         {
             "name": "survos/api-grid-bundle",
-            "version": "dev-main",
+            "version": "dev-tac",
             "dist": {
                 "type": "path",
                 "url": "//home/tac/g/survos/survos/packages/api-grid-bundle",
@@ -3900,17 +3900,11 @@
         },
         {
             "name": "survos/grid-group-bundle",
-            "version": "1.4.37",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosGridGroupBundle.git",
-                "reference": "5118343c32c01bfde9af8e87a432672bf1deb886"
-            },
+            "version": "dev-tac",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridGroupBundle/zipball/5118343c32c01bfde9af8e87a432672bf1deb886",
-                "reference": "5118343c32c01bfde9af8e87a432672bf1deb886",
-                "shasum": ""
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/grid-group-bundle",
+                "reference": "fbc24ba4cd9f4ef3148ea13526a4cea2176e3e39"
             },
             "require": {
                 "illuminate/collections": "^10.9",
@@ -3959,7 +3953,6 @@
                     "Survos\\GridGroupBundle\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3968,11 +3961,9 @@
                 "symfony-ux",
                 "symfony6"
             ],
-            "support": {
-                "issues": "https://github.com/survos/SurvosGridGroupBundle/issues",
-                "source": "https://github.com/survos/SurvosGridGroupBundle/tree/1.4.37"
-            },
-            "time": "2023-05-06T15:43:32+00:00"
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "survos/inspection-bundle",
@@ -11960,7 +11951,8 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
-        "survos/api-grid-bundle": 20
+        "survos/api-grid-bundle": 20,
+        "survos/grid-group-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
