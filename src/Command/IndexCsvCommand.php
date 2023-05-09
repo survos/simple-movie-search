@@ -83,6 +83,8 @@ EOL
         $count = 0;
 
         $config = $this->setupSchemaFromHeaders($fullFilename);
+        $filterableSortable = $config['filterableSortable'];
+        unset($config['filterableSortable']);
         $io->success("Schema file written: " . $config['outputSchemaFilename']);
         $writer = Writer::createFromString();
         $csvWriter = new CsvWriter($writer);
@@ -116,8 +118,8 @@ EOL
 //            ->addHeader()
 
 
-        $client = new Client('http://127.0.0.1:7700', 'masterKey');
-        $index = $client->index('movies');
+            $client = new Client('http://127.0.0.1:7700', 'masterKey');
+        $index = $client->index('movie');
 
 
         $parser = $this->getParser($config);
@@ -131,6 +133,12 @@ EOL
             }
         }
         $progressBar->finish();
+
+        $index->updateSettings([
+            'filterableAttributes' => $filterableSortable,
+            'sortableAttributes' => $filterableSortable
+        ]);
+
 //        dd($this->cat, $this->rel, $count);
         $io->success("Done.");
     }
@@ -319,8 +327,7 @@ END
             $csvSchema[$newColumn] = $columnType;
         }
 
-        $form = $formBuilder
-            ->getForm();
+        $form = $formBuilder->getForm();
         // https://github.com/swaggest/php-json-schema -- can we import with this?
         // should validate wth https://github.com/opis/json-schema
         $schema = $this->liform->transform($form);
@@ -329,11 +336,17 @@ END
 //        }
 //        dd($property, $schema);
 
-
-        file_put_contents($schemaFilename = 'schema.json', json_encode($schema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
+        $schemaFilename = 'schema.json';
+        file_put_contents($schemaFilename, json_encode($schema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
 //        dd(file_get_contents($schemaFilename));
 //        dd($schema, $outputSchema, json_encode($outputSchema, JSON_PRETTY_PRINT+JSON_UNESCAPED_SLASHES));
         // the input config
+        $schema = json_decode(file_get_contents($schemaFilename), true);
+        $filterableSortable = [];
+        foreach ($schema['properties'] as $code => $property) {
+            array_push($filterableSortable, $code);
+        }
+
         $config = [
             'delimiter' => "\t",
             'skipTitle' => true,
@@ -343,7 +356,8 @@ END
             'outputSchemaFilename' => $schemaFilename,
             'valueRules' => [
                 '\N' => null
-            ]
+            ],
+            'filterableSortable' => $filterableSortable
         ];
         return $config;
     }

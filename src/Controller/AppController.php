@@ -218,7 +218,7 @@ END
     }
 
     #[Route('/browse_dynamic', name: 'app_browse_dynamic')]
-    public function browse_dynamic(Request $request, Liform $liform): Response
+    public function browse_dynamic(Request $request): Response
     {
         $projectRoot = $this->getParameter('kernel.project_dir');
         $schema = json_decode(file_get_contents($schemaFilename = $projectRoot . '/schema.json'));
