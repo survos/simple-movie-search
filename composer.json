@@ -17,6 +17,7 @@
         "phpstan/phpdoc-parser": "^1.16",
         "survos/api-grid-bundle": "*@dev",
         "survos/command-bundle": "^1.4",
+        "survos/crawler-bundle": "*@dev",
         "survos/grid-bundle": "^1.4",
         "survos/grid-group-bundle": "^1.4",
         "survos/inspection-bundle": "^1.4",
@@ -80,6 +81,9 @@
         "symfony/polyfill-php81": "*"
     },
     "scripts": {
+        "phpstan": "vendor/bin/phpstan analyse",
+        "coverage": "php -d xpcov.enabled=1 vendor/bin/phpunit --coverage-html coverage\n",
+        "tests": "vendor/bin/phpunit",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
@@ -104,6 +108,7 @@
     "require-dev": {
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^9.5",
+        "spaze/phpstan-disallowed-calls": "^2.14",
         "symfony/browser-kit": "^6.2",
         "symfony/css-selector": "^6.2",
         "symfony/debug-bundle": "^6.2",
@@ -115,6 +120,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
+        "crawler": {
+            "type": "path",
+            "url": "//home/tac/g/survos/survos/packages/crawler-bundle"
+        },
         "api-grid": {
             "type": "path",
             "url": "//home/tac/g/survos/survos/packages/api-grid-bundle"

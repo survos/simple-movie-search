@@ -193,7 +193,6 @@ EOL
 //            dd($value, $catType, 'cat');
             $this->addCat($catType, $value, $settings);
             return $value;
-            return DB::table($table)->findById($value);
         });
         $parser = new Parser($config);
         return $parser;

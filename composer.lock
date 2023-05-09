@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa5522ad236666e9358cebccf6a667af",
+    "content-hash": "2736f81375ee0437e421acfb6404dd60",
     "packages": [
         {
             "name": "answear/liform",
@@ -58,54 +58,6 @@
                 "source": "https://github.com/answear/Liform/tree/0.20.2"
             },
             "time": "2022-09-23T15:16:15+00:00"
-        },
-        {
-            "name": "answear/liform-bundle",
-            "version": "0.19.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/answear/LiformBundle.git",
-                "reference": "fff72b20fc73d2fa55c4cb6e30740af8090f0627"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/answear/LiformBundle/zipball/fff72b20fc73d2fa55c4cb6e30740af8090f0627",
-                "reference": "fff72b20fc73d2fa55c4cb6e30740af8090f0627",
-                "shasum": ""
-            },
-            "require": {
-                "answear/liform": "^0.20",
-                "symfony/config": "^5.4|^6.0",
-                "symfony/dependency-injection": "^5.4|^6.0",
-                "symfony/http-kernel": "^5.4|^6.0"
-            },
-            "replace": {
-                "limenius/liform-bundle": "*"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^1.8"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Limenius\\LiformBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nacho Martín",
-                    "email": "nacho@limenius.com"
-                }
-            ],
-            "description": "Bundle for Liform: Transform Symfony Forms into Json Schema",
-            "support": {
-                "source": "https://github.com/answear/LiformBundle/tree/0.19.1"
-            },
-            "time": "2022-09-22T15:32:50+00:00"
         },
         {
             "name": "api-platform/core",
@@ -3754,6 +3706,67 @@
             "time": "2023-04-27T20:33:57+00:00"
         },
         {
+            "name": "survos/crawler-bundle",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/crawler-bundle",
+                "reference": "9c2e2be53a9f6aca9370b983e7e997b1dc351a43"
+            },
+            "require": {
+                "php": "^8.1",
+                "symfony/config": "^6.1.0",
+                "symfony/dependency-injection": "^6.1.0",
+                "symfony/http-kernel": "^6.1.0",
+                "symfony/stopwatch": "^6.1"
+            },
+            "conflict": {
+                "survos/api-grid-bundle": "<1.2.57",
+                "survos/auth-bundle": "<1.2.57",
+                "survos/barcode-bundle": "<1.2.57",
+                "survos/bootstrap-bundle": "<1.2.57",
+                "survos/command-bundle": "<1.2.57",
+                "survos/core-bundle": "<1.2.57",
+                "survos/doc-bundle": "<1.2.57",
+                "survos/faker-bundle": "<1.2.57",
+                "survos/grid-bundle": "<1.2.57",
+                "survos/grid-group-bundle": "<1.2.57",
+                "survos/html-prettify-bundle": "<1.2.57",
+                "survos/import-bridge": "<1.2.57",
+                "survos/inspection-bundle": "<1.2.57",
+                "survos/location-bundle": "<1.2.57",
+                "survos/maker-bundle": "<1.2.57",
+                "survos/providence-bundle": "<1.2.57",
+                "survos/ruler-bundle": "<1.2.57",
+                "survos/stripe-product": "<1.2.57",
+                "survos/tree-bundle": "<1.2.57",
+                "survos/wiki-bundle": "<1.2.57",
+                "survos/workflow-helper-bundle": "<1.2.57"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Survos\\CrawlerBundle\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "Provides a way to create tests that crawl a site",
+            "transport-options": {
+                "relative": false
+            }
+        },
+        {
             "name": "survos/grid-bundle",
             "version": "1.4.38",
             "source": {
@@ -4009,12 +4022,67 @@
             "time": "2023-05-08T11:56:11+00:00"
         },
         {
-            "name": "survos/scraper-bundle",
-            "version": "dev-main",
+            "name": "survos/liform-bundle",
+            "version": "1.4.40",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosLiformbundle.git",
+                "reference": "06282e6561a167130d48b43353abfe6699d3e7fc"
+            },
             "dist": {
-                "type": "path",
-                "url": "//home/tac/g/survos/survos/packages/scraper-bundle",
-                "reference": "82b8380d3f8a3b638b44233a9d01826531f2aeb1"
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosLiformbundle/zipball/06282e6561a167130d48b43353abfe6699d3e7fc",
+                "reference": "06282e6561a167130d48b43353abfe6699d3e7fc",
+                "shasum": ""
+            },
+            "require": {
+                "answear/liform": "^0.20",
+                "symfony/config": "^6.1.0",
+                "symfony/dependency-injection": "^6.1.0",
+                "symfony/http-kernel": "^6.1.0"
+            },
+            "replace": {
+                "limenius/liform-bundle": "*"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Limenius\\LiformBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nacho Martín",
+                    "email": "nacho@limenius.com"
+                }
+            ],
+            "description": "Bundle for Liform: Transform Symfony Forms into Json Schema",
+            "support": {
+                "issues": "https://github.com/survos/SurvosLiformbundle/issues",
+                "source": "https://github.com/survos/SurvosLiformbundle/tree/1.4.40"
+            },
+            "time": "2023-05-09T11:02:43+00:00"
+        },
+        {
+            "name": "survos/scraper-bundle",
+            "version": "1.4.40",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosScraperBundle.git",
+                "reference": "980724101d9b9a1fc3e4580b2493f1d0d819f233"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosScraperBundle/zipball/980724101d9b9a1fc3e4580b2493f1d0d819f233",
+                "reference": "980724101d9b9a1fc3e4580b2493f1d0d819f233",
+                "shasum": ""
             },
             "require": {
                 "php": "^8.1",
@@ -4040,6 +4108,7 @@
                     "Survos\\Scraper\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4048,9 +4117,11 @@
                 "symfony-ux",
                 "symfony6"
             ],
-            "transport-options": {
-                "relative": false
-            }
+            "support": {
+                "issues": "https://github.com/survos/SurvosScraperBundle/issues",
+                "source": "https://github.com/survos/SurvosScraperBundle/tree/1.4.40"
+            },
+            "time": "2023-04-24T17:40:50+00:00"
         },
         {
             "name": "symfony/asset",
@@ -11334,6 +11405,72 @@
             "time": "2020-09-28T06:39:44+00:00"
         },
         {
+            "name": "spaze/phpstan-disallowed-calls",
+            "version": "v2.14.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spaze/phpstan-disallowed-calls.git",
+                "reference": "3dfc371dcaa017bda0b66218e4a5db1a9a88baa3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spaze/phpstan-disallowed-calls/zipball/3dfc371dcaa017bda0b66218e4a5db1a9a88baa3",
+                "reference": "3dfc371dcaa017bda0b66218e4a5db1a9a88baa3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0",
+                "phpstan/phpstan": "^1.10"
+            },
+            "require-dev": {
+                "nette/neon": "^3.2",
+                "nikic/php-parser": "^4.13",
+                "php-parallel-lint/php-console-highlighter": "^1.0",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpunit/phpunit": "^8.5 || ^10.1",
+                "spaze/coding-standard": "^1.6"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spaze\\PHPStan\\Rules\\Disallowed\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michal Špaček",
+                    "email": "mail@michalspacek.cz",
+                    "homepage": "https://www.michalspacek.cz"
+                }
+            ],
+            "description": "PHPStan rules to detect disallowed method & function calls, constant, namespace & superglobal usages",
+            "keywords": [
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/spaze/phpstan-disallowed-calls/issues",
+                "source": "https://github.com/spaze/phpstan-disallowed-calls/tree/v2.14.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spaze",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-04-30T02:32:31+00:00"
+        },
+        {
             "name": "symfony/browser-kit",
             "version": "v6.2.7",
             "source": {
@@ -11926,8 +12063,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "survos/api-grid-bundle": 20,
-        "answear/liform-bundle": 20,
-        "survos/scraper-bundle": 20
+        "survos/crawler-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
