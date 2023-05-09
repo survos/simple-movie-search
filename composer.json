@@ -20,8 +20,8 @@
         "survos/grid-bundle": "^1.4",
         "survos/grid-group-bundle": "^1.4",
         "survos/inspection-bundle": "^1.4",
-        "answear/liform-bundle": "*@dev",
-        "survos/scraper-bundle": "*@dev",
+        "survos/liform-bundle": "^1.4",
+        "survos/scraper-bundle": "^1.4",
         "symfony/asset": "^6.2",
         "symfony/console": "^6.2",
         "symfony/doctrine-messenger": "^6.2",
@@ -115,17 +115,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
-        "liform": {
-            "type": "path",
-            "url": "//home/tac/g/survos/survos/packages/liform-bundle"
-        },
         "api-grid": {
             "type": "path",
             "url": "//home/tac/g/survos/survos/packages/api-grid-bundle"
-        },
-        "scraper": {
-            "type": "path",
-            "url": "//home/tac/g/survos/survos/packages/scraper-bundle"
         }
     }
 }
