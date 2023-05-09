@@ -1,0 +1,11 @@
+survos_crawler:
+    max_per_route: 3
+
+    # this is only for easier debugging, not the actual call.
+
+    base_url: 'https://movie.wip/'
+    initial_path: /
+    user_class: null # App\Entity\User
+#    users:
+#        - tacman@gmail.com
+#        - visitor@museado.com
