@@ -13,6 +13,8 @@ use Survos\GridGroupBundle\Service\CsvCache;
 use Survos\CoreBundle\Traits\JsonResponseTrait;
 use Survos\GridGroupBundle\Service\CsvCacheAdapter;
 use Survos\GridGroupBundle\Service\CsvDatabase;
+use Survos\Scraper\Service\LocalWebpageCacheAdapter;
+use Survos\Scraper\Service\ScraperService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -54,6 +56,12 @@ class AppController extends AbstractController
     #[Route('/test-parser', name: 'test_parser')]
     public function test_parser( Request $request): Response|iterable
     {
+        $csvString = "name,age
+bob,44";
+        $csvReader = Reader::createFromString($csvString)->setHeaderOffset(0);
+        var_dump($csvReader->first());
+        dd('stopped');
+
         // this should be done by a php unit test
         $yaml = Yaml::parseFile($this->dataDir . '../tests/parser-test.yaml');
         foreach ($yaml['tests'] as $test) {
@@ -186,7 +194,7 @@ END
         }
 
         // with adapter
-        $urlCacheAdapter = (new WebpageCacheAdapter($dir));
+        $urlCacheAdapter = (new LocalWebpageCacheAdapter($dir));
         $path = $urlCacheAdapter->get($key, function (CacheItemInterface $cacheItem) {
 
         });
