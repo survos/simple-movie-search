@@ -6,7 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "answear/liform": "^0.20.2",
-        "answear/liform-bundle": "^0.19.1",
+        "survos/liform-bundle": "^0.19.1",
         "doctrine/annotations": "^2.0",
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
@@ -115,6 +115,10 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
+        "liform": {
+            "type": "path",
+            "url": "//home/tac/g/survos/survos/packages/liform-bundle"
+        },
         "api-grid": {
             "type": "path",
             "url": "//home/tac/g/survos/survos/packages/api-grid-bundle"
