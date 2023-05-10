@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "499847aeea64a9e6428e590da11b728c",
+    "content-hash": "400cca70d2f8c286ce3d66819303e907",
     "packages": [
         {
             "name": "answear/liform",
@@ -3710,11 +3710,17 @@
         },
         {
             "name": "survos/crawler-bundle",
-            "version": "dev-tac",
+            "version": "1.4.40",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosCrawlerBundle.git",
+                "reference": "028ec5c93b9855d7b51cbb96173eb9efc5e1685d"
+            },
             "dist": {
-                "type": "path",
-                "url": "//home/tac/g/survos/survos/packages/crawler-bundle",
-                "reference": "9c2e2be53a9f6aca9370b983e7e997b1dc351a43"
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosCrawlerBundle/zipball/028ec5c93b9855d7b51cbb96173eb9efc5e1685d",
+                "reference": "028ec5c93b9855d7b51cbb96173eb9efc5e1685d",
+                "shasum": ""
             },
             "require": {
                 "php": "^8.1",
@@ -3755,6 +3761,7 @@
                     "Survos\\CrawlerBundle\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3765,17 +3772,25 @@
                 }
             ],
             "description": "Provides a way to create tests that crawl a site",
-            "transport-options": {
-                "relative": false
-            }
+            "support": {
+                "issues": "https://github.com/survos/SurvosCrawlerBundle/issues",
+                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.4.40"
+            },
+            "time": "2023-04-19T14:35:23+00:00"
         },
         {
             "name": "survos/doc-bundle",
-            "version": "dev-tac",
+            "version": "1.4.40",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosDocBundle.git",
+                "reference": "41c66e494a23e51d0a0580f0e6f1f08393935be0"
+            },
             "dist": {
-                "type": "path",
-                "url": "//home/tac/g/survos/survos/packages/doc-bundle",
-                "reference": "31f73c5e88906698a01fd61d6f17e0e50133b0b9"
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosDocBundle/zipball/41c66e494a23e51d0a0580f0e6f1f08393935be0",
+                "reference": "41c66e494a23e51d0a0580f0e6f1f08393935be0",
+                "shasum": ""
             },
             "require": {
                 "php": "^8.1",
@@ -3830,6 +3845,7 @@
                     "Survos\\DocBundle\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3840,9 +3856,11 @@
                 }
             ],
             "description": "Build Sphinx documentation for a Symfony project, using Twig templates",
-            "transport-options": {
-                "relative": false
-            }
+            "support": {
+                "issues": "https://github.com/survos/SurvosDocBundle/issues",
+                "source": "https://github.com/survos/SurvosDocBundle/tree/1.4.40"
+            },
+            "time": "2023-04-24T17:20:19+00:00"
         },
         {
             "name": "survos/grid-bundle",
@@ -12143,10 +12161,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "survos/crawler-bundle": 20,
-        "survos/doc-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
