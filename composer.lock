@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "400cca70d2f8c286ce3d66819303e907",
+    "content-hash": "ab56800727d26e738bdc9b637e1c732c",
     "packages": [
         {
             "name": "answear/liform",
@@ -3483,16 +3483,16 @@
         },
         {
             "name": "survos/api-grid-bundle",
-            "version": "1.4.40",
+            "version": "1.4.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosApiGridBundle.git",
-                "reference": "8dbaae96d844834b21ab954451551c51b7b53f3d"
+                "reference": "b7b08e96c4247ef9242c2605c8afd93ed4f8c5d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/8dbaae96d844834b21ab954451551c51b7b53f3d",
-                "reference": "8dbaae96d844834b21ab954451551c51b7b53f3d",
+                "url": "https://api.github.com/repos/survos/SurvosApiGridBundle/zipball/b7b08e96c4247ef9242c2605c8afd93ed4f8c5d8",
+                "reference": "b7b08e96c4247ef9242c2605c8afd93ed4f8c5d8",
                 "shasum": ""
             },
             "require": {
@@ -3502,7 +3502,7 @@
                 "friendsofsymfony/jsrouting-bundle": "^3.2",
                 "meilisearch/search-bundle": "^0.11.0",
                 "php": "^8.1",
-                "survos/inspection-bundle": "^1.4.40",
+                "survos/inspection-bundle": "^1.4.41",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -3548,13 +3548,13 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosApiGridBundle/issues",
-                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.4.40"
+                "source": "https://github.com/survos/SurvosApiGridBundle/tree/1.4.41"
             },
-            "time": "2023-05-09T11:02:45+00:00"
+            "time": "2023-05-10T16:42:13+00:00"
         },
         {
             "name": "survos/command-bundle",
-            "version": "1.4.40",
+            "version": "1.4.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCommandBundle.git",
@@ -3621,13 +3621,13 @@
             "description": "Run Symfony console commands from a web interface",
             "support": {
                 "issues": "https://github.com/survos/SurvosCommandBundle/issues",
-                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.4.40"
+                "source": "https://github.com/survos/SurvosCommandBundle/tree/1.4.41"
             },
             "time": "2023-04-24T17:40:52+00:00"
         },
         {
             "name": "survos/core-bundle",
-            "version": "1.4.40",
+            "version": "1.4.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCoreBundle.git",
@@ -3704,22 +3704,22 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosCoreBundle/issues",
-                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.4.40"
+                "source": "https://github.com/survos/SurvosCoreBundle/tree/1.4.41"
             },
             "time": "2023-04-27T20:33:57+00:00"
         },
         {
             "name": "survos/crawler-bundle",
-            "version": "1.4.40",
+            "version": "1.4.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosCrawlerBundle.git",
-                "reference": "028ec5c93b9855d7b51cbb96173eb9efc5e1685d"
+                "reference": "cde01ba84f5d656c2f970172a55e576e2071f4f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosCrawlerBundle/zipball/028ec5c93b9855d7b51cbb96173eb9efc5e1685d",
-                "reference": "028ec5c93b9855d7b51cbb96173eb9efc5e1685d",
+                "url": "https://api.github.com/repos/survos/SurvosCrawlerBundle/zipball/cde01ba84f5d656c2f970172a55e576e2071f4f4",
+                "reference": "cde01ba84f5d656c2f970172a55e576e2071f4f4",
                 "shasum": ""
             },
             "require": {
@@ -3774,22 +3774,22 @@
             "description": "Provides a way to create tests that crawl a site",
             "support": {
                 "issues": "https://github.com/survos/SurvosCrawlerBundle/issues",
-                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.4.40"
+                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.4.41"
             },
-            "time": "2023-04-19T14:35:23+00:00"
+            "time": "2023-05-10T16:43:30+00:00"
         },
         {
             "name": "survos/doc-bundle",
-            "version": "1.4.40",
+            "version": "1.4.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosDocBundle.git",
-                "reference": "41c66e494a23e51d0a0580f0e6f1f08393935be0"
+                "reference": "78f2c0ad115b04443b3b266261fbd0923e198912"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosDocBundle/zipball/41c66e494a23e51d0a0580f0e6f1f08393935be0",
-                "reference": "41c66e494a23e51d0a0580f0e6f1f08393935be0",
+                "url": "https://api.github.com/repos/survos/SurvosDocBundle/zipball/78f2c0ad115b04443b3b266261fbd0923e198912",
+                "reference": "78f2c0ad115b04443b3b266261fbd0923e198912",
                 "shasum": ""
             },
             "require": {
@@ -3842,7 +3842,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Survos\\DocBundle\\": "src/"
+                    "Survos\\DocBundle\\": "src/",
+                    "Survos\\GridGroupBundle\\Tests\\": "tests/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3858,22 +3859,22 @@
             "description": "Build Sphinx documentation for a Symfony project, using Twig templates",
             "support": {
                 "issues": "https://github.com/survos/SurvosDocBundle/issues",
-                "source": "https://github.com/survos/SurvosDocBundle/tree/1.4.40"
+                "source": "https://github.com/survos/SurvosDocBundle/tree/1.4.41"
             },
-            "time": "2023-04-24T17:20:19+00:00"
+            "time": "2023-05-10T16:42:47+00:00"
         },
         {
             "name": "survos/grid-bundle",
-            "version": "1.4.40",
+            "version": "1.4.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosGridBundle.git",
-                "reference": "3535ccdcd41c92c78c89a45f51c7b0317a076d1c"
+                "reference": "7401447ba200c181d4549d3cbfb8256c3b20d8bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/3535ccdcd41c92c78c89a45f51c7b0317a076d1c",
-                "reference": "3535ccdcd41c92c78c89a45f51c7b0317a076d1c",
+                "url": "https://api.github.com/repos/survos/SurvosGridBundle/zipball/7401447ba200c181d4549d3cbfb8256c3b20d8bc",
+                "reference": "7401447ba200c181d4549d3cbfb8256c3b20d8bc",
                 "shasum": ""
             },
             "require": {
@@ -3881,7 +3882,7 @@
                 "doctrine/orm": "^2.12",
                 "doctrine/persistence": "^2.0 || ^3.0",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.4.40",
+                "survos/core-bundle": "^1.4.41",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -3956,9 +3957,9 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosGridBundle/issues",
-                "source": "https://github.com/survos/SurvosGridBundle/tree/1.4.40"
+                "source": "https://github.com/survos/SurvosGridBundle/tree/1.4.41"
             },
-            "time": "2023-05-09T11:02:48+00:00"
+            "time": "2023-05-10T16:44:35+00:00"
         },
         {
             "name": "survos/grid-group-bundle",
@@ -4043,22 +4044,22 @@
         },
         {
             "name": "survos/inspection-bundle",
-            "version": "1.4.40",
+            "version": "1.4.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosInspectionBundle.git",
-                "reference": "8247dcf2e2bc66a3e917e8d9fe5198191e7937ac"
+                "reference": "54f608fb97e2294dd7a7e2dd580555f340b6c4d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/8247dcf2e2bc66a3e917e8d9fe5198191e7937ac",
-                "reference": "8247dcf2e2bc66a3e917e8d9fe5198191e7937ac",
+                "url": "https://api.github.com/repos/survos/SurvosInspectionBundle/zipball/54f608fb97e2294dd7a7e2dd580555f340b6c4d1",
+                "reference": "54f608fb97e2294dd7a7e2dd580555f340b6c4d1",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "v3.1.7",
                 "php": "^8.1",
-                "survos/core-bundle": "^1.4.40",
+                "survos/core-bundle": "^1.4.41",
                 "symfony/config": "^6.1.0",
                 "symfony/dependency-injection": "^6.1.0",
                 "symfony/http-kernel": "^6.1.0",
@@ -4117,13 +4118,13 @@
             "description": "Inspects Doctrine entities with APIPlatform attributes",
             "support": {
                 "issues": "https://github.com/survos/SurvosInspectionBundle/issues",
-                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.4.40"
+                "source": "https://github.com/survos/SurvosInspectionBundle/tree/1.4.41"
             },
-            "time": "2023-05-09T11:02:47+00:00"
+            "time": "2023-05-10T16:42:49+00:00"
         },
         {
             "name": "survos/liform-bundle",
-            "version": "1.4.40",
+            "version": "1.4.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosLiformbundle.git",
@@ -4166,22 +4167,22 @@
             "description": "Bundle for Liform: Transform Symfony Forms into Json Schema",
             "support": {
                 "issues": "https://github.com/survos/SurvosLiformbundle/issues",
-                "source": "https://github.com/survos/SurvosLiformbundle/tree/1.4.40"
+                "source": "https://github.com/survos/SurvosLiformbundle/tree/1.4.41"
             },
             "time": "2023-05-09T11:02:43+00:00"
         },
         {
             "name": "survos/scraper-bundle",
-            "version": "1.4.40",
+            "version": "1.4.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/SurvosScraperBundle.git",
-                "reference": "980724101d9b9a1fc3e4580b2493f1d0d819f233"
+                "reference": "f35aeabf30ebbca84a89de0620c2aa0c613a4255"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosScraperBundle/zipball/980724101d9b9a1fc3e4580b2493f1d0d819f233",
-                "reference": "980724101d9b9a1fc3e4580b2493f1d0d819f233",
+                "url": "https://api.github.com/repos/survos/SurvosScraperBundle/zipball/f35aeabf30ebbca84a89de0620c2aa0c613a4255",
+                "reference": "f35aeabf30ebbca84a89de0620c2aa0c613a4255",
                 "shasum": ""
             },
             "require": {
@@ -4195,6 +4196,7 @@
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^9.5",
                 "symfony/browser-kit": "^6.1.0",
                 "symfony/framework-bundle": "^6.1.0",
                 "symfony/phpunit-bridge": "^6.1.0",
@@ -4205,7 +4207,8 @@
             "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
-                    "Survos\\Scraper\\": "src/"
+                    "Survos\\Scraper\\": "src/",
+                    "Survos\\Scraper\\Tests\\": "tests/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4219,9 +4222,9 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/SurvosScraperBundle/issues",
-                "source": "https://github.com/survos/SurvosScraperBundle/tree/1.4.40"
+                "source": "https://github.com/survos/SurvosScraperBundle/tree/1.4.41"
             },
-            "time": "2023-04-24T17:40:50+00:00"
+            "time": "2023-05-10T16:42:53+00:00"
         },
         {
             "name": "symfony/asset",
