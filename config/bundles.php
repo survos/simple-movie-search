@@ -25,4 +25,5 @@ return [
     Limenius\LiformBundle\LimeniusLiformBundle::class => ['all' => true],
     Survos\GridGroupBundle\SurvosGridGroupBundle::class => ['all' => true],
     Survos\Grid\SurvosGridBundle::class => ['all' => true],
+    Survos\DocBundle\SurvosDocBundle::class => ['all' => true],
 ];

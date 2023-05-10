@@ -122,6 +122,9 @@
     "survos/crawler-bundle": {
         "version": "1.4.40"
     },
+    "survos/doc-bundle": {
+        "version": "1.4.40"
+    },
     "survos/grid-bundle": {
         "version": "1.4.40"
     },
