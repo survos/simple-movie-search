@@ -2,6 +2,6 @@
 # ln -s /Users/kailashsharma/kash/tacman/survos/packages/api-grid-bundle/assets/src/controllers/sandbox_api_grid_controller.js assets/controllers/sandbox_api_grid_controller.js
 when@dev:
   survos_api_grid:
-    stimulus_controller: sandbox_api_grid
+#    stimulus_controller: sandbox_api_grid
     meiliHost: 'http://127.0.0.1:7700'
     meiliKey: masterKey
