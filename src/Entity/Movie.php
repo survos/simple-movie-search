@@ -50,7 +50,7 @@ use Survos\ApiGrid\Filter\MeiliSearch\SortFilter;
 #[ApiFilter(MultiFieldSearchFilter::class, properties: ['releaseName', 'imdbId'])] # Mei?isearch
 // can we move this to a property
 #[ApiFilter(JsonSearchFilter::class, properties: ['attributes'], arguments: ['searchParameterName' => 'attribute_search'])]
-// This is a doctrine facet filter that works when you select any fields from left seachPanes
+// This is a doctrine facet filter that works when you select any fields from left searchPanes
 #[ApiFilter(FacetsFieldSearchFilter::class, properties: ["imdbId","releaseName","title"], arguments: [
     "searchParameterName" => "facet_filter",
 ])]
