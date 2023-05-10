@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16106e9be4fa4096670a5573a93f5338",
+    "content-hash": "400cca70d2f8c286ce3d66819303e907",
     "packages": [
         {
             "name": "answear/liform",
@@ -3777,6 +3777,90 @@
                 "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.4.40"
             },
             "time": "2023-04-19T14:35:23+00:00"
+        },
+        {
+            "name": "survos/doc-bundle",
+            "version": "1.4.40",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/SurvosDocBundle.git",
+                "reference": "41c66e494a23e51d0a0580f0e6f1f08393935be0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/SurvosDocBundle/zipball/41c66e494a23e51d0a0580f0e6f1f08393935be0",
+                "reference": "41c66e494a23e51d0a0580f0e6f1f08393935be0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "symfony/config": "^6.1.0",
+                "symfony/console": "^6.1.0",
+                "symfony/dependency-injection": "^6.1.0",
+                "symfony/finder": "^6.1.0",
+                "symfony/http-kernel": "^6.1.0",
+                "symfony/options-resolver": "^6.1.0",
+                "twig/twig": "^3.4"
+            },
+            "conflict": {
+                "survos/api-grid-bundle": "<1.2.57",
+                "survos/auth-bundle": "<1.2.57",
+                "survos/barcode-bundle": "<1.2.57",
+                "survos/bootstrap-bundle": "<1.2.57",
+                "survos/command-bundle": "<1.2.57",
+                "survos/core-bundle": "<1.2.57",
+                "survos/crawler-bundle": "<1.2.57",
+                "survos/faker-bundle": "<1.2.57",
+                "survos/grid-bundle": "<1.2.57",
+                "survos/grid-group-bundle": "<1.2.57",
+                "survos/html-prettify-bundle": "<1.2.57",
+                "survos/import-bridge": "<1.2.57",
+                "survos/inspection-bundle": "<1.2.57",
+                "survos/location-bundle": "<1.2.57",
+                "survos/maker-bundle": "<1.2.57",
+                "survos/providence-bundle": "<1.2.57",
+                "survos/ruler-bundle": "<1.2.57",
+                "survos/stripe-product": "<1.2.57",
+                "survos/tree-bundle": "<1.2.57",
+                "survos/wiki-bundle": "<1.2.57",
+                "survos/workflow-helper-bundle": "<1.2.57"
+            },
+            "require-dev": {
+                "codeception/codeception": "^5.0",
+                "codeception/module-asserts": "^3.0",
+                "codeception/module-doctrine2": "^3.0",
+                "codeception/module-phpbrowser": "^3.0",
+                "codeception/module-symfony": "^3.0 | *@dev",
+                "phpstan/phpstan": "^1.8",
+                "rector/rector": "^0.15"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^6.1.0"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\DocBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "Build Sphinx documentation for a Symfony project, using Twig templates",
+            "support": {
+                "issues": "https://github.com/survos/SurvosDocBundle/issues",
+                "source": "https://github.com/survos/SurvosDocBundle/tree/1.4.40"
+            },
+            "time": "2023-04-24T17:20:19+00:00"
         },
         {
             "name": "survos/grid-bundle",

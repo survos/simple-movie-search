@@ -19,6 +19,7 @@
         "survos/api-grid-bundle": "^1.4",
         "survos/command-bundle": "^1.4",
         "survos/crawler-bundle": "^1.4",
+        "survos/doc-bundle": "^1.4",
         "survos/grid-bundle": "^1.4",
         "survos/grid-group-bundle": "^1.4",
         "survos/liform-bundle": "^1.4",
