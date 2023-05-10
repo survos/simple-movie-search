@@ -51,9 +51,9 @@ use Survos\ApiGrid\Filter\MeiliSearch\SortFilter;
 // can we move this to a property
 #[ApiFilter(JsonSearchFilter::class, properties: ['attributes'], arguments: ['searchParameterName' => 'attribute_search'])]
 // This is a doctrine facet filter that works when you select any fields from left seachPanes
-//#[ApiFilter(FacetsFieldSearchFilter::class, properties: ["imdbId","releaseName","title"], arguments: [
-//    "searchParameterName" => "facet_filter",
-//])]
+#[ApiFilter(FacetsFieldSearchFilter::class, properties: ["imdbId","releaseName","title"], arguments: [
+    "searchParameterName" => "facet_filter",
+])]
 class Movie
 {
     #[ORM\Column]
