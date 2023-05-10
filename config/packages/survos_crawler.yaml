@@ -3,7 +3,7 @@ survos_crawler:
 
     # this is only for easier debugging, not the actual call.
 
-    base_url: 'https://movie.wip/'
+    base_url: 'https://movies.wip/'
     initial_path: /
     user_class: null # App\Entity\User
 #    users:

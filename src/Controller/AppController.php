@@ -310,8 +310,14 @@ END
 
         $csvDatabase = new CsvDatabase('new-imdb.csv', 'imdbId', ['primaryTitle','startYear','runtimeMinutes','titleType']);
 
-        $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
-        foreach ($reader->getRow() as $idx =>  $row) {
+        $reader = Reader::createFromPath($fullFilename);
+        $reader->setHeaderOffset(0);
+        $reader->setDelimiter("\t");
+        $records = $reader->getRecords();
+
+//        $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
+        foreach ($records as $idx =>  $row) {
+
             $imdbId = $row['tconst'];
             $row['imdbId'] = $imdbId;
             if (!$csvDatabase->has($imdbId)) {
@@ -324,8 +330,8 @@ END
                 break;
             }
         }
-        dd(file_get_contents($csvDatabase->getPath()));
-
+        //dd(file_get_contents($csvDatabase->getPath()));
+        return new Response();
 
     }
 
@@ -357,24 +363,29 @@ END
             dump($row);
         }
 
-
+//dd($fullFilename);
         $cache = new CsvCacheAdapter($csvFilename = 'test.csv', 'tconst',  ['primaryTitle','startYear','runtimeMinutes','titleType']);
-        $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
-        foreach ($reader->getRow() as $idx =>  $row) {
-            $imdbId = $row['tconst'];
-            $x = $cache->get($imdbId, function (ItemInterface $item) use ($row) {
-//                $reviews = $movieService->downloadReviews($imdbId)
-//                return $reviews;
-                return $row;
-            });
-            dump($x);
+//        $reader = new Reader($fullFilename, strict: false, delimiter: "\t");
+        $reader = Reader::createFromPath($fullFilename);
+        $records = $reader->getRecords();
+        $idx = 0;
+        foreach ($records as $record) {
+            $row = explode("\t",$record[0]);
+            $imdbId = $row[0];
+//            $x = $cache->get($imdbId, function (ItemInterface $item) use ($row) {
+////                $reviews = $movieService->downloadReviews($imdbId)
+////                return $reviews;
+//                return $row;
+//            });
+            $idx++;
+//            dump($x);
 
             if ( $idx > $limit) {
                 break;
             }
         }
-        dd('stopped, see ' . $csvFilename);
-
+        //dd('stopped, see ' . $csvFilename);
+        return new Response();
 
     }
 
