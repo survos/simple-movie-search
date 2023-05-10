@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16106e9be4fa4096670a5573a93f5338",
+    "content-hash": "499847aeea64a9e6428e590da11b728c",
     "packages": [
         {
             "name": "answear/liform",
@@ -3710,17 +3710,11 @@
         },
         {
             "name": "survos/crawler-bundle",
-            "version": "1.4.40",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/survos/SurvosCrawlerBundle.git",
-                "reference": "028ec5c93b9855d7b51cbb96173eb9efc5e1685d"
-            },
+            "version": "dev-tac",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/survos/SurvosCrawlerBundle/zipball/028ec5c93b9855d7b51cbb96173eb9efc5e1685d",
-                "reference": "028ec5c93b9855d7b51cbb96173eb9efc5e1685d",
-                "shasum": ""
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/crawler-bundle",
+                "reference": "9c2e2be53a9f6aca9370b983e7e997b1dc351a43"
             },
             "require": {
                 "php": "^8.1",
@@ -3761,7 +3755,6 @@
                     "Survos\\CrawlerBundle\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3772,11 +3765,84 @@
                 }
             ],
             "description": "Provides a way to create tests that crawl a site",
-            "support": {
-                "issues": "https://github.com/survos/SurvosCrawlerBundle/issues",
-                "source": "https://github.com/survos/SurvosCrawlerBundle/tree/1.4.40"
+            "transport-options": {
+                "relative": false
+            }
+        },
+        {
+            "name": "survos/doc-bundle",
+            "version": "dev-tac",
+            "dist": {
+                "type": "path",
+                "url": "//home/tac/g/survos/survos/packages/doc-bundle",
+                "reference": "31f73c5e88906698a01fd61d6f17e0e50133b0b9"
             },
-            "time": "2023-04-19T14:35:23+00:00"
+            "require": {
+                "php": "^8.1",
+                "symfony/config": "^6.1.0",
+                "symfony/console": "^6.1.0",
+                "symfony/dependency-injection": "^6.1.0",
+                "symfony/finder": "^6.1.0",
+                "symfony/http-kernel": "^6.1.0",
+                "symfony/options-resolver": "^6.1.0",
+                "twig/twig": "^3.4"
+            },
+            "conflict": {
+                "survos/api-grid-bundle": "<1.2.57",
+                "survos/auth-bundle": "<1.2.57",
+                "survos/barcode-bundle": "<1.2.57",
+                "survos/bootstrap-bundle": "<1.2.57",
+                "survos/command-bundle": "<1.2.57",
+                "survos/core-bundle": "<1.2.57",
+                "survos/crawler-bundle": "<1.2.57",
+                "survos/faker-bundle": "<1.2.57",
+                "survos/grid-bundle": "<1.2.57",
+                "survos/grid-group-bundle": "<1.2.57",
+                "survos/html-prettify-bundle": "<1.2.57",
+                "survos/import-bridge": "<1.2.57",
+                "survos/inspection-bundle": "<1.2.57",
+                "survos/location-bundle": "<1.2.57",
+                "survos/maker-bundle": "<1.2.57",
+                "survos/providence-bundle": "<1.2.57",
+                "survos/ruler-bundle": "<1.2.57",
+                "survos/stripe-product": "<1.2.57",
+                "survos/tree-bundle": "<1.2.57",
+                "survos/wiki-bundle": "<1.2.57",
+                "survos/workflow-helper-bundle": "<1.2.57"
+            },
+            "require-dev": {
+                "codeception/codeception": "^5.0",
+                "codeception/module-asserts": "^3.0",
+                "codeception/module-doctrine2": "^3.0",
+                "codeception/module-phpbrowser": "^3.0",
+                "codeception/module-symfony": "^3.0 | *@dev",
+                "phpstan/phpstan": "^1.8",
+                "rector/rector": "^0.15"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^6.1.0"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Survos\\DocBundle\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tac Tacelosky",
+                    "email": "tacman@gmail.com"
+                }
+            ],
+            "description": "Build Sphinx documentation for a Symfony project, using Twig templates",
+            "transport-options": {
+                "relative": false
+            }
         },
         {
             "name": "survos/grid-bundle",
@@ -12077,7 +12143,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "survos/crawler-bundle": 20,
+        "survos/doc-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
