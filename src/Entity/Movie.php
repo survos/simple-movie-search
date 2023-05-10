@@ -91,7 +91,7 @@ class Movie
     private ?int $runtimeMinutes = null;
 
     #[ORM\Column(type: Types::JSON, nullable: false)]
-    #[Groups(['searchable','movie.read'])]
+    #[Groups(['movie.read'])]
     private array $genres = [];
 
 
