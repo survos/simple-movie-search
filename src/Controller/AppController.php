@@ -60,7 +60,7 @@ class AppController extends AbstractController
 bob,44";
         $csvReader = Reader::createFromString($csvString)->setHeaderOffset(0);
         var_dump($csvReader->first());
-        dd('stopped');
+        //dd('stopped');
 
         // this should be done by a php unit test
         $yaml = Yaml::parseFile($this->dataDir . '../tests/parser-test.yaml');
@@ -78,16 +78,19 @@ bob,44";
                 assertEquals($expects, $row, json_encode($expects) . '<>' . json_encode($row));
             }
         }
-        dd('all tests pass');
-        return [];
+        //dd('all tests pass');
+        return new Response();
     }
 
     #[Route('/import_with_parser', name: 'import_with_parser')]
     public function import_with_parser(SearchService $searchService, EntityManagerInterface $em, Request $request): Response|iterable
     {
-        $filename = $this->dataDir . 'title.small.tsv';
+        $filename = $this->dataDir . 'title.basics.tsv';
         $csv = \League\Csv\Reader::createFromPath($filename)->setDelimiter("\t");
         $csv->setHeaderOffset(0);
+        $csv->setDelimiter("\t");
+        $records = $csv->getRecords();
+
         foreach ($csv->getHeader() as $header) {
             $schema[$header] = 'string';
         }
@@ -104,6 +107,7 @@ map:
 END
         );
 
+        return new Response();
 
         $config = [
             'delimiter' => "\t",
