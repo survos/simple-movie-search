@@ -377,6 +377,9 @@
             "webpack.config.js"
         ]
     },
+    "tacman/dictionary-bundle": {
+        "version": "dev-master"
+    },
     "twig/extra-bundle": {
         "version": "v3.5.1"
     }

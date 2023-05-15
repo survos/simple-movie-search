@@ -51,6 +51,7 @@
         "symfony/web-link": "^6.2",
         "symfony/webpack-encore-bundle": "^1.16",
         "symfony/yaml": "^6.2",
+        "tacman/dictionary-bundle": "^3.1",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },
@@ -102,8 +103,8 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
-            "require": "^6.2"
+            "allow-contrib": true,
+            "require": "^6.3"
         }
     },
     "require-dev": {
