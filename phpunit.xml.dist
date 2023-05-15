@@ -21,6 +21,9 @@
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
         </testsuite>
+        <testsuite name="Crawler testcases">
+            <directory>vendor/survos/crawler-bundle/src/Tests/</directory>
+        </testsuite>
     </testsuites>
 
     <coverage processUncoveredFiles="true">
