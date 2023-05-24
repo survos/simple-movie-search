@@ -27,4 +27,5 @@ return [
     Survos\Grid\SurvosGridBundle::class => ['all' => true],
     Survos\DocBundle\SurvosDocBundle::class => ['all' => true],
     Knp\DictionaryBundle\KnpDictionaryBundle::class => ['all' => true],
+    Survos\Bundle\MakerBundle\SurvosMakerBundle::class => ['all' => true],
 ];

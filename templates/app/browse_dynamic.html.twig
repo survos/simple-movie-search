@@ -7,6 +7,14 @@
 
 {% block body %}
 
+    <twig:api_grid>
+        <twig:block name="footer" ix="1">
+            <button class="btn btn-primary">Claim your prize</button>
+        </twig:block>
+    </twig:api_grid>
+
+
+
 
     {#    {{ api_table(class) }}#}
     {#    <pre>{{ api_table(class)|escape }}</pre>#}
@@ -68,6 +76,11 @@
             dom: 'P<"dtsp-dataTable"rQfti>l'
         }
     %}
+            <twig:block name="footer">
+                <button class="btn btn-primary">Claim your prize</button>
+            </twig:block>
+
+
 
         {% block genres %}
             {{ row.genres|join('|') }}

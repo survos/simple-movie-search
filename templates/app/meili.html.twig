@@ -68,6 +68,15 @@
         }
     %}
 
+        <twig:Alert type="success">
+            <div>Congrats on winning a free puppy!</div>
+
+            <twig:block name="footer">
+                <button class="btn btn-primary">Claim your prize</button>
+            </twig:block>
+        </twig:Alert>
+
+
         {% block actions %}
             {#                <a href="{{ path('app_bookmark') }}">#}
             <i class="far fa-thumbs-up"></i>
