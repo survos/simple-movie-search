@@ -1,0 +1,9 @@
+'app:import-imdb':
+    description: 'Import imdb into the movie database (doctrine)'
+    help: ''
+'app:create-csv':
+    description: 'Creates a CSV database from the movie file.  Uses CsvReader from league.  No doctrine'
+    help: "Given a CSV file with movie titles and genre, create 2 csv files with the appropriate relationships.\n\nheaders contain type hints, which can be used for MeiliSearch"
+'app:index-csv':
+    description: 'Index a CSV file.  Uses CsvReader and CsvParser'
+    help: "Given a CSV file with movie titles and genre, create 2 csv files with the appropriate relationships.\n\nheaders contain type hints, which can be used for MeiliSearch"
