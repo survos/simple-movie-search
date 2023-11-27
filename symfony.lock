@@ -61,6 +61,9 @@
             "config/routes/fos_js_routing.yaml"
         ]
     },
+    "knplabs/knp-menu-bundle": {
+        "version": "v3.2.0"
+    },
     "meilisearch/search-bundle": {
         "version": "0.10",
         "recipe": {
@@ -138,6 +141,9 @@
     "survos/api-grid-bundle": {
         "version": "1.4.40"
     },
+    "survos/bootstrap-bundle": {
+        "version": "1.5.93"
+    },
     "survos/command-bundle": {
         "version": "1.4.40"
     },
@@ -153,9 +159,6 @@
     "survos/foo-bundle": {
         "version": "dev-tac"
     },
-    "survos/grid-bundle": {
-        "version": "1.4.40"
-    },
     "survos/grid-group-bundle": {
         "version": "1.4.40"
     },
@@ -170,6 +173,21 @@
     },
     "survos/scraper-bundle": {
         "version": "1.4.40"
+    },
+    "symfony/asset-mapper": {
+        "version": "6.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.4",
+            "ref": "040e08b268490e84a8e05652d6e9d3d49576f1c6"
+        },
+        "files": [
+            "assets/app.js",
+            "assets/styles/app.css",
+            "config/packages/asset_mapper.yaml",
+            "importmap.php"
+        ]
     },
     "symfony/console": {
         "version": "6.2",
@@ -324,13 +342,18 @@
         ]
     },
     "symfony/stimulus-bundle": {
-        "version": "2.12",
+        "version": "2.9999999",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "2.8",
-            "ref": "9e33a8a3794b603fb4be6c04ee5ecab901ce549e"
-        }
+            "version": "2.9",
+            "ref": "05c45071c7ecacc1e48f94bc43c1f8d4405fb2b2"
+        },
+        "files": [
+            "assets/bootstrap.js",
+            "assets/controllers.json",
+            "assets/controllers/hello_controller.js"
+        ]
     },
     "symfony/translation": {
         "version": "6.2",
@@ -396,25 +419,6 @@
         },
         "files": [
             "config/packages/messenger.yaml"
-        ]
-    },
-    "symfony/webpack-encore-bundle": {
-        "version": "1.17",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.10",
-            "ref": "eff2e505d4557c967b6710fe06bd947ba555cae5"
-        },
-        "files": [
-            "assets/app.js",
-            "assets/bootstrap.js",
-            "assets/controllers.json",
-            "assets/controllers/hello_controller.js",
-            "assets/styles/app.css",
-            "config/packages/webpack_encore.yaml",
-            "package.json",
-            "webpack.config.js"
         ]
     },
     "symfony/workflow": {
