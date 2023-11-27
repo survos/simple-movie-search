@@ -28,3 +28,7 @@ yarn-error.log
 
 /data/*.gz
 /data/*.tsv
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

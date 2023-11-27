@@ -194,7 +194,10 @@ EOL
             $this->addCat($catType, $value, $settings);
             return $value;
         });
-        $parser = new Parser($config);
+
+        $schema = Parser::createConfigFromMap();
+        $schema->setValueRules($test['valueRules'] ?? []);
+        $parser = new Parser($schema);
         return $parser;
     }
 
