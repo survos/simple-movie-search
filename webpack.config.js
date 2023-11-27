@@ -56,15 +56,11 @@ Encore
         config.corejs = '3.23';
     })
 
-    .configureBabel((config) => {
-        config.plugins.push('@babel/plugin-proposal-class-properties');
-    })
-
     // enables Sass/SCSS support
-    .enableSassLoader()
+    //.enableSassLoader()
 
     // uncomment if you use TypeScript
-    .enableTypeScriptLoader()
+    //.enableTypeScriptLoader()
 
     // uncomment if you use React
     //.enableReactPreset()
@@ -74,21 +70,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    .autoProvidejQuery()
+    //.autoProvidejQuery()
 ;
 
-
-
-const config = Encore.getWebpackConfig();
-config.resolve.symlinks = false;
-
-const webpack = require('webpack')
-config.plugins.push(new webpack.ProvidePlugin({
-    process: 'process/browser',
-}));
-
-config.watchOptions = {
-    poll: true,
-};
-
-module.exports = config;
+module.exports = Encore.getWebpackConfig();
