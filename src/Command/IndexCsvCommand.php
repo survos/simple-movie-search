@@ -118,7 +118,7 @@ EOL
 //            ->addHeader()
 
 
-            $client = new Client('http://127.0.0.1:7700', 'masterKey');
+        $client = new Client('http://127.0.0.1:7700', 'masterKey');
         $index = $client->index('movie');
 
 
@@ -333,6 +333,7 @@ END
         // https://github.com/swaggest/php-json-schema -- can we import with this?
         // should validate wth https://github.com/opis/json-schema
         $schema = $this->liform->transform($form);
+        dd($schema);
 //        foreach ($schema['properties'] as $code => $property) {
 //            dump($code, $property);
 //        }

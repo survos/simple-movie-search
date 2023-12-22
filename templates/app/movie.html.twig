@@ -4,6 +4,17 @@
 
 {% block body %}
 
-    {{ dump(movie) }}
+    <h3>Movie: {{ movie.primaryTitle }}</h3>
+
+    {% set columns = [
+        'imdbId',
+        'primaryTitle',
+        'year',
+    ] %}
+{#    {% component 'item_grid' with {data: movie} %}#}
+{#    {% endcomponent %}#}
+    <twig:item_grid :data="movie" :columns="columns">
+
+    </twig:item_grid>
 
 {% endblock %}
