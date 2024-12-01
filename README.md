@@ -21,7 +21,8 @@ bin/console app:import-imdb --limit 500
 
 ```
 
-
+composer config repositories.dbal '{"type": "path", "url": "~/g/tacman/symfony_dynamic_db"}'
+composer req tacman/symfony_dynamic_db:dev-tac
 
 symfony server:start -d
 

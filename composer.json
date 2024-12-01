@@ -51,6 +51,7 @@
         "symfony/web-link": "^6.2.7",
         "symfony/webpack-encore-bundle": "^1.16.1",
         "symfony/yaml": "^6.2.10",
+        "tacman/symfony_dynamic_db": "dev-tac",
         "twig/extra-bundle": "^2.12|^3.6",
         "twig/twig": "^2.12|^3.6"
     },
@@ -121,5 +122,9 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": {
+        "dbal": {
+            "type": "path",
+            "url": "~/g/tacman/symfony_dynamic_db"
+        }
     }
 }
